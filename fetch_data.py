@@ -73,7 +73,7 @@ THEMES = [
    ["CAT","DE","CMI","PCAR","TEX","WNC"],                                  "#94a3b8",  0),
 ]
 
-ddef fetch(ticker, period="3mo"):
+def fetch(ticker, period="3mo"):
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
            f"?range={period}&interval=1d")
     req = urllib.request.Request(
