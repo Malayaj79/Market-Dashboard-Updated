@@ -73,7 +73,7 @@ THEMES = [
    ["CAT","DE","CMI","PCAR","TEX","WNC"],                                  "#94a3b8",  0),
 ]
 
-def fetch(ticker, period="3mo"):
+ddef fetch(ticker, period="3mo"):
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
            f"?range={period}&interval=1d")
     req = urllib.request.Request(
@@ -85,13 +85,20 @@ def fetch(ticker, period="3mo"):
         meta   = res["meta"]
         closes = res["indicators"]["quote"][0]["close"]
         
-        price      = meta.get("regularMarketPrice") or meta.get("previousClose")
-        prev_close = meta.get("regularMarketPreviousClose") or meta.get("previousClose")
-        
-        # GLITCH GUARD: If previous close is missing/zero, use historical array
+        # Filter out empty days
         valid_closes = [c for c in closes if c is not None]
+        if not valid_closes:
+            return None
+        
+        # Safest way to get current price: meta label first, then fallback to latest chart candle
+        price = meta.get("regularMarketPrice") or valid_closes[-1]
+        
+        # Safest way to get previous close
+        prev_close = meta.get("chartPreviousClose") or meta.get("previousClose")
+        
+        # GLITCH GUARD: If previous close is still missing, use yesterday's candle
         if prev_close is None or prev_close == 0:
-            prev_close = valid_closes[-1] if valid_closes else price
+            prev_close = valid_closes[-2] if len(valid_closes) > 1 else price
             
         return {"ts": res["timestamp"], "closes": closes, "price": price, "prev_close": prev_close, "valid_closes": valid_closes}
     except Exception as e:
