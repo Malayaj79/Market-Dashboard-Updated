@@ -87,26 +87,23 @@ def fetch(ticker, period="2mo"):
         meta   = res["meta"]
         closes = res["indicators"]["quote"][0]["close"]
         
-        # Filter out empty days
+        # Filter out empty days so 1W and 1M calculations stay accurate
         valid_closes = [c for c in closes if c is not None]
         if not valid_closes:
             return None
         
-        # 1. Get the true live price
-        price = meta.get("regularMarketPrice") or valid_closes[-1]
-        
-        # 2. Get the official previous close (avoiding the 3-month anchor bug)
+        # 1. LIVE PRICE: Updates during open hours, freezes at official close.
+        price = meta.get("regularMarketPrice")
+        if price is None:
+            price = valid_closes[-1]
+            
+        # 2. PREVIOUS CLOSE: The official close of the prior trading session.
         prev_close = meta.get("regularMarketPreviousClose") or meta.get("previousClose")
         
-        # 3. GLITCH GUARD: If the API sends 0, or sends the exact same price as today (the 0% bug)
-        if not prev_close or prev_close == 0 or prev_close == price:
+        # Fallback only if Yahoo completely fails to send the previous close metadata
+        if not prev_close or prev_close == 0:
             if len(valid_closes) > 1:
-                # If the last candle in the array matches today's live price, yesterday is the 2nd to last candle
-                if valid_closes[-1] == price:
-                    prev_close = valid_closes[-2]
-                else:
-                    # Otherwise, the last candle is yesterday's completed daily candle
-                    prev_close = valid_closes[-1]
+                prev_close = valid_closes[-2]
             else:
                 prev_close = price
             
