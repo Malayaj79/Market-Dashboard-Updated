@@ -1,23 +1,14 @@
 """
 Market Themes Momentum Dashboard — Data Fetcher
 ================================================
-METHODOLOGY (matches original dashboard):
+METHODOLOGY:
   - Fetches ALL constituent stocks for each theme (not just one proxy ETF)
-  - Computes 1D / 1W / 1M returns for every stock individually:
-      1D = regularMarketPrice vs regularMarketPreviousClose
-           → true today's intraday move (matches what you see on any brokerage)
-      1W = today vs last Friday's closing price
-      1M = today vs last month-end closing price
+  - Computes 1D / 1W / 1M returns for every stock individually
   - Equal-weight averages all valid constituent returns → theme return
   - Relative Strength = theme return minus SPY return (same anchor)
-  - Momentum Score = (RetBlend × 45%) + (RSBlend × 35%) + (MA × 7pts)
-      where RetBlend = 1D×20% + 1W×35% + 1M×45%
-
-TO UPDATE MA SIGNALS WEEKLY:
-  Edit ma= in THEMES below (+1 bull, 0 neutral, -1 bear), then push.
 """
 
-import json, datetime, time, urllib.request, os
+import json, datetime, time, urllib.request
 
 THEMES = [
   ("ai",        "Artificial Intelligence",      "AI",           "⚡", "Technology",       "AIQ",
@@ -31,11 +22,11 @@ THEMES = [
   ("quantum",   "Quantum Computing",            "Quantum",      "🔬", "Technology",       "QTUM",
    ["IONQ","RGTI","QUBT","IBM","GOOGL","MSFT"],                           "#a78bfa",  1),
   ("robotics",  "Robotics & Automation",        "Robots",       "🤖", "Technology",       "ROBO",
-   ["ISRG","ROK","PATH","TSLA","FANUY","ONTO"],                           "#c084fc",  1),
+   ["ISRG","ABB","PATH","TSLA","FANUY","BRZE"],                           "#c084fc",  1),
   ("iot",       "Internet of Things",           "IoT",          "📡", "Technology",       "SNSR",
    ["CSCO","TXN","MCHP","PTC","SWKS","QRVO"],                            "#38bdf8",  0),
   ("print3d",   "3D Printing",                  "3D Print",     "🖨", "Technology",       "PRNT",
-   ["DDD","SSYS","XMTR","NNDM","MTLS","VELO"],                           "#7c3aed", -1),
+   ["DDD","SSYS","MKFG","XMTR","NNDM","MTLS"],                           "#7c3aed", -1),
   ("saas",      "Software as a Service",        "SaaS",         "🧩", "Technology",       "IGV",
    ["CRM","NOW","WDAY","HUBS","ZM","BILL"],                               "#6ee7b7",  0),
   ("datacntr",  "Data Centers & Infra",         "DataCtrs",     "🏭", "Technology",       "SRVR",
@@ -57,13 +48,13 @@ THEMES = [
   ("oilgas",    "Traditional Oil & Gas",        "Oil & Gas",    "🛢", "Energy",            "XLE",
    ["XOM","CVX","COP","SLB","EOG","MPC"],                                 "#d97706", -1),
   ("minerals",  "Critical Minerals",            "Minerals",     "⛏", "Materials",         "COPX",
-   ["FCX","MP","ALB","VALE","RIO","TECK"],                                "#fb923c",  1),
+   ["FCX","MP","ALB","VALE","RIO","LTHM"],                                "#fb923c",  1),
   ("gold",      "Gold & Gold Miners",           "Gold",         "🥇", "Precious Metals",   "GLD",
    ["GLD","NEM","GOLD","AEM","WPM","FNV"],                                "#ffd700",  1),
   ("silver",    "Silver & Silver Miners",       "Silver",       "🥈", "Precious Metals",   "SLV",
-   ["SLV","PAAS","AG","HL","WPM","FSM"],                                  "#e2e8f0",  1),
+   ["SLV","PAAS","AG","HL","MAG","WPM"],                                  "#e2e8f0",  1),
   ("jrgold",    "Junior Gold Miners",           "Jr. Gold",     "⛏", "Precious Metals",   "GDXJ",
-   ["GDXJ","ORLA","NGD","AUMN","EQX","AU"],                               "#fcd34d",  1),
+   ["GDXJ","ORLA","KNT","MAI","NGD","AUMN"],                              "#fcd34d",  1),
   ("pgm",       "Platinum Group Metals",        "PGMs",         "⚗", "Precious Metals",   "PPLT",
    ["PPLT","PALL","SBSW","IMPUY","ANGPY"],                                "#cbd5e1",  0),
   ("broadmet",  "Broad Precious Metals",        "Prec. Metals", "🏅", "Precious Metals",   "GLTR",
@@ -71,10 +62,10 @@ THEMES = [
   ("water",     "Water Management",             "Water",        "💧", "Utilities",         "PHO",
    ["AWK","XYL","WTRG","PNR","MSEX","CWCO"],                              "#0ea5e9",  0),
   ("space",     "Space Exploration",            "Space",        "🚀", "Industrials",       "UFO",
-   ["ASTS","LUNR","RKLB","RDW","SPCE","BWXT"],                            "#8b5cf6",  1),
+   ["ASTS","LUNR","RKLB","RDW","ASTR","SPCE"],                            "#8b5cf6",  1),
   ("defense",   "Defense & Military Tech",      "Defense",      "🛡", "Industrials",       "ITA",
    ["LMT","RTX","NOC","GD","BA","HII"],                                   "#ff6b35",  1),
-  ("drones",    "Drones & Autonomous",          "Drones",       "🛸", "Industrials",       "ACHR",
+  ("drones",    "Drones & Autonomous",          "Drones",       "🛸", "Industrials",       "IFLY",
    ["ACHR","JOBY","AVAV","KTOS","RCAT","UAVS"],                           "#f472b6",  1),
   ("reshoring", "Supply Chain Reshoring",       "Reshoring",    "🏗", "Industrials",       "PAVE",
    ["CAT","DE","URI","MLM","VMC","NUE"],                                   "#fdba74",  0),
@@ -82,7 +73,6 @@ THEMES = [
    ["CAT","DE","CMI","PCAR","TEX","WNC"],                                  "#94a3b8",  0),
 ]
 
-# ── Yahoo Finance fetcher ─────────────────────────────────────────────────────
 def fetch(ticker, period="3mo"):
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}"
            f"?range={period}&interval=1d")
@@ -91,26 +81,19 @@ def fetch(ticker, period="3mo"):
     try:
         with urllib.request.urlopen(req, timeout=20) as r:
             d = json.loads(r.read())
-        res    = d["chart"]["result"][0]
+        res = d["chart"]["result"][0]
         meta   = res["meta"]
-        ts     = res["timestamp"]
         closes = res["indicators"]["quote"][0]["close"]
-
-        # Current price
-        price = meta.get("regularMarketPrice") or meta.get("previousClose")
-
-        # Previous close: try meta first, then fall back to second-to-last
-        # historical close (most reliable when market is open or just closed)
-        prev_close = meta.get("regularMarketPreviousClose")
-        if not prev_close:
-            # Get the last two valid closes from history
-            valid = [c for c in closes if c is not None]
-            if len(valid) >= 2:
-                prev_close = valid[-2]   # yesterday's close
-            elif len(valid) == 1:
-                prev_close = valid[-1]
-
-        return {"ts": ts, "closes": closes, "price": price, "prev_close": prev_close}
+        
+        price      = meta.get("regularMarketPrice") or meta.get("previousClose")
+        prev_close = meta.get("regularMarketPreviousClose") or meta.get("previousClose")
+        
+        # GLITCH GUARD: If previous close is missing/zero, use historical array
+        valid_closes = [c for c in closes if c is not None]
+        if prev_close is None or prev_close == 0:
+            prev_close = valid_closes[-1] if valid_closes else price
+            
+        return {"ts": res["timestamp"], "closes": closes, "price": price, "prev_close": prev_close, "valid_closes": valid_closes}
     except Exception as e:
         print(f"    ERR {ticker}: {e}")
         return None
@@ -132,8 +115,11 @@ def avg(values):
     return round(sum(vals) / len(vals), 2) if vals else None
 
 # ── Reference timestamps ──────────────────────────────────────────────────────
-now       = datetime.datetime.utcnow()
-last_fri  = now - datetime.timedelta(days=max((now.weekday() - 4) % 7, 1))
+now = datetime.datetime.utcnow()
+
+# BUG FIX: Properly calculate 'last Friday' even when running script ON a Friday
+days_to_fri = (now.weekday() - 4) % 7
+last_fri = now - datetime.timedelta(days=7 if days_to_fri == 0 else days_to_fri)
 month_end = now.replace(day=1) - datetime.timedelta(days=1)
 
 def mkets(dt):
@@ -148,7 +134,7 @@ spy_raw = fetch("SPY")
 spy = {"d": None, "w": None, "m": None}
 if spy_raw:
     c  = spy_raw["price"]
-    pc = spy_raw["prev_close"]   # official prior session close → true today's move
+    pc = spy_raw["prev_close"]
     spy = {
         "d": pct(c, pc),
         "w": pct(c, price_on(spy_raw["ts"], spy_raw["closes"], ts_fri)),
@@ -156,9 +142,7 @@ if spy_raw:
     }
     print(f"  SPY → 1D={spy['d']}% (vs prev close ${pc})  1W={spy['w']}%  1M={spy['m']}%")
 
-# Cache to avoid re-fetching tickers shared across themes (e.g. NVDA, WPM)
 _cache = {}
-
 def fetch_cached(ticker):
     if ticker not in _cache:
         _cache[ticker] = fetch(ticker)
@@ -171,45 +155,52 @@ results = []
 for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEMES:
     print(f"\n{name}")
 
-    # Proxy ETF → sparkline & display price only
     proxy_raw   = fetch_cached(proxy_etf)
     proxy_price = round(proxy_raw["price"], 2) if proxy_raw and proxy_raw["price"] else None
     spark5      = [round(x, 2) for x in proxy_raw["closes"] if x is not None][-5:] if proxy_raw else []
 
-    # Fetch every constituent and collect individual returns
     all_r1D, all_r1W, all_r1M = [], [], []
     for ticker in constituents:
         raw = fetch_cached(ticker)
         if not raw:
             continue
+            
         cur = raw["price"]
-        pc  = raw["prev_close"]   # official prior session close → true today's move
+        pc  = raw["prev_close"]
         r1D = pct(cur, pc)
+        
+        # GLITCH GUARD: Unadjusted stock splits on Yahoo cause massive false returns >50% or <-50%
+        if r1D is not None and (r1D > 50 or r1D < -50):
+            print(f"    ⚠️ YF GLITCH DETECTED: {ticker} moved {r1D}%. Falling back to historical close.")
+            v_closes = raw.get("valid_closes", [])
+            # Try getting the previous day's close directly from the timeline
+            if len(v_closes) > 1:
+                pc = v_closes[-2] if cur == v_closes[-1] else v_closes[-1]
+                r1D = pct(cur, pc)
+
         r1W = pct(cur, price_on(raw["ts"], raw["closes"], ts_fri))
         r1M = pct(cur, price_on(raw["ts"], raw["closes"], ts_month))
+        
         print(f"  {ticker:8s}  1D={str(r1D):>7}%  1W={str(r1W):>7}%  1M={str(r1M):>7}%")
         if r1D is not None: all_r1D.append(r1D)
         if r1W is not None: all_r1W.append(r1W)
         if r1M is not None: all_r1M.append(r1M)
 
-    # Equal-weight blend
     r1D = avg(all_r1D)
     r1W = avg(all_r1W)
     r1M = avg(all_r1M)
 
-    # Relative Strength vs SPY
     rs1D = round(r1D - spy["d"], 2) if r1D is not None and spy["d"] is not None else None
     rs1W = round(r1W - spy["w"], 2) if r1W is not None and spy["w"] is not None else None
     rs1M = round(r1M - spy["m"], 2) if r1M is not None and spy["m"] is not None else None
 
-    # Momentum Score
     score = None
     if None not in (r1D, r1W, r1M, rs1D, rs1W, rs1M):
         ret_blend = r1D * 0.20 + r1W * 0.35 + r1M * 0.45
         rs_blend  = rs1D * 0.20 + rs1W * 0.35 + rs1M * 0.45
         score     = round(ret_blend * 0.45 + rs_blend * 0.35 + ma * 7, 1)
 
-    print(f"  → BLENDED  1D={r1D}%  1W={r1W}%  1M={r1M}%  score={score}  (n={len(all_r1M)} stocks)")
+    print(f"  → BLENDED  1D={r1D}%  1W={r1W}%  1M={r1M}%  score={score}")
 
     results.append({
         "id": tid, "name": name, "short": short, "icon": icon,
@@ -220,19 +211,16 @@ for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEM
         "score": score, "spark5": spark5, "n_stocks": len(all_r1M),
     })
 
-# ── Sort & write JSON ─────────────────────────────────────────────────────────
 results.sort(key=lambda x: x["score"] if x["score"] is not None else -999, reverse=True)
 
 output = {
     "updated":     now.strftime("%Y-%m-%d %H:%M UTC"),
-    "methodology": "Equal-weight avg of all constituent stocks · 1D/1W/1M anchored to today's price",
+    "methodology": "Equal-weight avg of all constituent stocks · 1D = vs official prev close · 1W = vs last Friday · 1M = vs last month-end",
     "spy":         spy,
     "themes":      results,
 }
 
-os.makedirs("data", exist_ok=True)
 with open("data/market_data.json", "w") as f:
     json.dump(output, f, indent=2)
 
-print(f"\n✅  Written data/market_data.json  ({len(results)} themes)")
-print(f"    Top 3: {', '.join(r['name'] for r in results[:3])}")
+print(f"\n✅  Written data/market_data.json")
