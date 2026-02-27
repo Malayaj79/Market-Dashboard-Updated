@@ -1,0 +1,23 @@
+name: Refresh Market Data
+on:
+  schedule:
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install yfinance requests
+      - run: python fetch_data.py
+      - run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add data/market_data.json
+          git diff --cached --quiet || git commit -m "refresh market data"
+          git push
