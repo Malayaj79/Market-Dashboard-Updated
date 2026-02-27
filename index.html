@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Momentum Command Centre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c10;--bg1:#0c1219;--bg2:#101821;--bg3:#152030;
+  --border:#1c2d40;--border2:#243547;
+  --text:#d0dce8;--muted:#3d5570;--dim:#1a2a3a;
+  --green:#00e676;--red:#ff1744;--amber:#ffab00;--gold:#ffd600;--cyan:#00b8d4;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+}
+html{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5}
+body{max-width:1240px;margin:0 auto;padding:0 16px 40px}
+::selection{background:#00b8d430}
+
+/* HEADER */
+.site-header{border-bottom:1px solid var(--border);padding:18px 0 14px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.site-title{font-family:var(--mono);font-size:15px;font-weight:700;letter-spacing:2px;color:var(--cyan)}
+.site-title span{color:var(--muted)}
+.header-meta{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1px;text-align:right;line-height:2}
+.header-meta b{color:var(--amber)}
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;margin-right:5px;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 #00e67640}50%{opacity:.6;box-shadow:0 0 0 5px transparent}}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--bg1);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:18px;height:28px;display:flex;align-items:center}
+.marquee-inner{display:flex;animation:scroll 80s linear infinite;white-space:nowrap;font-family:var(--mono);font-size:10px}
+.marquee-inner:hover{animation-play-state:paused}
+.m-item{padding:0 22px;border-right:1px solid var(--border);display:flex;gap:8px;align-items:center}
+.m-tk{color:var(--muted)}.m-pr{color:var(--text)}
+.up{color:var(--green)}.dn{color:var(--red)}.neu{color:var(--muted)}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* PODIUM */
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.pod{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:14px 16px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .15s}
+.pod:hover{border-color:var(--border2)}
+.pod::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.pod.p1::before{background:var(--gold)}.pod.p2::before{background:#9e9e9e}.pod.p3::before{background:#bf6b2e}
+.pod-rank{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:4px}
+.pod-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.pod-etf{font-family:var(--mono);font-size:9px;color:var(--cyan);margin-bottom:8px}
+.pod-score{font-family:var(--mono);font-size:22px;font-weight:700}
+.pod-rets{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:4px;display:flex;gap:12px}
+
+/* SECTION */
+.section{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.sec-hdr{display:flex;align-items:center;padding:10px 16px;background:var(--bg1);cursor:pointer;border-bottom:1px solid var(--border);user-select:none;gap:8px}
+.sec-hdr:hover{background:var(--bg2)}
+.sec-num{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px}
+.sec-title{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.5px}
+.sec-sub{font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:auto;margin-right:10px}
+.chev{font-family:var(--mono);color:var(--muted);font-size:10px;transition:transform .2s}
+.chev.open{transform:rotate(90deg)}
+.sec-body{background:var(--bg);padding:16px}
+
+/* TABS & FILTERS */
+.tab-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.fl{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:2px;margin-right:4px}
+.tab{font-family:var(--mono);font-size:8px;letter-spacing:1px;padding:4px 10px;border-radius:3px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .12s}
+.tab:hover{color:var(--text);border-color:var(--border2)}
+.tab.on{border-color:var(--cyan);color:var(--cyan);background:#00b8d410}
+.sep{width:1px;height:18px;background:var(--border);margin:0 4px}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}
+thead th{padding:5px 10px;text-align:right;font-size:8px;letter-spacing:1.5px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:400}
+thead th:first-child,thead th:nth-child(2){text-align:left}
+tbody tr{border-bottom:1px solid var(--dim);transition:background .1s}
+tbody tr:hover{background:var(--bg2)}
+tbody tr:last-child{border-bottom:none}
+td{padding:5px 10px;text-align:right;white-space:nowrap}
+td:first-child,td:nth-child(2){text-align:left}
+.r-num{color:var(--muted);width:28px;font-size:10px}
+.r-name{color:var(--text);font-weight:500}
+.r-etf{color:var(--cyan);font-size:10px}
+.r-price{color:var(--text)}
+
+/* SCORE */
+.sc-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:76px}
+.sc-num{font-size:11px;font-weight:700}
+.sc-bar-bg{width:66px;height:3px;background:var(--dim);border-radius:2px;overflow:hidden}
+.sc-bar-fill{height:100%;border-radius:2px}
+
+/* MA BADGE */
+.ma{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:700;letter-spacing:.5px}
+.ma-b{background:#00e67615;color:var(--green);border:1px solid #00e67630}
+.ma-s{background:#ff174415;color:var(--red);border:1px solid #ff174430}
+.ma-n{background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+
+/* HOLDINGS */
+.h-tog{color:var(--cyan);font-size:9px;cursor:pointer;letter-spacing:.5px;white-space:nowrap}
+.h-row{display:none}
+.h-row td{padding:6px 10px 12px 10px;text-align:left}
+.h-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.h-card{background:var(--bg1);border:1px solid var(--border);border-radius:5px;padding:8px 10px;display:flex;gap:8px;align-items:flex-start;border-left-width:3px;transition:background .1s}
+.h-card:hover{background:var(--bg2)}
+.h-ticker{border-radius:3px;padding:3px 7px;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;white-space:nowrap;margin-top:1px}
+.h-info .h-name{font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h-info .h-role{font-family:var(--mono);font-size:8px;color:var(--muted);line-height:1.5}
+.h-note{margin-top:8px;padding:6px 10px;background:var(--bg);border-radius:4px;border-left:2px solid var(--border2);font-family:var(--mono);font-size:8px;color:var(--muted);line-height:1.6}
+.h-note b{color:var(--amber);letter-spacing:.5px}
+
+/* SPARK */
+.sp-cell{padding:4px 10px}
+canvas.sp{display:block}
+
+/* HEATMAP */
+.heatmap{display:flex;flex-wrap:wrap;gap:5px}
+.hm{flex:1 1 70px;min-width:58px;max-width:96px;border-radius:6px;padding:7px 5px;text-align:center;cursor:pointer;transition:transform .1s;border:1px solid transparent}
+.hm:hover{transform:scale(1.07)}
+.hm-icon{font-size:12px}.hm-short{font-family:var(--mono);font-size:7px;color:rgba(255,255,255,.45);margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hm-val{font-family:var(--mono);font-size:12px;font-weight:700}
+
+/* CALC */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.calc-ins{display:flex;flex-direction:column;gap:10px}
+.f-row{display:flex;flex-direction:column;gap:3px}
+.f-lbl{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--muted)}
+.f-in{background:var(--bg1);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:12px;padding:7px 10px;outline:none;transition:border-color .15s;width:100%}
+.f-in:focus{border-color:var(--cyan)}
+.dir-row{display:flex;gap:6px}
+.dir-btn{flex:1;padding:6px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:var(--mono);font-size:9px;letter-spacing:1px;cursor:pointer;text-align:center;transition:all .15s}
+.dir-l{background:#00e67612;border-color:var(--green);color:var(--green)}
+.dir-s{background:#ff174412;border-color:var(--red);color:var(--red)}
+.calc-out{background:var(--bg1);border:1px solid var(--border);border-radius:6px;padding:14px}
+.out-lbl{font-family:var(--mono);font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:3px}
+.out-big{font-family:var(--mono);font-size:24px;font-weight:700;margin-bottom:8px}
+.out-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.out-cell{background:var(--bg);border-radius:4px;padding:8px 10px}
+.out-val{font-family:var(--mono);font-size:12px;font-weight:700}
+.rr-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--dim);font-family:var(--mono);font-size:10px}
+.rr-row:last-child{border-bottom:none}
+
+/* FOOTER */
+.site-footer{border-top:1px solid var(--border);margin-top:20px;padding-top:12px;font-family:var(--mono);font-size:8px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+@media(max-width:680px){.podium{grid-template-columns:1fr}.calc-grid{grid-template-columns:1fr}.sec-sub{display:none}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="site-title">MOMENTUM<span> //</span> COMMAND CENTRE</div>
+    <div style="font-family:var(--mono);font-size:8px;color:var(--muted);margin-top:4px;letter-spacing:1px">30 THEMATIC SECTORS · COMPOSITE MOMENTUM SCORING · YAHOO FINANCE</div>
+  </div>
+  <div class="header-meta">
+    <div><span class="live-dot"></span>UPDATED: <b id="ts">LOADING…</b></div>
+    <div>AUTO-REFRESH DAILY 22:00 UTC · GITHUB ACTIONS</div>
+    <div>1D=vs yesterday · 1W=vs last Friday · 1M=vs last month-end</div>
+  </div>
+</header>
+
+<div class="marquee-wrap"><div class="marquee-inner" id="marquee">
+  <div class="m-item"><span class="m-tk">LOADING</span><span class="m-pr">—</span></div>
+</div></div>
+
+<div class="podium" id="podium"></div>
+
+<!-- 01 THEMES -->
+<div class="section">
+  <div class="sec-hdr" onclick="tog('themes')">
+    <span class="sec-num">01</span>
+    <span class="sec-title">THEMATIC MOMENTUM</span>
+    <span class="sec-sub">30 THEMES · RANKED BY COMPOSITE SCORE</span>
+    <span class="chev open" id="c-themes">▶</span>
+  </div>
+  <div class="sec-body" id="b-themes">
+    <div class="tab-row" id="sector-tabs"></div>
+    <div class="tab-row">
+      <span class="fl">SORT</span>
+      <span class="tab on" id="s-score" onclick="setSort('score')">MOMENTUM</span>
+      <span class="tab" id="s-ret" onclick="setSort('ret')">RETURN</span>
+      <span class="tab" id="s-rs" onclick="setSort('rs')">VS SPY</span>
+      <span class="sep"></span>
+      <span class="fl">TIMEFRAME</span>
+      <span class="tab on" id="tf-1M" onclick="setTf('1M')">1M</span>
+      <span class="tab" id="tf-1W" onclick="setTf('1W')">1W</span>
+      <span class="tab" id="tf-1D" onclick="setTf('1D')">1D</span>
+    </div>
+    <div id="t-wrap"></div>
+  </div>
+</div>
+
+<!-- 02 HEATMAP -->
+<div class="section">
+  <div class="sec-hdr" onclick="tog('heat')">
+    <span class="sec-num">02</span>
+    <span class="sec-title">RELATIVE STRENGTH HEATMAP</span>
+    <span class="sec-sub">RETURN MINUS SPY · COLOUR = MAGNITUDE</span>
+    <span class="chev open" id="c-heat">▶</span>
+  </div>
+  <div class="sec-body" id="b-heat">
+    <div class="tab-row">
+      <span class="fl">TF</span>
+      <span class="tab on" id="hm-1M" onclick="setHmTf('1M')">1M</span>
+      <span class="tab" id="hm-1W" onclick="setHmTf('1W')">1W</span>
+      <span class="tab" id="hm-1D" onclick="setHmTf('1D')">1D</span>
+    </div>
+    <div class="heatmap" id="heatmap"></div>
+  </div>
+</div>
+
+<!-- 03 METHODOLOGY -->
+<div class="section">
+  <div class="sec-hdr" onclick="tog('meth')">
+    <span class="sec-num">03</span>
+    <span class="sec-title">METHODOLOGY & BENCHMARKS</span>
+    <span class="sec-sub">SCORING FORMULA · SPY ANCHOR</span>
+    <span class="chev" id="c-meth">▶</span>
+  </div>
+  <div class="sec-body" id="b-meth" style="display:none">
+    <div id="meth-content"></div>
+  </div>
+</div>
+
+<!-- 04 POSITION SIZING -->
+<div class="section">
+  <div class="sec-hdr" onclick="tog('calc')">
+    <span class="sec-num">04</span>
+    <span class="sec-title">POSITION SIZING CALCULATOR</span>
+    <span class="sec-sub">RISK-BASED · 1R / 2R / 3R TARGETS</span>
+    <span class="chev" id="c-calc">▶</span>
+  </div>
+  <div class="sec-body" id="b-calc" style="display:none">
+    <div class="calc-grid">
+      <div class="calc-ins">
+        <div class="f-row">
+          <div class="f-lbl">DIRECTION</div>
+          <div class="dir-row">
+            <div class="dir-btn dir-l" id="btn-l" onclick="setDir('long')">▲ LONG</div>
+            <div class="dir-btn" id="btn-s" onclick="setDir('short')">▼ SHORT</div>
+          </div>
+        </div>
+        <div class="f-row"><label class="f-lbl">ACCOUNT EQUITY (USD)</label><input class="f-in" id="equity" type="number" value="100000" oninput="calcPos()"></div>
+        <div class="f-row"><label class="f-lbl">RISK PER TRADE (%)</label><input class="f-in" id="rpct" type="number" value="1" step="0.1" oninput="calcPos()"></div>
+        <div class="f-row"><label class="f-lbl">ENTRY PRICE ($)</label><input class="f-in" id="entry" type="number" value="100" oninput="calcPos()"></div>
+        <div class="f-row"><label class="f-lbl">STOP LOSS ($)</label><input class="f-in" id="stopL" type="number" value="95" oninput="calcPos()"></div>
+      </div>
+      <div class="calc-out" id="calc-out"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>DATA: YAHOO FINANCE · EOD PRICES · AUTO-REFRESHED DAILY · NOT FINANCIAL ADVICE</span>
+  <span>SCORE = RET BLEND×45% + RS BLEND×35% + MA×7 · RET BLEND = 1D×20%+1W×35%+1M×45%</span>
+</footer>
+
+<script>
+// ── CONSTITUENT DETAILS LOOKUP ────────────────────────────────────────────
+const CM = {
+  // Technology
+  "NVDA":  ["NVIDIA",           "AI GPU compute — H100/B200 data center chips"],
+  "MSFT":  ["Microsoft",        "Azure AI cloud + OpenAI partnership"],
+  "GOOGL": ["Alphabet",         "Gemini AI, Google Cloud, DeepMind"],
+  "META":  ["Meta Platforms",   "Llama AI models + social AI infra"],
+  "AMZN":  ["Amazon",           "AWS Bedrock AI cloud platform"],
+  "PLTR":  ["Palantir",         "AI enterprise software (AIP platform)"],
+  "AIQ":   ["AI Powered Equity ETF","Broad AI equity exposure"],
+  "AMD":   ["Advanced Micro Devices","CPUs + MI300X AI GPUs"],
+  "AVGO":  ["Broadcom",         "Custom AI chips (XPUs) + networking ASICs"],
+  "ASML":  ["ASML Holding",     "EUV lithography — essential chip-making"],
+  "TSM":   ["TSMC",             "World's largest semiconductor foundry"],
+  "AMAT":  ["Applied Materials","Semiconductor manufacturing equipment"],
+  "SOXX":  ["iShares Semis ETF","Broad semiconductor sector exposure"],
+  "WCLD":  ["WisdomTree Cloud ETF","Cloud computing sector exposure"],
+  "HACK":  ["ETFMG Cybersecurity","Cyber security sector exposure"],
+  "CRWD":  ["CrowdStrike",      "Endpoint + cloud security platform"],
+  "PANW":  ["Palo Alto Networks","NGFW, SASE, zero-trust security"],
+  "ZS":    ["Zscaler",          "Zero-trust network access (ZTNA)"],
+  "FTNT":  ["Fortinet",         "Network security appliances + SASE"],
+  "S":     ["SentinelOne",      "AI-native endpoint detection & response"],
+  "OKTA":  ["Okta",             "Identity & access management"],
+  "QTUM":  ["Defiance Quantum ETF","Quantum computing sector exposure"],
+  "IONQ":  ["IonQ",             "Trapped-ion quantum computers"],
+  "RGTI":  ["Rigetti Computing","$5.8M AFRL contract — superconducting qubits"],
+  "QUBT":  ["Quantum Computing Inc","Photonic quantum reservoir computing"],
+  "IBM":   ["IBM",              "IBM Quantum — 1000+ qubit systems"],
+  "ROBO":  ["ROBO Global ETF",  "Robotics & automation sector exposure"],
+  "ISRG":  ["Intuitive Surgical","Da Vinci surgical robot systems"],
+  "ABB":   ["ABB Ltd",          "Industrial robots & factory automation"],
+  "PATH":  ["UiPath",           "Robotic process automation (RPA) software"],
+  "TSLA":  ["Tesla",            "Optimus humanoid robots + EV + energy storage"],
+  "FANUY": ["Fanuc",            "CNC robots — dominant in Japan factory automation"],
+  "BRZE":  ["Symbotic",         "AI-powered warehouse & supply chain robots"],
+  "SNSR":  ["Global X IoT ETF", "Internet of Things sector exposure"],
+  "CSCO":  ["Cisco",            "IoT networking infrastructure"],
+  "TXN":   ["Texas Instruments","Analog + embedded IoT chips"],
+  "MCHP":  ["Microchip Technology","Microcontrollers for IoT devices"],
+  "PTC":   ["PTC Inc",          "Industrial IoT platform (ThingWorx)"],
+  "SWKS":  ["Skyworks Solutions","RF chips for wireless IoT"],
+  "QRVO":  ["Qorvo",            "RF semiconductors for IoT devices"],
+  "PRNT":  ["3D Printing ETF",  "3D printing sector exposure"],
+  "DDD":   ["3D Systems",       "Industrial SLA + DMP 3D printing"],
+  "SSYS":  ["Stratasys",        "FDM + PolyJet 3D printing systems"],
+  "MKFG":  ["Markforged",       "Metal & composite industrial 3D printing"],
+  "XMTR":  ["Xometry",          "Digital manufacturing marketplace"],
+  "NNDM":  ["Nano Dimension",   "PCB + electronics 3D printing"],
+  "MTLS":  ["Materialise",      "3D printing software & medical services"],
+  "IGV":   ["iShares Software ETF","Enterprise software sector exposure"],
+  "CRM":   ["Salesforce",       "AI-powered CRM + enterprise SaaS"],
+  "NOW":   ["ServiceNow",       "IT workflow automation SaaS"],
+  "WDAY":  ["Workday",          "HR + financial management SaaS"],
+  "HUBS":  ["HubSpot",          "Marketing + sales CRM SaaS"],
+  "ZM":    ["Zoom",             "Video communications SaaS platform"],
+  "BILL":  ["Bill.com",         "SMB AP/AR automation SaaS"],
+  "SRVR":  ["Pacer Data & Infra ETF","Data center infrastructure exposure"],
+  "EQIX":  ["Equinix",          "World's largest colocation data center REIT"],
+  "DLR":   ["Digital Realty",   "Global data center REIT"],
+  "SMCI":  ["Super Micro Computer","AI server & rack systems"],
+  "VRT":   ["Vertiv",           "Power + cooling for AI data centers"],
+  "ETN":   ["Eaton Corp",       "Electrical power management + transformers"],
+  // Memory & Storage
+  "MU":    ["Micron Technology","HBM3E memory — sold out all 2026"],
+  "SNDK":  ["SanDisk",          "+133% YTD 2026 — flash memory & storage"],
+  "WDC":   ["Western Digital",  "+27% vs Jan 31 — $4B buyback announced"],
+  "STX":   ["Seagate Technology","HAMR drives sold out through 2026"],
+  "MRVL":  ["Marvell Technology","AI storage controllers + custom silicon"],
+  "NTAP":  ["NetApp",           "Enterprise cloud storage & data management"],
+  // Fiber Optics
+  "CIEN":  ["Ciena",            "+146% YTD — $7.8B backlog, AI optical"],
+  "AAOI":  ["Applied Optoelectronics","+57% YTD — 800G hyperscale order"],
+  "LITE":  ["Lumentum",         "$700/share — +327% 1Y — AI laser chips"],
+  "COHR":  ["Coherent Corp",    "+76% YTD — transceivers for AI data centers"],
+  "VIAV":  ["Viavi Solutions",  "Optical test & measurement instruments"],
+  "IIVI":  ["II-VI Incorporated","Optical components, lasers, compound semis"],
+  // Energy
+  "NLR":   ["VanEck Uranium+Nuclear","Nuclear & uranium sector exposure"],
+  "CEG":   ["Constellation Energy","Largest US nuclear power operator"],
+  "VST":   ["Vistra Energy",    "Nuclear + natural gas power generation"],
+  "NRG":   ["NRG Energy",       "Nuclear + conventional power utility"],
+  "CCJ":   ["Cameco",           "World's largest publicly-traded uranium miner"],
+  "BWXT":  ["BWX Technologies", "Nuclear components + SMR manufacturing"],
+  "SMR":   ["NuScale Power",    "Small modular reactors (SMR) developer"],
+  "URNM":  ["Sprott Uranium Miners","Pure-play uranium mining ETF"],
+  "NXE":   ["NexGen Energy",    "Athabasca Basin high-grade uranium developer"],
+  "DNN":   ["Denison Mines",    "Wheeler River ISR uranium project"],
+  "UUUU":  ["Energy Fuels",     "US uranium + rare earth minerals"],
+  "URG":   ["Ur-Energy",        "US ISR uranium mining operations"],
+  "ICLN":  ["iShares Clean Energy","Renewables sector exposure"],
+  "ENPH":  ["Enphase Energy",   "Solar microinverters — residential + commercial"],
+  "FSLR":  ["First Solar",      "Thin-film utility-scale solar panels"],
+  "NEE":   ["NextEra Energy",   "World's largest wind + solar utility"],
+  "SEDG":  ["SolarEdge",        "Solar power optimizers + inverters"],
+  "RUN":   ["Sunrun",           "Residential solar installation + storage"],
+  "BEP":   ["Brookfield Renewable","Diversified global clean energy"],
+  "LIT":   ["Global X Lithium ETF","Battery + lithium sector exposure"],
+  "QS":    ["QuantumScape",     "Solid-state EV batteries"],
+  "ALB":   ["Albemarle",        "World's largest lithium producer"],
+  "SQM":   ["SQM",              "Atacama lithium brine mining"],
+  "FLNC":  ["Fluence Energy",   "Grid-scale battery storage systems"],
+  "STEM":  ["Stem Inc",         "AI-driven energy storage optimization"],
+  "GRID":  ["First Trust GRID ETF","Power grid infrastructure exposure"],
+  "EMR":   ["Emerson Electric", "Grid automation & industrial controls"],
+  "HUBB":  ["Hubbell",          "Electrical grid components + connectors"],
+  "PWR":   ["Quanta Services",  "Grid construction + T&D infrastructure"],
+  "GEV":   ["GE Vernova",       "Power turbines + grid equipment + Volterra"],
+  "XLE":   ["Energy Select ETF","Traditional oil & gas sector exposure"],
+  "XOM":   ["ExxonMobil",       "Integrated oil major — Permian Basin leader"],
+  "CVX":   ["Chevron",          "Integrated oil major — LNG + Permian"],
+  "COP":   ["ConocoPhillips",   "Pure-play E&P — low-cost shale"],
+  "SLB":   ["SLB (Schlumberger)","Oilfield services + digital well tech"],
+  "EOG":   ["EOG Resources",    "Premium US shale E&P — Permian + Eagle Ford"],
+  "MPC":   ["Marathon Petroleum","Largest US petroleum refiner"],
+  // Materials
+  "COPX":  ["Global X Copper Miners","Copper + critical minerals exposure"],
+  "FCX":   ["Freeport-McMoRan", "World's largest public copper miner"],
+  "MP":    ["MP Materials",     "Only US rare earth mining + processing"],
+  "VALE":  ["Vale",             "Nickel + iron ore — Brazil"],
+  "RIO":   ["Rio Tinto",        "Copper + lithium + iron ore projects"],
+  "LTHM":  ["Livent Corp",      "Lithium hydroxide for EV batteries"],
+  // Precious Metals
+  "GLD":   ["SPDR Gold Shares", "$473 spot price $5,127/oz — bullish 2026"],
+  "NEM":   ["Newmont",          "World's largest gold miner"],
+  "GOLD":  ["Barrick Gold",     "Major gold + copper producer"],
+  "AEM":   ["Agnico Eagle",     "Senior gold miner — Canadian ops"],
+  "WPM":   ["Wheaton Precious Metals","Gold + silver streamer — low cost"],
+  "FNV":   ["Franco-Nevada",    "Gold royalty + streaming company"],
+  "IAU":   ["iShares Gold ETF", "Physical gold ETF"],
+  "GDX":   ["VanEck Gold Miners","Senior gold miners ETF"],
+  "SLV":   ["iShares Silver Trust","Physical silver ETF — $80+"],
+  "PAAS":  ["Pan American Silver","Major diversified silver miner"],
+  "AG":    ["First Majestic Silver","Pure-play primary silver miner"],
+  "HL":    ["Hecla Mining",     "Largest US primary silver producer"],
+  "MAG":   ["MAG Silver",       "Juanicipio high-grade silver project"],
+  "GDXJ":  ["VanEck Junior Gold ETF","+5.81% Feb 23 · 1Y +203%"],
+  "ORLA":  ["Orla Mining",      "Camino Rojo gold mine — Mexico + Nevada"],
+  "KNT":   ["K92 Mining",       "Kainantu high-grade gold — Papua New Guinea"],
+  "MAI":   ["Minera Alamos",    "Low-cost Mexico gold producer"],
+  "NGD":   ["New Gold",         "Canada gold + copper producer"],
+  "AUMN":  ["Golden Minerals",  "Mexico silver-gold explorer"],
+  "PPLT":  ["Aberdeen Platinum ETF","Physical platinum trust"],
+  "PALL":  ["Aberdeen Palladium ETF","Physical palladium trust"],
+  "SBSW":  ["Sibanye Stillwater","US palladium + South Africa gold + PGM"],
+  "IMPUY": ["Impala Platinum",  "World's 2nd largest platinum miner"],
+  "ANGPY": ["Anglo American Platinum","Largest platinum miner — South Africa"],
+  "GLTR":  ["Aberdeen Metals ETF","Gold + silver + platinum + palladium basket"],
+  // Utilities
+  "PHO":   ["Invesco Water ETF", "Water infrastructure sector exposure"],
+  "AWK":   ["American Water Works","Largest US regulated water utility"],
+  "XYL":   ["Xylem",            "Water technology, pumps & smart meters"],
+  "WTRG":  ["Essential Utilities","Water + wastewater utility (PA/OH/TX)"],
+  "PNR":   ["Pentair",          "Water treatment + flow systems"],
+  "MSEX":  ["Middlesex Water",  "NJ regulated water + wastewater utility"],
+  "CWCO":  ["Consolidated Water","Desalination + water supply — Cayman"],
+  // Industrials
+  "UFO":   ["Procure Space ETF", "Space economy sector exposure"],
+  "ASTS":  ["AST SpaceMobile",  "Space-based cellular broadband constellation"],
+  "LUNR":  ["Intuitive Machines","Lunar landers + NASA commercial contracts"],
+  "RKLB":  ["Rocket Lab",       "Small satellite launcher + spacecraft"],
+  "RDW":   ["Redwire",          "Space infrastructure + solar arrays"],
+  "ASTR":  ["Astra Space",      "Small payload launch vehicles"],
+  "SPCE":  ["Virgin Galactic",  "Space tourism — suborbital flights"],
+  "ITA":   ["iShares Defense ETF","Defense & aerospace sector exposure"],
+  "LMT":   ["Lockheed Martin",  "F-35, hypersonics, missile defense"],
+  "RTX":   ["RTX (Raytheon)",   "Missiles, radar, Pratt & Whitney engines"],
+  "NOC":   ["Northrop Grumman", "B-21 Raider bomber + space systems"],
+  "GD":    ["General Dynamics", "Nuclear submarines + Gulfstream jets"],
+  "BA":    ["Boeing Defense",   "F/A-18, KC-46 tanker, space launch"],
+  "HII":   ["Huntington Ingalls","Nuclear submarines + aircraft carriers"],
+  "IFLY":  ["ETFMG Drone ETF",  "Drones & autonomous vehicles exposure"],
+  "ACHR":  ["Archer Aviation",  "Midnight eVTOL air taxi — FAA certification"],
+  "JOBY":  ["Joby Aviation",    "S4 eVTOL air taxi — Toyota-backed"],
+  "AVAV":  ["AeroVironment",    "Switchblade + Puma military UAVs"],
+  "KTOS":  ["Kratos Defense",   "Tactical drones + autonomous systems"],
+  "RCAT":  ["Red Cat Holdings", "Black Widow military micro-drones"],
+  "UAVS":  ["AgEagle Aerial",   "Commercial drones + sensors"],
+  "PAVE":  ["Global X US Infra ETF","Infrastructure + reshoring exposure"],
+  "CAT":   ["Caterpillar",      "Construction + mining equipment leader"],
+  "DE":    ["Deere & Co",       "Heavy machinery + precision ag"],
+  "URI":   ["United Rentals",   "Equipment rental for infrastructure build"],
+  "MLM":   ["Martin Marietta",  "Aggregates + cement for construction"],
+  "VMC":   ["Vulcan Materials", "Crushed stone + aggregates for infra"],
+  "NUE":   ["Nucor",            "Largest US steelmaker — domestic steel"],
+  "XLI":   ["Industrial Select ETF","Broad industrials sector exposure"],
+  "CMI":   ["Cummins",          "Diesel + hydrogen engines + power systems"],
+  "PCAR":  ["PACCAR",           "Kenworth + Peterbilt heavy trucks"],
+  "TEX":   ["Terex",            "Cranes + lifting equipment"],
+  "WNC":   ["Wabash National",  "Trailers + transport equipment"],
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let D=null, tf='1M', hmTf='1M', sortBy='score', sect='All', dir='long';
+const open={themes:true,heat:true,meth:false,calc:false};
+
+// ── LOAD ──────────────────────────────────────────────────────────────────
+async function load(){
+  try{const r=await fetch('data/market_data.json?_='+Date.now());D=await r.json();}
+  catch(e){D=SEED;}
+  boot();
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────
+const f=(v,d=2)=>v==null?'—':(v>=0?'+':'')+v.toFixed(d)+'%';
+const fp=v=>v==null?'—':'$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fc=v=>v==null?'neu':v>0?'up':v<0?'dn':'neu';
+function gRet(t){return tf==='1D'?t.ret1D:tf==='1W'?t.ret1W:t.ret1M}
+function gRS(t) {return tf==='1D'?t.rs1D :tf==='1W'?t.rs1W :t.rs1M }
+function hRS(t) {return hmTf==='1D'?t.rs1D:hmTf==='1W'?t.rs1W:t.rs1M}
+function sorted(){
+  let l=sect==='All'?[...D.themes]:D.themes.filter(t=>t.sector===sect);
+  if(sortBy==='score')l.sort((a,b)=>(b.score??-999)-(a.score??-999));
+  else if(sortBy==='ret')l.sort((a,b)=>(gRet(b)??-999)-(gRet(a)??-999));
+  else l.sort((a,b)=>(gRS(b)??-999)-(gRS(a)??-999));
+  return l;
+}
+function gRank(id){return[...D.themes].sort((a,b)=>(b.score??-999)-(a.score??-999)).findIndex(t=>t.id===id)+1}
+
+// ── SPARKLINE ─────────────────────────────────────────────────────────────
+function mkSpark(pts,w=68,h=22){
+  const c=document.createElement('canvas');c.width=w;c.height=h;c.className='sp';
+  if(!pts||pts.length<2)return c;
+  const ctx=c.getContext('2d');
+  const mn=Math.min(...pts),mx=Math.max(...pts),rng=mx-mn||1;
+  const x=i=>(i/(pts.length-1))*w;
+  const y=v=>h-((v-mn)/rng)*(h-3)-1.5;
+  ctx.beginPath();
+  pts.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));
+  ctx.strokeStyle=pts[pts.length-1]>=pts[0]?'#00e676':'#ff1744';
+  ctx.lineWidth=1.5;ctx.lineJoin='round';ctx.stroke();
+  return c;
+}
+
+// ── BOOT ──────────────────────────────────────────────────────────────────
+function boot(){
+  document.getElementById('ts').textContent=D.updated;
+  buildMarquee();buildPodium();buildSectorTabs();
+  renderTable();renderHeatmap();buildMeth();calcPos();
+}
+
+// ── MARQUEE ───────────────────────────────────────────────────────────────
+function buildMarquee(){
+  const items=D.themes.slice(0,16);
+  let h=items.map(t=>{const c=fc(t.ret1D);return`<div class="m-item"><span class="m-tk">${t.etf}</span><span class="m-pr">${fp(t.price)}</span><span class="${c}">${f(t.ret1D)}</span></div>`;}).join('');
+  document.getElementById('marquee').innerHTML=h+h;
+}
+
+// ── PODIUM ────────────────────────────────────────────────────────────────
+function buildPodium(){
+  const top=[...D.themes].sort((a,b)=>(b.score??-999)-(a.score??-999)).slice(0,3);
+  const pc=['p1','p2','p3'],md=['🥇','🥈','🥉'];
+  document.getElementById('podium').innerHTML=top.map((t,i)=>{
+    const c=fc(t.score);
+    return`<div class="pod ${pc[i]}">
+      <div class="pod-rank">${md[i]} RANK #${i+1} · ${t.sector.toUpperCase()}</div>
+      <div class="pod-name">${t.icon} ${t.name}</div>
+      <div class="pod-etf">${t.etf} · ${t.stocks.slice(0,3).join(' · ')}</div>
+      <div class="pod-score ${c}">${t.score!=null?(t.score>=0?'+':'')+t.score:'—'}</div>
+      <div class="pod-rets">
+        <span>1M <span class="${fc(t.ret1M)}">${f(t.ret1M)}</span></span>
+        <span>1W <span class="${fc(t.ret1W)}">${f(t.ret1W)}</span></span>
+        <span>1D <span class="${fc(t.ret1D)}">${f(t.ret1D)}</span></span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── SECTOR TABS ───────────────────────────────────────────────────────────
+function buildSectorTabs(){
+  const sectors=['All',...new Set(D.themes.map(t=>t.sector))];
+  document.getElementById('sector-tabs').innerHTML=
+    `<span class="fl">SECTOR</span>`+
+    sectors.map(s=>`<span class="tab${s===sect?' on':''}" onclick="sect='${s}';renderTable()">${s.toUpperCase()}</span>`).join('');
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────────
+function renderTable(){
+  ['score','ret','rs'].forEach(s=>{const el=document.getElementById('s-'+s);if(el)el.className='tab'+(sortBy===s?' on':'');});
+  ['1D','1W','1M'].forEach(t=>{const el=document.getElementById('tf-'+t);if(el)el.className='tab'+(tf===t?' on':'');});
+  buildSectorTabs();
+  const list=sorted();
+  let h=`<table><thead><tr>
+    <th>#</th><th>THEME</th><th>ETF</th><th>PRICE</th>
+    <th>1D%</th><th>1W%</th><th>1M%</th>
+    <th>VS SPY ${tf}</th><th>MA</th><th>5D</th><th>SCORE</th><th>HOLDINGS</th>
+  </tr></thead><tbody>`;
+  list.forEach(t=>{
+    const gr=gRank(t.id),rs=gRS(t),sc=t.score;
+    const bp=Math.min(Math.max((sc!=null?(sc+22)/44:0.5),0),1)*100;
+    const bc=sc>=5?'#ffd600':sc>=0?'#00e676':sc>=-5?'#ffab00':'#ff1744';
+    const maC=t.ma===1?'ma-b':t.ma===-1?'ma-s':'ma-n';
+    const maL=t.ma===1?'↑ BULL':t.ma===-1?'↓ BEAR':'— NEU';
+    h+=`<tr>
+      <td class="r-num">${gr}</td>
+      <td class="r-name">${t.icon} ${t.name}</td>
+      <td class="r-etf">${t.etf}</td>
+      <td class="r-price">${fp(t.price)}</td>
+      <td class="${fc(t.ret1D)}">${f(t.ret1D)}</td>
+      <td class="${fc(t.ret1W)}">${f(t.ret1W)}</td>
+      <td class="${fc(t.ret1M)}">${f(t.ret1M)}</td>
+      <td class="${fc(rs)}">${f(rs)}</td>
+      <td><span class="ma ${maC}">${maL}</span></td>
+      <td class="sp-cell" id="sp-${t.id}"></td>
+      <td><div class="sc-wrap">
+        <span class="sc-num ${fc(sc)}">${sc!=null?(sc>=0?'+':'')+sc:'—'}</span>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${bp}%;background:${bc}"></div></div>
+      </div></td>
+      <td><span class="h-tog" onclick="event.stopPropagation();togH('h-${t.id}')">▸ ${t.stocks.length} stocks</span></td>
+    </tr>
+    <tr class="h-row" id="h-${t.id}"><td colspan="12">
+      <div class="h-grid">${t.stocks.map(s=>{
+        const [cname,role]=CM[s]||[s,'Key constituent'];
+        return`<div class="h-card" style="border-left-color:${t.color}">
+          <div class="h-ticker" style="background:${t.color}18;color:${t.color};border:1px solid ${t.color}44">${s}</div>
+          <div class="h-info">
+            <div class="h-name">${cname}</div>
+            <div class="h-role">${role}</div>
+          </div>
+        </div>`;
+      }).join('')}</div>
+      <div class="h-note"><b>METHODOLOGY · </b>Returns are equal-weight blended across all ${t.stocks.length} constituents above. Each stock's 1D/1W/1M return is computed individually then averaged — not proxied via a single ETF.</div>
+    </td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('t-wrap').innerHTML=h;
+  list.forEach(t=>{const el=document.getElementById('sp-'+t.id);if(el)el.appendChild(mkSpark(t.spark5));});
+}
+
+// ── HEATMAP ───────────────────────────────────────────────────────────────
+function renderHeatmap(){
+  ['1D','1W','1M'].forEach(t=>{const el=document.getElementById('hm-'+t);if(el)el.className='tab'+(hmTf===t?' on':'');});
+  const list=[...D.themes].sort((a,b)=>(hRS(b)??-999)-(hRS(a)??-999));
+  document.getElementById('heatmap').innerHTML=list.map(t=>{
+    const rs=hRS(t),int=Math.min(Math.abs(rs??0)/20,1);
+    const bg=rs==null?'#1c2d40':rs>=0?`rgba(0,230,118,${.05+int*.35})`:`rgba(255,23,68,${.05+int*.35})`;
+    const bc=rs==null?'#1c2d40':rs>=0?`rgba(0,230,118,${.12+int*.4})`:`rgba(255,23,68,${.12+int*.4})`;
+    return`<div class="hm" style="background:${bg};border-color:${bc}" title="${t.name}: ${f(rs)} vs SPY">
+      <div class="hm-icon">${t.icon}</div>
+      <div class="hm-short">${t.short}</div>
+      <div class="hm-val ${fc(rs)}">${f(rs,1)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── METHODOLOGY ───────────────────────────────────────────────────────────
+function buildMeth(){
+  const spy=D.spy;
+  document.getElementById('meth-content').innerHTML=`
+    <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:12px">SPY BENCHMARK · ALL RETURNS ANCHORED TO TODAY</div>
+    <table><thead><tr><th>INSTRUMENT</th><th>1D%</th><th>1W%</th><th>1M%</th></tr></thead>
+    <tbody><tr>
+      <td class="r-name">SPY (S&P 500 ETF)</td>
+      <td class="${fc(spy.d)}">${f(spy.d)}</td>
+      <td class="${fc(spy.w)}">${f(spy.w)}</td>
+      <td class="${fc(spy.m)}">${f(spy.m)}</td>
+    </tr></tbody></table>
+    <div style="margin-top:16px;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.5px;line-height:2">
+      <div>MOMENTUM SCORE = (RET BLEND × 45%) + (RS BLEND × 35%) + (MA SIGNAL × 7 PTS)</div>
+      <div>RET / RS BLEND  = 1D×20% + 1W×35% + 1M×45%</div>
+      <div>MA SIGNAL: +1 = BULLISH MA CROSSOVER  ·  0 = NEUTRAL  ·  -1 = BEARISH</div>
+      <div>SCORE RANGE ≈ -22 to +22  ·  SCORE >+10 = STRONG MOMENTUM  ·  UPDATE MA SIGNAL WEEKLY</div>
+    </div>`;
+}
+
+// ── CALC ──────────────────────────────────────────────────────────────────
+function setDir(d){
+  dir=d;
+  document.getElementById('btn-l').className='dir-btn'+(d==='long'?' dir-l':'');
+  document.getElementById('btn-s').className='dir-btn'+(d==='short'?' dir-s':'');
+  calcPos();
+}
+function calcPos(){
+  const eq=+document.getElementById('equity').value||0;
+  const rp=+document.getElementById('rpct').value||0;
+  const en=+document.getElementById('entry').value||0;
+  const sl=+document.getElementById('stopL').value||0;
+  const out=document.getElementById('calc-out');
+  if(!en||!sl||en===sl){out.innerHTML='<div style="color:var(--muted);font-family:var(--mono);font-size:10px">Enter valid entry and stop loss.</div>';return;}
+  const maxR=eq*rp/100,rsk=Math.abs(en-sl),shs=Math.floor(maxR/rsk),pv=shs*en,pe=pv/eq*100;
+  const isL=dir==='long',col=isL?'var(--green)':'var(--red)';
+  const rr=[1,2,3].map(r=>{
+    const tgt=isL?en+rsk*r:en-rsk*r,pnl=shs*(tgt-en)*(isL?1:-1);
+    return`<div class="rr-row"><span style="color:var(--muted)">${r}R TARGET</span><span style="color:${col}">$${tgt.toFixed(2)}</span><span class="up">+$${pnl.toLocaleString('en-US',{maximumFractionDigits:0})}</span></div>`;
+  }).join('');
+  out.innerHTML=`
+    <div class="out-lbl">SHARES TO TRADE</div>
+    <div class="out-big" style="color:${col}">${shs.toLocaleString()}</div>
+    <div class="out-grid">
+      <div class="out-cell"><div class="out-lbl">MAX RISK $</div><div class="out-val up">$${maxR.toLocaleString('en-US',{maximumFractionDigits:0})}</div></div>
+      <div class="out-cell"><div class="out-lbl">POSITION VALUE</div><div class="out-val">$${pv.toLocaleString('en-US',{maximumFractionDigits:0})}</div></div>
+      <div class="out-cell"><div class="out-lbl">RISK / SHARE</div><div class="out-val dn">$${rsk.toFixed(2)}</div></div>
+      <div class="out-cell"><div class="out-lbl">% OF EQUITY</div><div class="out-val">${pe.toFixed(1)}%</div></div>
+    </div>
+    <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:2px;margin:12px 0 6px">R:R TARGETS</div>
+    ${rr}`;
+}
+
+// ── TOGGLES ───────────────────────────────────────────────────────────────
+function tog(id){
+  open[id]=!open[id];
+  const b=document.getElementById('b-'+id),c=document.getElementById('c-'+id);
+  b.style.display=open[id]?'block':'none';c.classList.toggle('open',open[id]);
+}
+function togH(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==='table-row'?'none':'table-row';}
+function setTf(t){tf=t;renderTable();}
+function setHmTf(t){hmTf=t;renderHeatmap();}
+function setSort(s){sortBy=s;renderTable();}
+
+// ── SEED DATA (fallback when opened locally without server) ───────────────
+const SEED={
+  updated:"2026-02-26 22:00 UTC (seed — deploy to GitHub Pages for live auto-refresh)",
+  spy:{d:0.47,w:0.89,m:2.18},
+  themes:[
+    {id:"fiber",name:"Fiber Optics & Optical Net.",short:"Fiber",icon:"🔆",sector:"Fiber Optics",etf:"CIEN",stocks:["AAOI","LITE","COHR","CIEN","VIAV"],color:"#bbf7d0",ma:1,price:350.01,ret1D:3.20,ret1W:9.80,ret1M:46.00,rs1D:2.73,rs1W:8.91,rs1M:43.82,score:21.4,spark5:[320,331,338,344,350]},
+    {id:"jrgold",name:"Junior Gold Miners",short:"Jr. Gold",icon:"⛏",sector:"Precious Metals",etf:"GDXJ",stocks:["GDXJ","ORLA","KNT","MAI","NGD"],color:"#fcd34d",ma:1,price:117.20,ret1D:5.81,ret1W:8.40,ret1M:12.30,rs1D:5.34,rs1W:7.51,rs1M:10.12,score:18.9,spark5:[104,108,112,115,117]},
+    {id:"memory",name:"Memory & Data Storage",short:"Memory",icon:"💾",sector:"Memory & Storage",etf:"MU",stocks:["SNDK","WDC","STX","MU","MRVL"],color:"#38bdf8",ma:1,price:105.20,ret1D:1.60,ret1W:7.80,ret1M:26.20,rs1D:1.13,rs1W:6.91,rs1M:24.02,score:18.2,spark5:[83,90,97,101,105]},
+    {id:"uranium",name:"Uranium Mining",short:"Uranium",icon:"☢",sector:"Energy",etf:"URNM",stocks:["CCJ","NXE","DNN","UUUU","URG"],color:"#f59e0b",ma:1,price:54.80,ret1D:5.58,ret1W:7.20,ret1M:30.60,rs1D:5.11,rs1W:6.31,rs1M:28.42,score:18.1,spark5:[42,45,49,52,55]},
+    {id:"nuclear",name:"Nuclear Energy",short:"Nuclear",icon:"⚛",sector:"Energy",etf:"NLR",stocks:["CEG","VST","NRG","CCJ","BWXT"],color:"#fde68a",ma:1,price:68.40,ret1D:4.34,ret1W:6.10,ret1M:28.50,rs1D:3.87,rs1W:5.21,rs1M:26.32,score:17.2,spark5:[53,57,61,65,68]},
+    {id:"minerals",name:"Critical Minerals",short:"Minerals",icon:"⛏",sector:"Materials",etf:"COPX",stocks:["FCX","MP","ALB","VALE","RIO"],color:"#fb923c",ma:1,price:42.10,ret1D:4.91,ret1W:6.30,ret1M:9.20,rs1D:4.44,rs1W:5.41,rs1M:7.02,score:14.8,spark5:[38,39,40,41,42]},
+    {id:"quantum",name:"Quantum Computing",short:"Quantum",icon:"🔬",sector:"Technology",etf:"QTUM",stocks:["IONQ","RGTI","QUBT","IBM","GOOGL"],color:"#a78bfa",ma:1,price:58.30,ret1D:3.10,ret1W:5.20,ret1M:8.40,rs1D:2.63,rs1W:4.31,rs1M:6.22,score:13.9,spark5:[53,54,56,57,58]},
+    {id:"gold",name:"Gold & Gold Miners",short:"Gold",icon:"🥇",sector:"Precious Metals",etf:"GLD",stocks:["GLD","NEM","GOLD","AEM","WPM"],color:"#ffd700",ma:1,price:473.20,ret1D:2.63,ret1W:3.80,ret1M:5.20,rs1D:2.16,rs1W:2.91,rs1M:3.02,score:12.1,spark5:[449,455,462,468,473]},
+    {id:"silver",name:"Silver & Silver Miners",short:"Silver",icon:"🥈",sector:"Precious Metals",etf:"SLV",stocks:["SLV","PAAS","AG","HL","MAG"],color:"#e2e8f0",ma:1,price:80.10,ret1D:1.21,ret1W:4.20,ret1M:7.80,rs1D:0.74,rs1W:3.31,rs1M:5.62,score:11.8,spark5:[74,76,77,79,80]},
+    {id:"datacenter",name:"Data Centers & Infra",short:"DataCtrs",icon:"🏭",sector:"Technology",etf:"SRVR",stocks:["EQIX","DLR","NVDA","SMCI","VRT"],color:"#fca5a5",ma:1,price:31.20,ret1D:2.40,ret1W:4.10,ret1M:6.80,rs1D:1.93,rs1W:3.21,rs1M:4.62,score:11.5,spark5:[29,30,30,31,31]},
+    {id:"broadmet",name:"Broad Precious Metals",short:"Prec.Metals",icon:"🏅",sector:"Precious Metals",etf:"GLTR",stocks:["GLD","SLV","PPLT","PALL","WPM"],color:"#f0abfc",ma:1,price:112.40,ret1D:2.10,ret1W:3.50,ret1M:6.40,rs1D:1.63,rs1W:2.61,rs1M:4.22,score:11.2,spark5:[105,107,109,111,112]},
+    {id:"grid",name:"Power Grid Modernization",short:"Grid",icon:"🔌",sector:"Energy",etf:"GRID",stocks:["ETN","VRT","EMR","HUBB","PWR"],color:"#86efac",ma:1,price:84.20,ret1D:1.60,ret1W:2.80,ret1M:5.10,rs1D:1.13,rs1W:1.91,rs1M:2.92,score:10.6,spark5:[80,81,82,83,84]},
+    {id:"cyber",name:"Cybersecurity",short:"Cyber",icon:"🔐",sector:"Technology",etf:"HACK",stocks:["CRWD","PANW","ZS","FTNT","S"],color:"#22d3ee",ma:1,price:46.80,ret1D:1.45,ret1W:2.10,ret1M:3.80,rs1D:0.98,rs1W:1.21,rs1M:1.62,score:10.1,spark5:[45,45,46,46,47]},
+    {id:"defense",name:"Defense & Military Tech",short:"Defense",icon:"🛡",sector:"Industrials",etf:"ITA",stocks:["LMT","RTX","NOC","GD","BA"],color:"#ff6b35",ma:1,price:148.30,ret1D:0.90,ret1W:1.80,ret1M:3.60,rs1D:0.43,rs1W:0.91,rs1M:1.42,score:9.6,spark5:[143,144,145,147,148]},
+    {id:"clean",name:"Clean & Renewable Energy",short:"Clean",icon:"🌱",sector:"Energy",etf:"ICLN",stocks:["ENPH","FSLR","NEE","SEDG","RUN"],color:"#4ade80",ma:1,price:13.80,ret1D:1.10,ret1W:3.20,ret1M:6.40,rs1D:0.63,rs1W:2.31,rs1M:4.22,score:9.4,spark5:[13,13,13,14,14]},
+    {id:"drones",name:"Drones & Autonomous",short:"Drones",icon:"🛸",sector:"Industrials",etf:"IFLY",stocks:["ACHR","JOBY","AVAV","KTOS","RCAT"],color:"#f472b6",ma:1,price:28.40,ret1D:1.40,ret1W:2.90,ret1M:5.20,rs1D:0.93,rs1W:2.01,rs1M:3.02,score:9.2,spark5:[27,27,28,28,28]},
+    {id:"robotics",name:"Robotics & Automation",short:"Robots",icon:"🤖",sector:"Technology",etf:"ROBO",stocks:["ISRG","ABB","PATH","TSLA","FANUY"],color:"#c084fc",ma:1,price:55.60,ret1D:1.30,ret1W:2.50,ret1M:3.10,rs1D:0.83,rs1W:1.61,rs1M:0.92,score:9.0,spark5:[54,54,55,55,56]},
+    {id:"space",name:"Space Exploration",short:"Space",icon:"🚀",sector:"Industrials",etf:"UFO",stocks:["ASTS","LUNR","RKLB","RDW","ASTR"],color:"#8b5cf6",ma:1,price:19.80,ret1D:1.90,ret1W:3.10,ret1M:4.80,rs1D:1.43,rs1W:2.21,rs1M:2.62,score:8.9,spark5:[18,19,19,20,20]},
+    {id:"pgm",name:"Platinum Group Metals",short:"PGMs",icon:"⚗",sector:"Precious Metals",etf:"PPLT",stocks:["PPLT","PALL","SBSW","IMPUY"],color:"#cbd5e1",ma:0,price:91.20,ret1D:1.80,ret1W:2.60,ret1M:4.30,rs1D:1.33,rs1W:1.71,rs1M:2.12,score:5.8,spark5:[87,88,89,90,91]},
+    {id:"ai",name:"Artificial Intelligence",short:"AI",icon:"⚡",sector:"Technology",etf:"AIQ",stocks:["NVDA","MSFT","GOOGL","META","AMZN"],color:"#00d4ff",ma:0,price:32.10,ret1D:1.82,ret1W:3.41,ret1M:4.20,rs1D:1.35,rs1W:2.52,rs1M:2.02,score:5.6,spark5:[30,31,31,32,32]},
+    {id:"water",name:"Water Management",short:"Water",icon:"💧",sector:"Utilities",etf:"PHO",stocks:["AWK","XYL","WTRG","PNR","MSEX"],color:"#0ea5e9",ma:0,price:62.40,ret1D:0.50,ret1W:0.80,ret1M:1.40,rs1D:0.03,rs1W:-0.09,rs1M:-0.78,score:0.6,spark5:[61,61,62,62,62]},
+    {id:"iot",name:"Internet of Things",short:"IoT",icon:"📡",sector:"Technology",etf:"SNSR",stocks:["CSCO","TXN","MCHP","PTC","SWKS"],color:"#38bdf8",ma:0,price:28.80,ret1D:0.70,ret1W:0.90,ret1M:1.20,rs1D:0.23,rs1W:0.01,rs1M:-0.98,score:0.4,spark5:[28,28,29,29,29]},
+    {id:"battery",name:"Battery Technology",short:"Battery",icon:"🔋",sector:"Energy",etf:"LIT",stocks:["TSLA","QS","ALB","SQM","FLNC"],color:"#34d399",ma:0,price:36.40,ret1D:0.80,ret1W:1.40,ret1M:2.20,rs1D:0.33,rs1W:0.51,rs1M:0.02,score:0.3,spark5:[35,36,36,36,36]},
+    {id:"reshoring",name:"Supply Chain Reshoring",short:"Reshoring",icon:"🏗",sector:"Industrials",etf:"PAVE",stocks:["CAT","DE","URI","MLM","VMC"],color:"#fdba74",ma:0,price:38.20,ret1D:0.60,ret1W:1.10,ret1M:2.40,rs1D:0.13,rs1W:0.21,rs1M:0.22,score:-0.1,spark5:[37,37,38,38,38]},
+    {id:"machinery",name:"Heavy Machinery & Infra",short:"Machinery",icon:"🔧",sector:"Industrials",etf:"XLI",stocks:["CAT","DE","CMI","PCAR","TEX"],color:"#94a3b8",ma:0,price:136.80,ret1D:0.70,ret1W:1.30,ret1M:2.80,rs1D:0.23,rs1W:0.41,rs1M:0.62,score:0.2,spark5:[133,134,135,136,137]},
+    {id:"saas",name:"Software as a Service",short:"SaaS",icon:"🧩",sector:"Technology",etf:"IGV",stocks:["CRM","NOW","WDAY","HUBS","ZM"],color:"#6ee7b7",ma:0,price:98.60,ret1D:1.20,ret1W:0.50,ret1M:-1.80,rs1D:0.73,rs1W:-0.39,rs1M:-3.98,score:-0.7,spark5:[100,100,99,99,99]},
+    {id:"cloud",name:"Cloud Computing",short:"Cloud",icon:"☁",sector:"Technology",etf:"WCLD",stocks:["AMZN","MSFT","GOOGL","SNOW","NET"],color:"#60a5fa",ma:-1,price:31.40,ret1D:1.10,ret1W:-0.80,ret1M:-3.20,rs1D:0.63,rs1W:-1.69,rs1M:-5.38,score:-4.9,spark5:[32,32,32,31,31]},
+    {id:"semi",name:"Semiconductors & Chips",short:"Semis",icon:"💎",sector:"Technology",etf:"SOXX",stocks:["NVDA","AMD","AVGO","ASML","TSM"],color:"#818cf8",ma:-1,price:196.40,ret1D:2.21,ret1W:1.80,ret1M:-2.40,rs1D:1.74,rs1W:0.91,rs1M:-4.58,score:-3.5,spark5:[201,200,199,198,196]},
+    {id:"print3d",name:"3D Printing",short:"3D Print",icon:"🖨",sector:"Technology",etf:"PRNT",stocks:["DDD","SSYS","MKFG","XMTR","NNDM"],color:"#7c3aed",ma:-1,price:11.20,ret1D:0.40,ret1W:-0.60,ret1M:-2.10,rs1D:-0.07,rs1W:-1.49,rs1M:-4.28,score:-5.8,spark5:[12,11,11,11,11]},
+    {id:"oilgas",name:"Traditional Oil & Gas",short:"Oil & Gas",icon:"🛢",sector:"Energy",etf:"XLE",stocks:["XOM","CVX","COP","SLB","EOG"],color:"#d97706",ma:-1,price:54.87,ret1D:-0.42,ret1W:-1.20,ret1M:-3.80,rs1D:-0.89,rs1W:-2.09,rs1M:-5.98,score:-10.2,spark5:[57,56,56,55,55]}
+  ]
+};
+
+load();
+</script>
+</body>
+</html>
