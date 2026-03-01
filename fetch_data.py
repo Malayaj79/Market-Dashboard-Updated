@@ -154,19 +154,16 @@ def cap_weighted_avg(returns, caps):
     weighted_sum = sum([r * c for r, c in valid_pairs])
     return round(weighted_sum / total_cap, 2)
 
-# ── Reference timestamps ──────────────────────────────────────────────────────
+# ── Reference timestamps (ROLLING WINDOWS) ────────────────────────────────────
 now = datetime.datetime.utcnow()
 
-days_to_fri = (now.weekday() - 4) % 7
-last_fri = now - datetime.timedelta(days=7 if days_to_fri == 0 else days_to_fri)
-month_end = now.replace(day=1) - datetime.timedelta(days=1)
-
 def mkets(dt):
-    # 21:00 UTC aligns with 4:00 PM EST (Standard Time) closing bell
+    # 21:00 UTC aligns precisely with the 4:00 PM EST closing bell
     return int(datetime.datetime(dt.year, dt.month, dt.day, 21, 0).timestamp())
 
-ts_fri   = mkets(last_fri)
-ts_month = mkets(month_end)
+# Exact 7-day and 30-day rolling lookbacks
+ts_1w = mkets(now - datetime.timedelta(days=7))
+ts_1m = mkets(now - datetime.timedelta(days=30))
 
 # ── Fetch SPY benchmark ───────────────────────────────────────────────────────
 print("\nFetching SPY benchmark...")
@@ -177,8 +174,8 @@ if spy_raw:
     pc = spy_raw["prev_close"]
     spy = {
         "d": pct(c, pc),
-        "w": pct(c, price_on(spy_raw["ts"], spy_raw["closes"], ts_fri)),
-        "m": pct(c, price_on(spy_raw["ts"], spy_raw["closes"], ts_month)),
+        "w": pct(c, price_on(spy_raw["ts"], spy_raw["closes"], ts_1w)),
+        "m": pct(c, price_on(spy_raw["ts"], spy_raw["closes"], ts_1m)),
     }
     print(f"  SPY → 1D={spy['d']}%  1W={spy['w']}%  1M={spy['m']}%")
 
@@ -213,8 +210,8 @@ for (tid, name, short, icon, sector, proxy_etf, constituents, color) in THEMES:
         pc  = raw["prev_close"]
         
         r1D = pct(cur, pc)
-        r1W = pct(cur, price_on(raw["ts"], raw["closes"], ts_fri))
-        r1M = pct(cur, price_on(raw["ts"], raw["closes"], ts_month))
+        r1W = pct(cur, price_on(raw["ts"], raw["closes"], ts_1w))
+        r1M = pct(cur, price_on(raw["ts"], raw["closes"], ts_1m))
         
         print(f"  {ticker:8s}  Cap: {cap/1e9:>6.1f}B | 1D={str(r1D):>6}%  1W={str(r1W):>6}%  1M={str(r1M):>6}%")
         
@@ -289,7 +286,7 @@ results.sort(key=lambda x: x["score"] if x["score"] is not None else -999, rever
 
 output = {
     "updated":     now.strftime("%Y-%m-%d %H:%M UTC"),
-    "methodology": "Market-Cap Weighted avg · 10/21 EMA Crossover (Proxy or Breadth) · 1D = vs prev close · 1W = vs last Fri · 1M = vs last month-end",
+    "methodology": "Market-Cap Weighted avg · 10/21 EMA Crossover · 1D = vs prev close · 1W = rolling 7 days · 1M = rolling 30 days",
     "spy":         spy,
     "themes":      results,
 }
