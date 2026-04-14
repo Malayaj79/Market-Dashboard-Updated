@@ -261,7 +261,7 @@ canvas.sp{display:block}
 
 <footer class="site-footer">
   <span>DATA: YAHOO FINANCE · EOD PRICES · AUTO-REFRESHED DAILY · NOT FINANCIAL ADVICE</span>
-  <span>SCORE = RET×30%+RS×25%+RESILIENCE×20%+BREADTH×15%+MA×10 · ADR-WEIGHTED: HIGH-VOL STOCKS GET LOWER WEIGHT TO AVOID SKEW</span>
+  <span>SCORE = RET×35%+RS×30%+RESILIENCE×20%+BREADTH×15% · ADR-WEIGHTED · FULLY DATA-DRIVEN</span>
 </footer>
 
 <script>
@@ -358,6 +358,69 @@ const CM = {
   "MATX":  ["Matson",               "US domestic container + Alaska shipping"],
   "ATSG":  ["Air Transport Services","Air cargo + ACMI leasing — Amazon partner"],
   "VELO":  ["Velo3D",               "Metal 3D printing for aerospace + defense"],
+  // Edge Computing + CDN additions
+  "OSS":   ["One Stop Systems",     "Edge AI computing hardware for ruggedized deployments"],
+  "AKAM":  ["Akamai Technologies",  "Largest edge computing + CDN platform globally"],
+  "FSLY":  ["Fastly",               "Edge cloud platform — serverless compute at the edge"],
+  "FFIV":  ["F5 Networks",          "App delivery controllers + edge security"],
+  "BCOV":  ["Brightcove",           "Video CDN + streaming delivery platform"],
+  "ALLT":  ["Allot",                "Network intelligence + edge security"],
+  "LLNW":  ["Limelight Networks",   "Video streaming CDN — rebranded as Edgio"],
+  "EGIO":  ["Edgio",                "Media CDN + edge delivery platform"],
+  "BAND":  ["Bandwidth Inc",        "Cloud communications API — CPaaS"],
+  "CDNS":  ["Cadence Design",       "EDA software + chip design tools"],
+  "FFIV":  ["F5 Networks",          "App delivery controllers + multi-cloud networking"],
+  // New tickers v4
+  "ORCL":  ["Oracle",               "OCI cloud + AI database + enterprise SaaS"],
+  "PEGA":  ["Pegasystems",          "AI-powered agentic workflow automation"],
+  "NICE":  ["NICE Systems",         "AI contact center + workforce management"],
+  "ADSK":  ["Autodesk",             "Design + engineering SaaS — AEC + mfg"],
+  "CLDR":  ["Cloudera",             "Hybrid cloud data platform"],
+  "PSTG":  ["Pure Storage",         "All-flash storage for AI workloads"],
+  "TER":   ["Teradyne",             "Semiconductor + industrial robot testing"],
+  "FANUY": ["Fanuc",                "CNC robots — dominant Japan factory automation"],
+  "BRZE":  ["Symbotic",             "AI-powered warehouse automation robots"],
+  "ABB":   ["ABB Ltd",              "Industrial robots + grid automation"],
+  "SLAB":  ["Silicon Labs",         "Pure-play IoT connectivity chips"],
+  "WOLF":  ["Wolfspeed",            "Silicon carbide chips — EV + industrial"],
+  "SMTC":  ["Semtech",              "LoRa IoT wireless + signal integrity chips"],
+  "MXIM":  ["Maxim Integrated",     "Analog + mixed-signal chips for IoT"],
+  "RBLX":  ["Roblox",               "Spatial/metaverse platform — XR adoption"],
+  "TWST":  ["Twist Bioscience",     "Synthetic DNA for AI drug design"],
+  "BEAM":  ["Beam Therapeutics",    "Base editing — precision gene therapy"],
+  "EW":    ["Edwards Lifesciences", "Heart valves + hemodynamic monitoring"],
+  "SYK":   ["Stryker",              "Surgical equipment + orthopedic implants"],
+  "TNDM":  ["Tandem Diabetes Care", "Insulin pump + closed-loop management"],
+  "AMGN":  ["Amgen",                "AMG133 — GLP-1/GIP dual agonist pipeline"],
+  "RYTM":  ["Rhythm Pharmaceuticals","Obesity genetics — MC4R pathway"],
+  "TLN":   ["Talen Energy",         "Nuclear + data center power agreements"],
+  "ARRY":  ["Array Technologies",   "Solar tracking systems — utility scale"],
+  "CSIQ":  ["Canadian Solar",       "Vertically integrated solar manufacturer"],
+  "MAXN":  ["Maxeon Solar",         "High-efficiency solar panels"],
+  "BEPC":  ["Brookfield Renewable", "Clean energy utility — wind + solar + hydro"],
+  "AES":   ["AES Corporation",      "Global renewable power developer"],
+  "CWEN":  ["Clearway Energy",      "Wind + solar power generation MLP"],
+  "ENVX":  ["Enovix",               "Silicon anode battery technology"],
+  "SCCO":  ["Southern Copper",      "World's largest copper reserves"],
+  "PL":    ["Planet Labs",          "Daily satellite imagery constellation"],
+  "MNTS":  ["Momentus",             "In-space transportation services"],
+  "EGLE":  ["Eagle Bulk Shipping",  "Supramax dry bulk carrier fleet"],
+  "FAST":  ["Fastenal",             "Industrial supply chain + reshoring"],
+  "GWW":   ["W.W. Grainger",        "MRO distribution — industrial reshoring"],
+  "MAG":   ["MAG Silver",           "Juanicipio high-grade silver — Mexico"],
+  "VLD":   ["Velo3D",               "Metal 3D printing for aerospace + defense"],
+  "QBTS":  ["D-Wave Quantum",       "Quantum annealing systems — commercial"],
+  "ARQQ":  ["Arqit Quantum",        "Quantum encryption + satellite security"],
+  "IIVI":  ["II-VI Incorporated",   "Optical components + compound semiconductors"],
+  "IRON":  ["Iron Mountain",        "Data center REIT + records management"],
+  "TAN":   ["Invesco Solar ETF",    "Solar sector exposure"],
+  "NOW":   ["ServiceNow",           "AI-powered IT workflow automation SaaS"],
+  "VEEV":  ["Veeva Systems",        "Life sciences SaaS — clinical + CRM"],
+  "INTU":  ["Intuit",               "TurboTax + QuickBooks + AI financial SaaS"],
+  "MCHP":  ["Microchip Technology", "Microcontrollers + analog chips"],
+  "IBM":   ["IBM",                  "Watson AI + hybrid cloud + quantum"],
+  "CRM":   ["Salesforce",           "AI-powered CRM + Agentforce platform"],
+  "MSFT":  ["Microsoft",            "Azure AI + Copilot + OpenAI partnership"],
   // New tickers added v3
   "ARM":   ["Arm Holdings",         "CPU/GPU IP licensing — every chip uses ARM"],
   "FSLY":  ["Fastly",               "Edge cloud + CDN — developer-focused delivery"],
@@ -616,7 +679,7 @@ function boot(){
 // ── MARQUEE ───────────────────────────────────────────────────────────────
 function buildMarquee(){
   const items=D.themes.slice(0,16);
-  let h=items.map(t=>{const c=fc(t.ret1D);return`<div class="m-item"><span class="m-tk">${t.etf}</span><span class="m-pr">${fp(t.price)}</span><span class="${c}">${f(t.ret1D)}</span></div>`;}).join('');
+  let h=items.map(t=>{const c=fc(t.ret1D);return`<div class="m-item"><span class="m-tk">${t.short}</span><span class="${c}">${f(t.ret1D)}</span><span class="neu">${f(t.ret1M)} 1M</span></div>`;}).join('');
   document.getElementById('marquee').innerHTML=h+h;
 }
 
@@ -629,7 +692,7 @@ function buildPodium(){
     return`<div class="pod ${pc[i]}">
       <div class="pod-rank">${md[i]} RANK #${i+1} · ${t.sector.toUpperCase()}</div>
       <div class="pod-name">${t.icon} ${t.name}</div>
-      <div class="pod-etf">${t.etf} · ${t.stocks.slice(0,3).join(' · ')}</div>
+      <div class="pod-etf">${t.stocks.slice(0,4).join(' · ')}</div>
       <div class="pod-score ${c}">${t.score!=null?(t.score>=0?'+':'')+t.score:'—'}</div>
       <div class="pod-rets">
         <span>1M <span class="${fc(t.ret1M)}">${f(t.ret1M)}</span></span>
@@ -655,16 +718,14 @@ function renderTable(){
   buildSectorTabs();
   const list=sorted();
   let h=`<table><thead><tr>
-    <th>#</th><th>THEME</th><th>ETF</th><th>PRICE</th>
-    <th>1D%</th><th>1W%</th><th>1M%</th>
-    <th>VS SPY ${tf}</th><th>RESILIENCE</th><th>BREADTH</th><th>MA</th><th>5D</th><th>SCORE</th><th>STOCKS</th>
+    <th>#</th><th>THEME</th><th>1D%</th><th>1W%</th><th>1M%</th>
+    <th>VS SPY ${tf}</th><th>RESILIENCE</th><th>BREADTH</th><th>5D TREND</th><th>SCORE</th><th>STOCKS</th>
   </tr></thead><tbody>`;
   list.forEach(t=>{
     const gr=gRank(t.id),rs=gRS(t),sc=t.score;
     const bp=Math.min(Math.max((sc!=null?(sc+22)/44:0.5),0),1)*100;
     const bc=sc>=5?'#ffd600':sc>=0?'#00e676':sc>=-5?'#ffab00':'#ff1744';
-    const maC=t.ma===1?'ma-b':t.ma===-1?'ma-s':'ma-n';
-    const maL=t.ma===1?'↑ BULL':t.ma===-1?'↓ BEAR':'— NEU';
+    const maC=''; const maL=''; // MA removed — fully data-driven scoring
     // Resilience badge
     const res=t.resilience;
     const resC=res==null?'res-neu':res>0.5?'res-pos':res<-0.5?'res-neg':'res-neu';
@@ -676,15 +737,12 @@ function renderTable(){
     h+=`<tr>
       <td class="r-num">${gr}</td>
       <td class="r-name">${t.icon} ${t.name}</td>
-      <td class="r-etf">${t.etf}</td>
-      <td class="r-price">${fp(t.price)}</td>
       <td class="${fc(t.ret1D)}">${f(t.ret1D)}</td>
       <td class="${fc(t.ret1W)}">${f(t.ret1W)}</td>
       <td class="${fc(t.ret1M)}">${f(t.ret1M)}</td>
       <td class="${fc(rs)}">${f(rs)}</td>
       <td><span class="res-badge ${resC}" title="Avg return on SPY red days vs SPY avg">${resL}</span></td>
       <td><span style="font-family:var(--mono);font-size:9px;color:var(--amber)">${brdL}</span><span class="brd-bar-bg"><span class="brd-bar-fill" style="width:${brdPct}%"></span></span></td>
-      <td><span class="ma ${maC}">${maL}</span></td>
       <td class="sp-cell" id="sp-${t.id}"></td>
       <td><div class="sc-wrap">
         <span class="sc-num ${fc(sc)}">${sc!=null?(sc>=0?'+':'')+sc:'—'}</span>
@@ -692,7 +750,7 @@ function renderTable(){
       </div></td>
       <td><span class="h-tog" onclick="event.stopPropagation();togH('h-${t.id}')">▸ ${t.stocks.length}</span></td>
     </tr>
-    <tr class="h-row" id="h-${t.id}"><td colspan="14">
+    <tr class="h-row" id="h-${t.id}"><td colspan="11">
       <div class="h-grid">${t.stocks.map(s=>{
         const [cname,role]=CM[s]||[s,'Key constituent'];
         return`<div class="h-card" style="border-left-color:${t.color}">
@@ -740,12 +798,11 @@ function buildMeth(){
       <td class="${fc(spy.m)}">${f(spy.m)}</td>
     </tr></tbody></table>
     <div style="margin-top:16px;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.5px;line-height:2">
-      <div>COMPOSITE SCORE = (RET BLEND × 30%) + (RS BLEND × 25%) + (RESILIENCE × 20%) + (BREADTH × 15%) + (MA × 10 PTS)</div>
-      <div>RET / RS BLEND  = 1D×20% + 1W×35% + 1M×45%</div>
-      <div>ADR WEIGHTING: EACH STOCK WEIGHTED BY 1/ADR% — LOW-VOL LARGE CAPS ANCHOR THE SIGNAL · HIGH-ADR SMALL CAPS DOWNWEIGHTED TO AVOID SKEW</div>
-      <div>RESILIENCE: AVG THEME RETURN ON SPY RED DAYS (LAST 20 SESSIONS) MINUS AVG SPY RETURN — POSITIVE = HOLDS BETTER ON SELLOFFS</div>
-      <div>BREADTH: % OF CONSTITUENTS ABOVE THEIR 20-DAY MA · 10/10 = ALL STOCKS PARTICIPATING · 0/10 = BROKEN LEADERSHIP</div>
-      <div>MA SIGNAL: +1 = BULLISH  ·  0 = NEUTRAL  ·  -1 = BEARISH  ·  UPDATE WEEKLY IN fetch_data.py</div>
+      <div>COMPOSITE SCORE = (RET BLEND × 35%) + (RS BLEND × 30%) + (RESILIENCE × 20%) + (BREADTH × 15%)</div>
+      <div>RET / RS BLEND  = 1D×20% + 1W×35% + 1M×45% · FULLY DATA-DRIVEN — NO MANUAL INPUTS</div>
+      <div>ADR WEIGHTING: EACH STOCK WEIGHTED BY 1/ADR% — LOW-VOL LARGE CAPS ANCHOR THE SIGNAL</div>
+      <div>RESILIENCE: AVG THEME RETURN ON SPY RED DAYS (LAST 20 SESSIONS) MINUS AVG SPY RETURN</div>
+      <div>BREADTH: % OF CONSTITUENTS ABOVE THEIR 20-DAY MA · 10/10 = ALL STOCKS PARTICIPATING</div>
     </div>`;
 }
 
