@@ -60,169 +60,169 @@ THEMES = [
   # ═══════════════════════════════════════════════════════════════════
   # TECHNOLOGY — AI
   # ═══════════════════════════════════════════════════════════════════
-  ("ai",        "Artificial Intelligence",     "AI",          "⚡","Technology"
+  ("ai",        "Artificial Intelligence",     "AI",          "⚡","Technology",
    ["NVDA","PLTR","AI","MSFT","META","GOOGL"],                   "#00d4ff"),
 
-  ("agenticai", "Agentic AI",                  "Agentic AI",  "🧠","Technology"
+  ("agenticai", "Agentic AI",                  "Agentic AI",  "🧠","Technology",
    ["CRM","ORCL","PEGA","GTLB","SOUN","BBAI"],                   "#818cf8"),
 
-  ("edgecomp",  "Edge Computing",              "Edge Compute","🖥","Technology"
+  ("edgecomp",  "Edge Computing",              "Edge Compute","🖥","Technology",
    ["AMBA","QCOM","AKAM","FSLY","OSS","ADI"],                   "#a78bfa"),
 
-  ("aiinfra",   "AI Infrastructure Software",  "AI Infra SW", "🗄","Technology"
+  ("aiinfra",   "AI Infrastructure Software",  "AI Infra SW", "🗄","Technology",
    ["DDOG","MDB","HASHI","NEWR","CFLT","NTNX"],                 "#60a5fa"),
 
   # ═══════════════════════════════════════════════════════════════════
   # TECHNOLOGY — SEMICONDUCTORS
   # ═══════════════════════════════════════════════════════════════════
-  ("semi",      "Semiconductors & Chips",      "Semis",       "💎","Technology"
+  ("semi",      "Semiconductors & Chips",      "Semis",       "💎","Technology",
    ["AMD","AVGO","ARM","TSM","ASML","LRCX"],                    "#6366f1"),
 
-  ("semiequip", "Semiconductor Equipment",     "Semi Equip",  "🔭","Technology"
+  ("semiequip", "Semiconductor Equipment",     "Semi Equip",  "🔭","Technology",
    ["AMAT","KLAC","ONTO","TER","UCTT","MKSI"],                  "#4f46e5"),
 
-  ("memory",    "Memory & Data Storage",       "Memory",      "💾","Memory & Storage"
+  ("memory",    "Memory & Data Storage",       "Memory",      "💾","Memory & Storage",
    ["SNDK","WDC","STX","MU","MRVL","NTAP"],                    "#38bdf8"),
 
-  ("fiber",     "Fiber Optics & Optical Net.", "Fiber Optics","🔆","Fiber Optics"
+  ("fiber",     "Fiber Optics & Optical Net.", "Fiber Optics","🔆","Fiber Optics",
    ["AAOI","LITE","COHR","CIEN","VIAV","FNSR"],                 "#bbf7d0"),
 
-  ("datacntr",  "Data Centers & Infra",        "DataCtrs",    "🏭","Technology"
+  ("datacntr",  "Data Centers & Infra",        "DataCtrs",    "🏭","Technology",
    ["EQIX","DLR","SMCI","VRT","DELL","NXDT"],                  "#fca5a5"),
 
   # ═══════════════════════════════════════════════════════════════════
   # TECHNOLOGY — SOFTWARE
   # ═══════════════════════════════════════════════════════════════════
-  ("cloud",     "Cloud Computing",             "Cloud",       "☁","Technology"
+  ("cloud",     "Cloud Computing",             "Cloud",       "☁","Technology",
    ["AMZN","DOCN","SNOW","WDAY","PSTG","ESTC"],                "#93c5fd"),
 
-  ("cyber",     "Cybersecurity",               "Cyber",       "🔐","Technology"
+  ("cyber",     "Cybersecurity",               "Cyber",       "🔐","Technology",
    ["CRWD","PANW","FTNT","S","OKTA","ZS"],                     "#22d3ee"),
 
-  ("quantum",   "Quantum Computing",           "Quantum",     "⚛","Technology"
+  ("quantum",   "Quantum Computing",           "Quantum",     "⚛","Technology",
    ["IONQ","RGTI","QUBT","QBTS","HON","IBM"],                  "#e879f9"),
 
-  ("robotics",  "Robotics & Automation",       "Robots",      "🤖","Technology"
+  ("robotics",  "Robotics & Automation",       "Robots",      "🤖","Technology",
    ["ISRG","ROK","PATH","BRZE","KUKA","FANUC"],                "#c084fc"),
 
-  ("saas",      "Software as a Service",       "SaaS",        "🧩","Technology"
+  ("saas",      "Software as a Service",       "SaaS",        "🧩","Technology",
    ["NOW","HUBS","BILL","INTU","VEEV","ZM"],                   "#6ee7b7"),
 
-  ("cdn",       "CDN & Edge Delivery",         "CDN/Edge",    "🌐","Technology"
+  ("cdn",       "CDN & Edge Delivery",         "CDN/Edge",    "🌐","Technology",
    ["EGIO","FFIV","ZAYO","LUMN","CCOI","ATNI"],                "#67e8f9"),
 
-  ("iot",       "Internet of Things",          "IoT",         "📡","Technology"
+  ("iot",       "Internet of Things",          "IoT",         "📡","Technology",
    ["TXN","SWKS","SLAB","SMTC","MCHP","NXPI"],                "#7dd3fc"),
 
-  ("print3d",   "3D Printing",                 "3D Print",    "🖨","Technology"
+  ("print3d",   "3D Printing",                 "3D Print",    "🖨","Technology",
    ["DDD","SSYS","XMTR","MTLS","MKFG","NNDM"],                "#7c3aed"),
 
   # ═══════════════════════════════════════════════════════════════════
   # TECHNOLOGY — CONSUMER
   # ═══════════════════════════════════════════════════════════════════
-  ("arvr",      "AR / VR & Spatial Computing", "AR/VR",       "🥽","Consumer Tech"
+  ("arvr",      "AR / VR & Spatial Computing", "AR/VR",       "🥽","Consumer Tech",
    ["RBLX","SNAP","IMMR","UNITY","U","AAPL"],                  "#f472b6"),
 
-  ("autonomouv","Autonomous Vehicles",          "Auto Vehicles","🚗","Consumer Tech"
+  ("autonomouv","Autonomous Vehicles",          "Auto Vehicles","🚗","Consumer Tech",
    ["TSLA","MBLY","LAZR","OUST","APTV","MOBILEYE"],            "#34d399"),
 
   # ═══════════════════════════════════════════════════════════════════
   # HEALTHCARE
   # ═══════════════════════════════════════════════════════════════════
-  ("aidrug",    "AI Drug Discovery",           "AI Drug",     "🧬","Healthcare"
+  ("aidrug",    "AI Drug Discovery",           "AI Drug",     "🧬","Healthcare",
    ["RXRX","SDGR","ABCL","EXAI","INSM","CRVS"],               "#10b981"),
 
-  ("meddevice", "Medical Devices",             "Med Devices", "🏥","Healthcare"
+  ("meddevice", "Medical Devices",             "Med Devices", "🏥","Healthcare",
    ["EW","SYK","INSP","TNDM","NVCR","ALGN"],                  "#3b82f6"),
 
-  ("glp1",      "GLP-1 & Obesity Drugs",       "GLP-1",       "💊","Healthcare"
+  ("glp1",      "GLP-1 & Obesity Drugs",       "GLP-1",       "💊","Healthcare",
    ["NVO","LLY","VKTX","HIMS","AMGN","ZFOX"],                 "#8b5cf6"),
 
   # ═══════════════════════════════════════════════════════════════════
   # FINTECH
   # ═══════════════════════════════════════════════════════════════════
-  ("fintech",   "Digital Payments & Fintech",  "Fintech",     "💳","Fintech"
+  ("fintech",   "Digital Payments & Fintech",  "Fintech",     "💳","Fintech",
    ["SQ","AFRM","SOFI","NU","UPST","HOOD"],                   "#f97316"),
 
   # ═══════════════════════════════════════════════════════════════════
   # ENERGY
   # ═══════════════════════════════════════════════════════════════════
-  ("nuclear",   "Nuclear Energy",              "Nuclear",     "☢","Energy"
+  ("nuclear",   "Nuclear Energy",              "Nuclear",     "☢","Energy",
    ["CEG","VST","TLN","BWXT","SMR","ETR"],                    "#fde68a"),
 
-  ("uranium",   "Uranium Mining",              "Uranium",     "🪨","Energy"
+  ("uranium",   "Uranium Mining",              "Uranium",     "🪨","Energy",
    ["CCJ","NXE","DNN","UUUU","URG","UEC"],                    "#f59e0b"),
 
-  ("grid",      "Power Grid Modernization",    "Grid",        "🔌","Energy"
+  ("grid",      "Power Grid Modernization",    "Grid",        "🔌","Energy",
    ["ETN","EMR","HUBB","PWR","GEV","AMPS"],                   "#86efac"),
 
-  ("solar",     "Solar Energy",                "Solar",       "☀","Energy"
+  ("solar",     "Solar Energy",                "Solar",       "☀","Energy",
    ["ENPH","FSLR","SEDG","ARRY","CSIQ","MAXN"],               "#fbbf24"),
 
-  ("clean",     "Wind & Renewable Energy",     "Wind/Renew",  "🌱","Energy"
+  ("clean",     "Wind & Renewable Energy",     "Wind/Renew",  "🌱","Energy",
    ["NEE","BEP","AES","CWEN","RUN","NOVA"],                   "#4ade80"),
 
-  ("battery",   "Battery Technology",          "Battery",     "🔋","Energy"
+  ("battery",   "Battery Technology",          "Battery",     "🔋","Energy",
    ["ALB","QS","SQM","ENVX","NXRT","CBAT"],                   "#34d399"),
 
-  ("lng",       "LNG Export & Natural Gas",    "LNG",         "🔥","Energy"
+  ("lng",       "LNG Export & Natural Gas",    "LNG",         "🔥","Energy",
    ["LNG","CQP","NFE","GLNG","AR","KNTK"],                    "#fb923c"),
 
-  ("oilgas",    "Traditional Oil & Gas",       "Oil & Gas",   "🛢","Energy"
+  ("oilgas",    "Traditional Oil & Gas",       "Oil & Gas",   "🛢","Energy",
    ["XOM","CVX","COP","SLB","EOG","MPC"],                     "#d97706"),
 
   # ═══════════════════════════════════════════════════════════════════
   # MATERIALS
   # ═══════════════════════════════════════════════════════════════════
-  ("minerals",  "Critical Minerals",           "Minerals",    "⛏","Materials"
+  ("minerals",  "Critical Minerals",           "Minerals",    "⛏","Materials",
    ["FCX","MP","VALE","RIO","SCCO","HBM"],                    "#fb923c"),
 
-  ("steel",     "Steel & Aluminum",            "Steel/Al",    "🏗","Materials"
+  ("steel",     "Steel & Aluminum",            "Steel/Al",    "🏗","Materials",
    ["NUE","STLD","CLF","CMC","AA","CENX"],                    "#78716c"),
 
-  ("agri",      "Agriculture & Fertilizers",   "Agriculture", "🌾","Materials"
+  ("agri",      "Agriculture & Fertilizers",   "Agriculture", "🌾","Materials",
    ["MOS","NTR","CF","ICL","CTVA","AGCO"],                    "#65a30d"),
 
   # ═══════════════════════════════════════════════════════════════════
   # PRECIOUS METALS
   # ═══════════════════════════════════════════════════════════════════
-  ("gold",      "Gold & Gold Miners",          "Gold",        "🥇","Precious Metals"
+  ("gold",      "Gold & Gold Miners",          "Gold",        "🥇","Precious Metals",
    ["GLD","NEM","GOLD","AEM","WPM","FNV"],                    "#ffd700"),
 
-  ("silver",    "Silver & Silver Miners",      "Silver",      "🥈","Precious Metals"
+  ("silver",    "Silver & Silver Miners",      "Silver",      "🥈","Precious Metals",
    ["SLV","PAAS","AG","HL","FSM","MAG"],                      "#e2e8f0"),
 
-  ("jrgold",    "Junior Gold Miners",          "Jr. Gold",    "⛏","Precious Metals"
+  ("jrgold",    "Junior Gold Miners",          "Jr. Gold",    "⛏","Precious Metals",
    ["GDXJ","ORLA","NGD","KGC","IAG","SAND"],                  "#fcd34d"),
 
-  ("pgm",       "Platinum Group Metals",       "PGMs",        "⚗","Precious Metals"
+  ("pgm",       "Platinum Group Metals",       "PGMs",        "⚗","Precious Metals",
    ["PPLT","PALL","SBSW","PLZL","PLAT","PAL"],                "#cbd5e1"),
 
   # ═══════════════════════════════════════════════════════════════════
   # UTILITIES
   # ═══════════════════════════════════════════════════════════════════
-  ("water",     "Water Management",            "Water",       "💧","Utilities"
+  ("water",     "Water Management",            "Water",       "💧","Utilities",
    ["AWK","XYL","WTRG","PNR","ARTNA","YORW"],                 "#0ea5e9"),
 
   # ═══════════════════════════════════════════════════════════════════
   # INDUSTRIALS
   # ═══════════════════════════════════════════════════════════════════
-  ("defense",   "Defense & Military Tech",     "Defense",     "🛡","Industrials"
+  ("defense",   "Defense & Military Tech",     "Defense",     "🛡","Industrials",
    ["LMT","RTX","NOC","GD","BA","HII"],                       "#ff6b35"),
 
-  ("drones",    "Drones & Autonomous",         "Drones",      "🛸","Industrials"
+  ("drones",    "Drones & Autonomous",         "Drones",      "🛸","Industrials",
    ["ACHR","JOBY","AVAV","KTOS","RCAT","ARK"],                "#f472b6"),
 
-  ("space",     "Space Exploration",           "Space",       "🚀","Industrials"
+  ("space",     "Space Exploration",           "Space",       "🚀","Industrials",
    ["ASTS","LUNR","RKLB","PL","SPCE","SATL"],                 "#8b5cf6"),
 
-  ("shipping",  "Shipping & Logistics",        "Shipping",    "🚢","Industrials"
+  ("shipping",  "Shipping & Logistics",        "Shipping",    "🚢","Industrials",
    ["ZIM","GOGL","SBLK","MATX","STNG","FLNG"],                "#0369a1"),
 
-  ("reshoring", "Supply Chain Reshoring",      "Reshoring",   "🏗","Industrials"
+  ("reshoring", "Supply Chain Reshoring",      "Reshoring",   "🏗","Industrials",
    ["URI","MLM","VMC","FAST","GWW","BLDR"],                   "#fdba74"),
 
-  ("machinery", "Heavy Machinery & Infra",     "Machinery",   "🔧","Industrials"
+  ("machinery", "Heavy Machinery & Infra",     "Machinery",   "🔧","Industrials",
    ["CAT","DE","CMI","PCAR","OSK","TEX"],                     "#94a3b8"),
 ]
 
