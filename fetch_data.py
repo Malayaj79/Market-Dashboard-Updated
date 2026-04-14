@@ -283,7 +283,8 @@ def fetch(ticker, period="3mo"):
 
         return {
             "ts": ts, "closes": closes, "price": price,
-            "prev_close": prev_close, "adr_pct": adr_pct, "adv": adv
+            "prev_close": prev_close, "adr_pct": adr_pct, "adv": adv,
+            "highs": highs, "lows": lows, "vols": vols
         }
     except Exception as e:
         print(f"    ERR {ticker}: {e}")
@@ -398,6 +399,99 @@ def compute_breadth(raw):
         return None
     return 1 if raw["price"] > (sum(cl[-20:]) / 20) else 0
 
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# EMERGING THEME METRICS — catch themes before they break out
+# ══════════════════════════════════════════════════════════════════════════════
+
+def compute_vol_accumulation(raw):
+    """Up-day vs down-day volume ratio (last 10 sessions). >1.5 = accumulation."""
+    if not raw:
+        return None
+    closes = raw["closes"]
+    vols   = raw.get("vols", [])
+    if not vols or len(closes) < 12:
+        return None
+    valid = [(c, v) for c, v in zip(closes, vols)
+             if c is not None and v is not None and c > 0 and v > 0]
+    pairs = []
+    for i in range(1, len(valid)):
+        prev_c = valid[i-1][0]
+        curr_c, v = valid[i]
+        pairs.append(((curr_c - prev_c) / prev_c, curr_c * v))
+    pairs = pairs[-10:]
+    if len(pairs) < 5:
+        return None
+    up   = [dv for ret, dv in pairs if ret > 0]
+    down = [dv for ret, dv in pairs if ret < 0]
+    if not up or not down:
+        return None
+    return round(min((sum(up)/len(up)) / (sum(down)/len(down)), 3.0), 2)
+
+
+def compute_adr_contraction(raw):
+    """ADR 11-20 sessions ago vs last 10 sessions. >1.5 = range tightening = base forming."""
+    if not raw:
+        return None
+    highs  = raw.get("highs", [])
+    lows   = raw.get("lows", [])
+    closes = raw["closes"]
+    if not highs or not lows or len(closes) < 25:
+        return None
+    days = [(h, l, c) for h, l, c in zip(highs, lows, closes)
+            if h is not None and l is not None and c is not None and c > 0]
+    if len(days) < 25:
+        return None
+    recent = sum((h-l)/c*100 for h,l,c in days[-10:]) / 10
+    older  = sum((h-l)/c*100 for h,l,c in days[-20:-10]) / 10
+    if recent < 0.1:
+        return None
+    return round(min(older / recent, 3.0), 2)
+
+
+def compute_rs_trend(raw, spy_sessions):
+    """RS slope vs SPY over last 10 sessions. Positive = RS line rising before price move."""
+    if not raw or not spy_sessions or len(spy_sessions) < 5:
+        return None
+    closes = raw["closes"]
+    valid  = [c for c in closes if c is not None]
+    if len(valid) < 12:
+        return None
+    stock_cl = valid[-12:]
+    rs_vals  = []
+    n_spy    = len(spy_sessions)
+    for i in range(1, len(stock_cl)):
+        sc_ret = (stock_cl[i] - stock_cl[i-1]) / stock_cl[i-1] * 100
+        spy_i  = n_spy - (len(stock_cl) - 1 - i)
+        sp_ret = spy_sessions[spy_i]["ret"] if 0 <= spy_i < n_spy else 0
+        rs_vals.append(sc_ret - sp_ret)
+    rs_vals = rs_vals[-10:]
+    if len(rs_vals) < 5:
+        return None
+    n  = len(rs_vals)
+    xs = list(range(n))
+    mx = sum(xs) / n
+    my = sum(rs_vals) / n
+    num = sum((x-mx)*(y-my) for x,y in zip(xs, rs_vals))
+    den = sum((x-mx)**2 for x in xs)
+    return round(num/den, 3) if den > 0 else None
+
+
+def compute_proximity_to_high(raw):
+    """How close to 52-week high. 1.0=at high, 0=more than 40% away. Sweet spot: within 15%."""
+    if not raw or not raw.get("price"):
+        return None
+    closes = raw["closes"]
+    valid  = [c for c in closes if c is not None]
+    if len(valid) < 10:
+        return None
+    high63   = max(valid[-63:]) if len(valid) >= 63 else max(valid)
+    distance = (high63 - raw["price"]) / high63 if high63 > 0 else 1.0
+    if distance > 0.40:
+        return 0.0
+    return round(max(0.0, 1.0 - (distance / 0.15)), 3)
+
 # ── Process themes ────────────────────────────────────────────────────────────
 results = []
 ADV_MIN = 10_000_000   # $10M minimum average daily dollar volume
@@ -411,6 +505,7 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
 
     all_r1D, all_r1W, all_r1M = [], [], []
     all_res, all_brd, all_w   = [], [], []
+    all_vacc, all_adrc, all_rst, all_prox = [], [], [], []
 
     for ticker in constituents:
         raw = fetch_cached(ticker)
@@ -430,6 +525,12 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
         res = compute_resilience(raw)
         brd = compute_breadth(raw)
 
+        # Emerging metrics
+        vacc = compute_vol_accumulation(raw)
+        adrc = compute_adr_contraction(raw)
+        rst  = compute_rs_trend(raw, spy["daily_rets"])
+        prox = compute_proximity_to_high(raw)
+
         adr = raw.get("adr_pct") or 3.0
         w   = 1.0 / max(adr, 0.5)
 
@@ -439,6 +540,7 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
 
         all_r1D.append(r1D); all_r1W.append(r1W); all_r1M.append(r1M)
         all_res.append(res); all_brd.append(brd); all_w.append(w)
+        all_vacc.append(vacc); all_adrc.append(adrc); all_rst.append(rst); all_prox.append(prox)
 
     r1D = wavg(all_r1D, all_w)
     r1W = wavg(all_r1W, all_w)
@@ -488,8 +590,37 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
         )
 
     breadth_display = round(breadth * 10, 1) if breadth is not None else None
+
+    # ── Emerging Score ────────────────────────────────────────────────────────
+    # Designed to catch themes BEFORE the big move
+    # Vol Accumulation×35% + ADR Contraction×25% + RS Trend×25% + Proximity×15%
+    vacc_avg = avg([v for v in all_vacc if v is not None])
+    adrc_avg = avg([v for v in all_adrc if v is not None])
+    rst_avg  = avg([v for v in all_rst  if v is not None])
+    prox_avg = avg([v for v in all_prox if v is not None])
+
+    emerging = None
+    if any(v is not None for v in [vacc_avg, adrc_avg, rst_avg, prox_avg]):
+        # Normalize each component to 0-10 scale
+        # Vol Accum: 1.0=neutral(5), 2.0=strong accum(10), 0.5=distrib(0)
+        v_norm = min(max((vacc_avg - 0.5) / 1.5 * 10, 0), 10) if vacc_avg else 5.0
+        # ADR Contraction: 1.0=no change(5), 2.0=tight(10), 0.5=expanding(0)
+        a_norm = min(max((adrc_avg - 0.5) / 1.5 * 10, 0), 10) if adrc_avg else 5.0
+        # RS Trend: slope, +0.5/session = strong(10), -0.5/session = weak(0)
+        r_norm = min(max((rst_avg + 0.5) / 1.0 * 10, 0), 10) if rst_avg is not None else 5.0
+        # Proximity: already 0-1, scale to 0-10
+        p_norm = (prox_avg * 10) if prox_avg is not None else 5.0
+
+        emerging = round(
+            v_norm * 0.35 +
+            a_norm * 0.25 +
+            r_norm * 0.25 +
+            p_norm * 0.15,
+            1
+        )
+
     n = sum(1 for r in all_r1M if r is not None)
-    print(f"  → score={score}  res={resilience}  breadth={breadth_display}/10  (n={n})")
+    print(f"  → score={score}  emerging={emerging}  vacc={vacc_avg}  adrc={adrc_avg}  rst={rst_avg}  (n={n})")
 
     # Blended display price: simple avg of constituent current prices (for reference only)
     constituent_prices = [_cache[t]["price"] for t in constituents
@@ -505,6 +636,10 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
         "resilience": resilience,
         "breadth": breadth_display,
         "score": score,
+        "emerging": emerging,
+        "vol_accum": round(vacc_avg, 2) if vacc_avg else None,
+        "adr_contraction": round(adrc_avg, 2) if adrc_avg else None,
+        "rs_trend": round(rst_avg, 3) if rst_avg is not None else None,
         "spark5": spark5,
         "n_stocks": n,
     })
