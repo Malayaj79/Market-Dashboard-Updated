@@ -163,7 +163,7 @@ THEMES = [
    ["NEE","BEP","AES","CWEN","RUN","NOVA"],                   "#4ade80"),
 
   ("battery",   "Battery Technology",          "Battery",     "🔋","Energy",
-   ["ALB","QS","SQM","ENVX","NXRT","CBAT"],                   "#34d399"),
+   ["ALB","QS","LTHM","ENVX","FLNC","STEM"],                   "#34d399"),
 
   ("lng",       "LNG Export & Natural Gas",    "LNG",         "🔥","Energy",
    ["LNG","CQP","NFE","GLNG","AR","KNTK"],                    "#fb923c"),
@@ -181,7 +181,7 @@ THEMES = [
    ["NUE","STLD","CLF","CMC","AA","CENX"],                    "#78716c"),
 
   ("agri",      "Agriculture & Fertilizers",   "Agriculture", "🌾","Materials",
-   ["MOS","NTR","CF","ICL","CTVA","AGCO"],                    "#65a30d"),
+   ["MOS","NTR","CF","ICL","CTVA","SQM"],                    "#65a30d"),
 
   # ═══════════════════════════════════════════════════════════════════
   # PRECIOUS METALS
@@ -229,7 +229,7 @@ THEMES = [
 # ── Verify no duplicates ──────────────────────────────────────────────────────
 from collections import defaultdict
 _seen = defaultdict(list)
-for (tid, *_, stocks, _) in THEMES:
+for (tid, name, short, icon, sector, stocks, color) in THEMES:
     for s in stocks:
         _seen[s].append(tid)
 _dupes = {s: ts for s, ts in _seen.items() if len(ts) > 1}
