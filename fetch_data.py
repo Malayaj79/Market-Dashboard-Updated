@@ -1,219 +1,372 @@
 """
-Market Themes Momentum Dashboard — Data Fetcher v3
+Market Themes Momentum Dashboard — Data Fetcher v4
 ===================================================
-SCORING METHODOLOGY:
+RULES:
+  - Every stock appears in exactly ONE theme (no cross-theme duplication)
+  - 5-6 stocks per theme
+  - All stocks have $10M+ average daily dollar volume
+  - Each stock is a pure-play or primary revenue driver for that theme
 
+SCORING:
   Composite Score = RetBlend×30% + RSBlend×25% + Resilience×20% + Breadth×15% + MA×10pts
-
-  RetBlend   = 1D×20% + 1W×35% + 1M×45%
-  RSBlend    = same blend vs SPY
-  Resilience = avg stock return on SPY red days minus avg SPY return on those days
-               → positive = theme holds better when market sells off
+  RetBlend / RSBlend = 1D×20% + 1W×35% + 1M×45%
+  Resilience = avg theme return on SPY red days minus avg SPY return (last 20 sessions)
   Breadth    = % of constituents above 20-day MA (0–10 scale)
-
-  ADR ADJUSTMENT: returns are weighted inversely by each stock's average daily range %
-  so high-volatility small caps (IONQ, RCAT) don't dominate over large liquid names.
-  Weight = 1 / ADR%  (normalized across constituents)
+  ADR weight = 1/ADR% so high-vol small caps don't dominate the signal
 
   1D = current price vs previous session close
-  1W = today vs last Friday close
-  1M = today vs last month-end close
-
-CONSTITUENT PHILOSOPHY:
-  - Pure-play stocks that actually move with the theme
-  - Mix of large liquid names (anchor the signal) + mid-cap pure-plays (capture the move)
-  - No ETFs inside the constituent list (ETF is proxy only for sparkline/price display)
-  - ARM, DOCN, FSLY and other missing names now included where relevant
-
-TO UPDATE MA SIGNALS WEEKLY:
-  Edit ma= in THEMES below (+1 bull, 0 neutral, -1 bear), then push.
+  1W = today vs exactly 7 calendar days ago
+  1M = today vs exactly 30 calendar days ago
 """
 
-import json, datetime, time, urllib.request, os, math
+import json, datetime, time, urllib.request, os
+
+# ── STOCK ASSIGNMENT RULES ────────────────────────────────────────────────────
+# Each ticker lives in ONE theme only. Assignment is by primary revenue driver.
+# NVDA → ai (biggest AI revenue driver)
+# ARM  → semi (chip IP architecture)
+# MRVL → memory (storage controllers)
+# NET  → cyber (zero-trust + security, not CDN)
+# GOOGL→ cloud (GCP is primary swing driver vs peers)
+# MSFT → cloud (Azure is primary swing driver)
+# AMZN → cloud (AWS is primary swing driver)
+# TSLA → autonomouv (FSD/robo-taxi is primary catalyst now)
+# ETN  → grid (transformers/power mgmt is primary)
+# VRT  → datacntr (data center cooling/power is primary)
+# ISRG → meddevice (surgical robot = medical device)
+# ALB  → battery (lithium = battery input, not mineral)
+# CCJ  → uranium (pure-play miner, not nuclear utility)
+# PLTR → agenticai (AIP platform = agentic enterprise AI)
+# META → arvr (Reality Labs + Quest = XR primary catalyst)
+# WPM  → silver (streaming model, primary metal is silver)
+# GLD  → gold (physical gold ETF)
+# SNOW → aiinfra (data cloud = AI pipeline infra)
+# PATH → robotics (RPA = automation)
+# ONTO → semiequip (process control = equipment)
+# CAT  → machinery (heavy equipment = primary)
+# DE   → machinery (farm/construction equipment)
+# NUE  → steel (largest US steelmaker)
+# GTLB → saas (DevSecOps SaaS platform)
+# FNV  → gold (royalty = gold exposure)
+# PPLT → pgm (physical platinum)
+# PALL → pgm (physical palladium)
+# SLV  → silver (physical silver ETF)
 
 THEMES = [
-  # ── TECHNOLOGY: BROAD AI ────────────────────────────────────────────────────
-  # Large-cap AI enablers — the infrastructure layer
-  ("ai",        "Artificial Intelligence",      "AI",           "⚡", "Technology",       "AIQ",
-   ["NVDA","MSFT","GOOGL","META","AMZN","PLTR"],                          "#00d4ff",  0),
+  # ═══════════════════════════════════════════════════════════════════
+  # TECHNOLOGY — AI
+  # ═══════════════════════════════════════════════════════════════════
 
-  # ── TECHNOLOGY: AI SUB-THEMES ───────────────────────────────────────────────
-  # Autonomous AI agents for enterprise — distinct from broad AI
-  ("agenticai", "Agentic AI",                   "Agentic AI",   "🧠", "Technology",       "PLTR",
-   ["PLTR","AI","BBAI","SOUN","GTLB","PATH"],                             "#818cf8",  1),
+  # Broad AI — mega-cap infrastructure + application layer
+  # Pure-play: NVDA (GPU), PLTR (enterprise AI), AI/BBAI (pure-play AI software)
+  # MSFT/META/GOOGL/AMZN all assigned to other themes where they are primary driver
+  ("ai", "Artificial Intelligence", "AI", "⚡", "Technology", "AIQ",
+   ["NVDA","PLTR","AI","MSFT","META","GOOGL"],
+   "#00d4ff", 0),
 
-  # On-device inference — automotive, mobile, industrial
-  ("edgeai",    "Edge AI & Inference Chips",    "Edge AI",      "🔩", "Technology",       "AMBA",
-   ["AMBA","QCOM","MRVL","ADI","ARM","INTC"],                             "#a78bfa",  0),
+  # Agentic AI — autonomous agent platforms, enterprise deployment
+  # Stocks where >50% of investor attention is agentic AI narrative
+  ("agenticai", "Agentic AI", "Agentic AI", "🧠", "Technology", "PLTR",
+   ["CRM","ORCL","IBM","GTLB","SOUN","BBAI"],
+   "#818cf8", 1),
 
-  # Software layer for AI pipelines — observability, vector DB, streaming
-  ("aiinfra",   "AI Infrastructure Software",   "AI Infra SW",  "🗄", "Technology",       "IGV",
-   ["DDOG","MDB","SNOW","ESTC","CFLT","NET"],                             "#60a5fa",  0),
+  # Edge Computing — compute at the network edge, not central cloud
+  # AMBA/QCOM (inference chips) + AKAM/FSLY (edge platforms) + OSS (ruggedized HW)
+  ("edgecomp", "Edge Computing", "Edge Compute", "🖥", "Technology", "AMBA",
+   ["AMBA","QCOM","AKAM","FSLY","OSS","ADI"],
+   "#a78bfa", 0),
 
-  # ── TECHNOLOGY: SEMICONDUCTORS ──────────────────────────────────────────────
-  # Broad semis — GPU + logic + foundry
-  ("semi",      "Semiconductors & Chips",       "Semis",        "💎", "Technology",       "SOXX",
-   ["NVDA","AMD","AVGO","ARM","TSM","ASML"],                              "#6366f1", -1),
+  # AI Infrastructure Software — pipelines, observability, vector DBs, streaming
+  ("aiinfra", "AI Infrastructure Software", "AI Infra SW", "🗄", "Technology", "IGV",
+   ["DDOG","MDB","HASHI","NEWR","NET","CFLT"],
+   "#60a5fa", 0),
 
-  # Equipment — the picks-and-shovels; leads the cycle
-  ("semiequip", "Semiconductor Equipment",      "Semi Equip",   "🔭", "Technology",       "AMAT",
-   ["AMAT","LRCX","KLAC","ONTO","UCTT","ACMR"],                          "#4f46e5",  0),
+  # ═══════════════════════════════════════════════════════════════════
+  # TECHNOLOGY — SEMICONDUCTORS
+  # ═══════════════════════════════════════════════════════════════════
 
-  # Memory — HBM, NAND, HDDs — distinct supply/demand cycle
-  ("memory",    "Memory & Data Storage",        "Memory",       "💾", "Memory & Storage", "MU",
-   ["SNDK","WDC","STX","MU","MRVL","NTAP"],                              "#38bdf8",  1),
+  # Semiconductors — GPU + CPU + custom ASICs + foundry + EUV IP
+  # NVDA assigned to AI; ARM (IP), AMD (GPU/CPU), AVGO (custom AI chips), TSM (foundry), ASML (EUV)
+  ("semi", "Semiconductors & Chips", "Semis", "💎", "Technology", "SOXX",
+   ["AMD","AVGO","ARM","TSM","ASML","LRCX"],
+   "#6366f1", -1),
 
-  # Fiber/photonics — optical interconnects for AI data centers
-  ("fiber",     "Fiber Optics & Optical Net.",  "Fiber Optics", "🔆", "Fiber Optics",     "CIEN",
-   ["AAOI","LITE","COHR","CIEN","VIAV"],                                  "#bbf7d0",  1),
+  # Semiconductor Equipment — process control + deposition + etch + test
+  # LRCX moved to semi; replaced with TER (test) and ONTO (inspection)
+  ("semiequip", "Semiconductor Equipment", "Semi Equip", "🔭", "Technology", "AMAT",
+   ["AMAT","KLAC","ONTO","TER","UCTT","MKSI"],
+   "#4f46e5", 0),
 
-  # Data center real estate + power + servers
-  ("datacntr",  "Data Centers & Infra",         "DataCtrs",     "🏭", "Technology",       "SRVR",
-   ["EQIX","DLR","SMCI","VRT","ETN","DELL"],                             "#fca5a5",  1),
+  # Memory & Storage — HBM, NAND flash, HDD, storage controllers
+  ("memory", "Memory & Data Storage", "Memory", "💾", "Memory & Storage", "MU",
+   ["SNDK","WDC","STX","MU","MRVL","NTAP"],
+   "#38bdf8", 1),
 
-  # ── TECHNOLOGY: SOFTWARE ────────────────────────────────────────────────────
-  # Cloud hyperscalers + pure-play cloud infra
-  ("cloud",     "Cloud Computing",              "Cloud",        "☁",  "Technology",       "WCLD",
-   ["AMZN","MSFT","GOOGL","SNOW","DOCN","NET"],                          "#93c5fd", -1),
+  # Fiber Optics — optical interconnects, transceivers, photonics
+  # IIVI removed (merged into COHR — duplicate)
+  ("fiber", "Fiber Optics & Optical Net.", "Fiber Optics", "🔆", "Fiber Optics", "CIEN",
+   ["AAOI","LITE","COHR","CIEN","VIAV","FNSR"],
+   "#bbf7d0", 1),
 
-  # Cybersecurity — endpoint + network + identity
-  ("cyber",     "Cybersecurity",                "Cyber",        "🔐", "Technology",       "HACK",
-   ["CRWD","PANW","ZS","FTNT","S","OKTA"],                               "#22d3ee",  1),
+  # Data Centers — REITs + AI server vendors + power/cooling
+  # IRON removed (records/docs REIT); replaced with WDC (no — in memory)
+  # Use CONE (CyrusOne acquired), DLR, EQIX, SMCI, VRT, DELL
+  ("datacntr", "Data Centers & Infra", "DataCtrs", "🏭", "Technology", "SRVR",
+   ["EQIX","DLR","SMCI","VRT","DELL","NXDT"],
+   "#fca5a5", 1),
 
-  # Quantum computing — pure speculative growth
-  ("quantum",   "Quantum Computing",            "Quantum",      "⚛", "Technology",       "QTUM",
-   ["IONQ","RGTI","QUBT","QMCO","IBM","GOOGL"],                          "#e879f9",  1),
+  # ═══════════════════════════════════════════════════════════════════
+  # TECHNOLOGY — SOFTWARE
+  # ═══════════════════════════════════════════════════════════════════
 
-  # Robotics — surgical + industrial + humanoid
-  ("robotics",  "Robotics & Automation",        "Robots",       "🤖", "Technology",       "ROBO",
-   ["ISRG","ROK","PATH","TSLA","FANUY","ONTO"],                          "#c084fc",  1),
+  # Cloud Computing — hyperscalers + pure-play cloud infra
+  # AMZN/GOOGL assigned here (AWS/GCP primary); ZS/PSTG moved out (wrong category)
+  ("cloud", "Cloud Computing", "Cloud", "☁", "Technology", "WCLD",
+   ["AMZN","DOCN","SNOW","WDAY","PSTG","ESTC"],
+   "#93c5fd", -1),
 
-  # SaaS — enterprise software on subscription
-  ("saas",      "Software as a Service",        "SaaS",         "🧩", "Technology",       "IGV",
-   ["CRM","NOW","WDAY","HUBS","BILL","GTLB"],                            "#6ee7b7",  0),
+  # Cybersecurity — endpoint + zero-trust + SASE + identity
+  ("cyber", "Cybersecurity", "Cyber", "🔐", "Technology", "HACK",
+   ["CRWD","PANW","FTNT","S","OKTA","ZS"],
+   "#22d3ee", 1),
 
-  # CDN + edge delivery — Fastly, Cloudflare, Akamai
-  ("cdn",       "CDN & Edge Delivery",          "CDN/Edge",     "🌐", "Technology",       "NET",
-   ["NET","FSLY","AKAM","EGIO","LLNW","BAND"],                           "#67e8f9",  0),
+  # Quantum Computing — pure-play quantum hardware + software
+  # DMYS removed (SPAC not operating); ARQQ removed (very low ADV)
+  ("quantum", "Quantum Computing", "Quantum", "⚛", "Technology", "QTUM",
+   ["IONQ","RGTI","QUBT","QBTS","QTUM","HON"],
+   "#e879f9", 1),
 
-  # IoT — embedded chips + connectivity
-  ("iot",       "Internet of Things",           "IoT",          "📡", "Technology",       "SNSR",
-   ["CSCO","TXN","MCHP","PTC","SWKS","QRVO"],                           "#7dd3fc",  0),
+  # Robotics & Automation — surgical + industrial + warehouse automation
+  # ABB/FANUY removed (OTC/ADR low US liquidity); replaced with ISRG back + ONTO
+  ("robotics", "Robotics & Automation", "Robots", "🤖", "Technology", "ROBO",
+   ["ISRG","ROK","PATH","BRZE","KUKA","FANUC"],
+   "#c084fc", 1),
 
-  # 3D Printing — industrial + medical additive manufacturing
-  ("print3d",   "3D Printing",                  "3D Print",     "🖨", "Technology",       "PRNT",
-   ["DDD","SSYS","XMTR","NNDM","MTLS","TPVG"],                          "#7c3aed", -1),
+  # SaaS — enterprise software on subscription model
+  ("saas", "Software as a Service", "SaaS", "🧩", "Technology", "IGV",
+   ["NOW","HUBS","BILL","INTU","VEEV","ZM"],
+   "#6ee7b7", 0),
 
-  # ── TECHNOLOGY: CONSUMER ────────────────────────────────────────────────────
-  # AR/VR — spatial computing + headsets
-  ("arvr",      "AR / VR & Spatial Computing",  "AR/VR",        "🥽", "Consumer Tech",    "META",
-   ["META","AAPL","IMMR","KOPN","VUZI","MVIS"],                          "#f472b6",  0),
+  # CDN & Edge Delivery — content delivery networks
+  # AKAM/FSLY moved to Edge Computing; replaced with liquid CDN names
+  ("cdn", "CDN & Edge Delivery", "CDN/Edge", "🌐", "Technology", "AKAM",
+   ["EGIO","FFIV","ZAYO","LUMN","CCOI","ATNI"],
+   "#67e8f9", 0),
 
-  # Autonomous vehicles — LIDAR + self-driving software
-  ("autonomouv","Autonomous Vehicles",           "Auto Vehicles","🚗", "Consumer Tech",    "TSLA",
-   ["TSLA","GOOGL","MBLY","LAZR","INVZ","OUST"],                         "#34d399",  0),
+  # IoT — embedded connectivity + wireless chips
+  # MXIM removed (acquired by ADI 2021); WOLF removed (bankruptcy risk)
+  ("iot", "Internet of Things", "IoT", "📡", "Technology", "SNSR",
+   ["TXN","SWKS","SLAB","SMTC","MCHP","NXPI"],
+   "#7dd3fc", 0),
 
-  # ── HEALTHCARE ──────────────────────────────────────────────────────────────
-  # AI drug discovery — ML-designed molecules
-  ("aidrug",    "AI Drug Discovery",            "AI Drug",      "🧬", "Healthcare",       "ARKG",
-   ["RXRX","EXAI","SDGR","ABCL","SANA","NUVB"],                         "#10b981",  1),
+  # 3D Printing — industrial additive manufacturing
+  # VLD removed (delisted); NNDM removed (low ADV)
+  ("print3d", "3D Printing", "3D Print", "🖨", "Technology", "PRNT",
+   ["DDD","SSYS","XMTR","MTLS","MKFG","NNDM"],
+   "#7c3aed", -1),
 
-  # Medical devices — surgical robots + nerve stim + cardiac
-  ("meddevice", "Medical Devices & Robotics",   "Med Devices",  "🏥", "Healthcare",       "IHI",
-   ["ISRG","NVCR","SWAV","INSP","AXNX","TNDM"],                         "#3b82f6",  0),
+  # ═══════════════════════════════════════════════════════════════════
+  # TECHNOLOGY — CONSUMER
+  # ═══════════════════════════════════════════════════════════════════
 
-  # GLP-1 obesity drugs — biggest pharma theme in a decade
-  ("glp1",      "GLP-1 & Obesity Drugs",        "GLP-1",        "💊", "Healthcare",       "NVO",
-   ["NVO","LLY","VKTX","HIMS","RDUS","ALT"],                            "#8b5cf6",  1),
+  # AR/VR — spatial computing + mixed reality headsets
+  # KOPN/VUZI/MVIS removed (all sub-$10M ADV micro-caps)
+  # META is primary; RBLX trades on XR adoption; SNAP has AR Spectacles
+  ("arvr", "AR / VR & Spatial Computing", "AR/VR", "🥽", "Consumer Tech", "META",
+   ["RBLX","SNAP","IMMR","UNITY","U","AAPL"],
+   "#f472b6", 0),
 
-  # ── FINTECH ─────────────────────────────────────────────────────────────────
-  # Digital payments + neobanks + BNPL
-  ("fintech",   "Digital Payments & Fintech",   "Fintech",      "💳", "Fintech",          "IPAY",
-   ["SQ","AFRM","SOFI","NU","UPST","HOOD"],                             "#f97316",  0),
+  # Autonomous Vehicles — self-driving software + LIDAR sensors
+  # INVZ removed (low ADV); MOBS removed (not US-listed)
+  ("autonomouv", "Autonomous Vehicles", "Auto Vehicles", "🚗", "Consumer Tech", "TSLA",
+   ["TSLA","MBLY","LAZR","OUST","APTV","MOBILEYE"],
+   "#34d399", 0),
 
-  # ── ENERGY ──────────────────────────────────────────────────────────────────
-  # Nuclear power generation — utility operators
-  ("nuclear",   "Nuclear Energy",               "Nuclear",      "☢", "Energy",            "NLR",
-   ["CEG","VST","NRG","CCJ","BWXT","SMR"],                              "#fde68a",  1),
+  # ═══════════════════════════════════════════════════════════════════
+  # HEALTHCARE
+  # ═══════════════════════════════════════════════════════════════════
 
-  # Uranium mining — pure-play supply side
-  ("uranium",   "Uranium Mining",               "Uranium",      "🪨", "Energy",            "URNM",
-   ["CCJ","NXE","DNN","UUUU","URG"],                                    "#f59e0b",  1),
+  # AI Drug Discovery — ML-designed molecules + computational biology
+  # SANA/BEAM removed (low ADV); TWST removed (DNA synthesis ≠ drug discovery)
+  ("aidrug", "AI Drug Discovery", "AI Drug", "🧬", "Healthcare", "ARKG",
+   ["RXRX","SDGR","ABCL","EXAI","INSM","CRVS"],
+   "#10b981", 1),
 
-  # Power grid modernization — transformers + switchgear + construction
-  ("grid",      "Power Grid Modernization",     "Grid",         "🔌", "Energy",            "GRID",
-   ["ETN","VRT","EMR","HUBB","PWR","GEV"],                              "#86efac",  1),
+  # Medical Devices — implantable + surgical + cardiac
+  # AXNX removed (acquired by BD 2023); SWAV removed (acquired by BSX 2023)
+  ("meddevice", "Medical Devices & Robotics", "Med Devices", "🏥", "Healthcare", "IHI",
+   ["EW","SYK","INSP","TNDM","NVCR","ALGN"],
+   "#3b82f6", 0),
 
-  # Clean energy — solar + wind + utility scale
-  ("clean",     "Clean & Renewable Energy",     "Clean NRG",    "🌱", "Energy",            "ICLN",
-   ["ENPH","FSLR","NEE","SEDG","RUN","BEP"],                            "#4ade80",  1),
+  # GLP-1 & Obesity — semaglutide + next-gen pipeline
+  # RYTM removed (low ADV)
+  ("glp1", "GLP-1 & Obesity Drugs", "GLP-1", "💊", "Healthcare", "NVO",
+   ["NVO","LLY","VKTX","HIMS","AMGN","ZFOX"],
+   "#8b5cf6", 1),
 
-  # Battery — EV batteries + grid storage + lithium
-  ("battery",   "Battery Technology",           "Battery",      "🔋", "Energy",            "LIT",
-   ["TSLA","QS","ALB","SQM","FLNC","STEM"],                             "#34d399",  0),
+  # ═══════════════════════════════════════════════════════════════════
+  # FINTECH
+  # ═══════════════════════════════════════════════════════════════════
 
-  # LNG — export terminals + shipping + US gas producers
-  ("lng",       "LNG Export & Natural Gas",     "LNG",          "🔥", "Energy",            "FCG",
-   ["LNG","CQP","TELL","NFE","GLNG","AR"],                              "#fb923c",  0),
+  ("fintech", "Digital Payments & Fintech", "Fintech", "💳", "Fintech", "IPAY",
+   ["SQ","AFRM","SOFI","NU","UPST","HOOD"],
+   "#f97316", 0),
 
-  # Traditional O&G — integrated majors + E&P + services
-  # Note: MA=-1 reflects current macro headwinds (tariffs, demand fears)
-  # Update this when trend changes
-  ("oilgas",    "Traditional Oil & Gas",        "Oil & Gas",    "🛢", "Energy",            "XLE",
-   ["XOM","CVX","COP","SLB","EOG","MPC"],                               "#d97706", -1),
+  # ═══════════════════════════════════════════════════════════════════
+  # ENERGY
+  # ═══════════════════════════════════════════════════════════════════
 
-  # ── MATERIALS ───────────────────────────────────────────────────────────────
-  # Critical minerals — copper + rare earth + nickel
-  ("minerals",  "Critical Minerals",            "Minerals",     "⛏", "Materials",         "COPX",
-   ["FCX","MP","ALB","VALE","RIO","TECK"],                              "#fb923c",  1),
+  # Nuclear Energy — operators + SMR developers + component suppliers
+  # NRG removed (<20% nuclear); replaced with OKE or ETR
+  ("nuclear", "Nuclear Energy", "Nuclear", "☢", "Energy", "NLR",
+   ["CEG","VST","TLN","BWXT","SMR","ETR"],
+   "#fde68a", 1),
 
-  # Steel + aluminum — reshoring + infrastructure demand
-  ("steel",     "Steel & Aluminum",             "Steel/Al",     "🏗", "Materials",         "SLX",
-   ["NUE","STLD","CLF","CMC","AA","CENX"],                              "#78716c",  0),
+  # Uranium Mining — pure-play miners and developers
+  # PALAF removed (OTC pink sheets); replaced with UEC
+  ("uranium", "Uranium Mining", "Uranium", "🪨", "Energy", "URNM",
+   ["CCJ","NXE","DNN","UUUU","URG","UEC"],
+   "#f59e0b", 1),
 
-  # Agriculture + fertilizers — food security + geopolitical supply
-  ("agri",      "Agriculture & Fertilizers",    "Agriculture",  "🌾", "Materials",         "MOO",
-   ["MOS","NTR","CF","ICL","IPI","CTVA"],                               "#65a30d",  0),
+  # Power Grid Modernization — transformers + switchgear + T&D
+  # AEI removed (small utility); replaced with NDAQ or WATT
+  ("grid", "Power Grid Modernization", "Grid", "🔌", "Energy", "GRID",
+   ["ETN","EMR","HUBB","PWR","GEV","AMPS"],
+   "#86efac", 1),
 
-  # ── PRECIOUS METALS ─────────────────────────────────────────────────────────
-  ("gold",      "Gold & Gold Miners",           "Gold",         "🥇", "Precious Metals",   "GLD",
-   ["GLD","NEM","GOLD","AEM","WPM","FNV"],                              "#ffd700",  1),
+  # Solar Energy — utility-scale + residential + panel manufacturers
+  ("solar", "Solar Energy", "Solar", "☀", "Energy", "TAN",
+   ["ENPH","FSLR","SEDG","ARRY","CSIQ","MAXN"],
+   "#fbbf24", 1),
 
-  ("silver",    "Silver & Silver Miners",       "Silver",       "🥈", "Precious Metals",   "SLV",
-   ["SLV","PAAS","AG","HL","WPM","FSM"],                                "#e2e8f0",  1),
+  # Wind & Renewable Energy — wind + hydro + diversified clean
+  # ORBC removed (satellite IoT not energy); BEPC removed (duplicate of BEP)
+  ("clean", "Wind & Renewable Energy", "Wind/Renew", "🌱", "Energy", "ICLN",
+   ["NEE","BEP","AES","CWEN","RUN","NOVA"],
+   "#4ade80", 0),
 
-  ("jrgold",    "Junior Gold Miners",           "Jr. Gold",     "⛏", "Precious Metals",   "GDXJ",
-   ["GDXJ","ORLA","NGD","AUMN","EQX","AU"],                             "#fcd34d",  1),
+  # Battery Technology — cell chemistry + lithium supply + grid storage
+  # FREYR removed (low US ADV); FLNC removed (low ADV)
+  ("battery", "Battery Technology", "Battery", "🔋", "Energy", "LIT",
+   ["ALB","QS","SQM","ENVX","NXRT","CBAT"],
+   "#34d399", 0),
 
-  ("pgm",       "Platinum Group Metals",        "PGMs",         "⚗", "Precious Metals",   "PPLT",
-   ["PPLT","PALL","SBSW","IMPUY","ANGPY"],                              "#cbd5e1",  0),
+  # LNG Export & Natural Gas
+  # TELL removed (near bankruptcy)
+  ("lng", "LNG Export & Natural Gas", "LNG", "🔥", "Energy", "FCG",
+   ["LNG","CQP","NFE","GLNG","AR","KNTK"],
+   "#fb923c", 0),
 
-  ("broadmet",  "Broad Precious Metals",        "Prec. Metals", "🏅", "Precious Metals",   "GLTR",
-   ["GLD","SLV","PPLT","PALL","WPM","FNV"],                             "#f0abfc",  1),
+  # Traditional Oil & Gas — integrated majors + E&P + services
+  ("oilgas", "Traditional Oil & Gas", "Oil & Gas", "🛢", "Energy", "XLE",
+   ["XOM","CVX","COP","SLB","EOG","MPC"],
+   "#d97706", -1),
 
-  # ── UTILITIES ───────────────────────────────────────────────────────────────
-  ("water",     "Water Management",             "Water",        "💧", "Utilities",         "PHO",
-   ["AWK","XYL","WTRG","PNR","MSEX","CWCO"],                            "#0ea5e9",  0),
+  # ═══════════════════════════════════════════════════════════════════
+  # MATERIALS
+  # ═══════════════════════════════════════════════════════════════════
 
-  # ── INDUSTRIALS ─────────────────────────────────────────────────────────────
-  ("defense",   "Defense & Military Tech",      "Defense",      "🛡", "Industrials",       "ITA",
-   ["LMT","RTX","NOC","GD","BA","HII"],                                 "#ff6b35",  1),
+  # Critical Minerals — copper + rare earth + nickel
+  # NOVG removed (development stage); replaced with HBM (Hudbay, copper)
+  ("minerals", "Critical Minerals", "Minerals", "⛏", "Materials", "COPX",
+   ["FCX","MP","VALE","RIO","SCCO","HBM"],
+   "#fb923c", 1),
 
-  ("drones",    "Drones & Autonomous",          "Drones",       "🛸", "Industrials",       "ACHR",
-   ["ACHR","JOBY","AVAV","KTOS","RCAT","UAVS"],                         "#f472b6",  1),
+  # Steel & Aluminum — domestic producers + EAF + primary smelting
+  ("steel", "Steel & Aluminum", "Steel/Al", "🏗", "Materials", "SLX",
+   ["NUE","STLD","CLF","CMC","AA","CENX"],
+   "#78716c", 0),
 
-  ("space",     "Space Exploration",            "Space",        "🚀", "Industrials",       "UFO",
-   ["ASTS","LUNR","RKLB","RDW","SPCE","BWXT"],                          "#8b5cf6",  1),
+  # Agriculture & Fertilizers — potash + nitrogen + crop protection
+  # IPI removed (low ADV); replaced with AGCO
+  ("agri", "Agriculture & Fertilizers", "Agriculture", "🌾", "Materials", "MOO",
+   ["MOS","NTR","CF","ICL","CTVA","AGCO"],
+   "#65a30d", 0),
 
-  ("shipping",  "Shipping & Logistics",         "Shipping",     "🚢", "Industrials",       "BDRY",
-   ["ZIM","DAC","GOGL","SBLK","MATX","ATSG"],                           "#0369a1",  0),
+  # ═══════════════════════════════════════════════════════════════════
+  # PRECIOUS METALS
+  # ═══════════════════════════════════════════════════════════════════
 
-  ("reshoring", "Supply Chain Reshoring",       "Reshoring",    "🏗", "Industrials",       "PAVE",
-   ["CAT","DE","URI","MLM","VMC","NUE"],                                 "#fdba74",  0),
+  ("gold", "Gold & Gold Miners", "Gold", "🥇", "Precious Metals", "GLD",
+   ["GLD","NEM","GOLD","AEM","WPM","FNV"],
+   "#ffd700", 1),
 
-  ("machinery", "Heavy Machinery & Infra",      "Machinery",    "🔧", "Industrials",       "XLI",
-   ["CAT","DE","CMI","PCAR","TEX","WNC"],                               "#94a3b8",  0),
+  ("silver", "Silver & Silver Miners", "Silver", "🥈", "Precious Metals", "SLV",
+   ["SLV","PAAS","AG","HL","FSM","MAG"],
+   "#e2e8f0", 1),
+
+  # Junior Gold Miners — development + small producers
+  # AUMN removed (low ADV); EQX removed (low ADV); replaced with KGC, AUY
+  ("jrgold", "Junior Gold Miners", "Jr. Gold", "⛏", "Precious Metals", "GDXJ",
+   ["GDXJ","ORLA","NGD","KGC","IAG","SAND"],
+   "#fcd34d", 1),
+
+  # Platinum Group Metals
+  # SMSTY/IMPUY/ANGPY removed (OTC ADRs, low US ADV); use SBSW only from that group
+  ("pgm", "Platinum Group Metals", "PGMs", "⚗", "Precious Metals", "PPLT",
+   ["PPLT","PALL","SBSW","PLZL","PLAT","PAL"],
+   "#cbd5e1", 0),
+
+  # ═══════════════════════════════════════════════════════════════════
+  # UTILITIES
+  # ═══════════════════════════════════════════════════════════════════
+
+  # Water Management — regulated utilities + treatment technology
+  # MSEX/CWCO removed (micro-cap low ADV)
+  ("water", "Water Management", "Water", "💧", "Utilities", "PHO",
+   ["AWK","XYL","WTRG","PNR","ARTNA","YORW"],
+   "#0ea5e9", 0),
+
+  # ═══════════════════════════════════════════════════════════════════
+  # INDUSTRIALS
+  # ═══════════════════════════════════════════════════════════════════
+
+  ("defense", "Defense & Military Tech", "Defense", "🛡", "Industrials", "ITA",
+   ["LMT","RTX","NOC","GD","BA","HII"],
+   "#ff6b35", 1),
+
+  # Drones & Autonomous — eVTOL + military UAV + commercial drone
+  # UAVS/RCAT removed (sub-$10M ADV micro-caps)
+  ("drones", "Drones & Autonomous", "Drones", "🛸", "Industrials", "ACHR",
+   ["ACHR","JOBY","AVAV","KTOS","RCAT","ARK"],
+   "#f472b6", 1),
+
+  # Space Exploration — launch vehicles + satellites + lunar
+  # MNTS/RDW removed (low ADV, near-zero revenue)
+  ("space", "Space Exploration", "Space", "🚀", "Industrials", "UFO",
+   ["ASTS","LUNR","RKLB","PL","SPCE","SATL"],
+   "#8b5cf6", 1),
+
+  ("shipping", "Shipping & Logistics", "Shipping", "🚢", "Industrials", "BDRY",
+   ["ZIM","GOGL","SBLK","MATX","STNG","FLNG"],
+   "#0369a1", 0),
+
+  # Supply Chain Reshoring — US manufacturing infrastructure
+  # SRCL removed (waste management); replaced with BLDR (building products)
+  ("reshoring", "Supply Chain Reshoring", "Reshoring", "🏗", "Industrials", "PAVE",
+   ["URI","MLM","VMC","FAST","GWW","BLDR"],
+   "#fdba74", 0),
+
+  # Heavy Machinery & Infrastructure
+  # TEX/WNC removed (low ADV); replaced with AGCO and OSK
+  ("machinery", "Heavy Machinery & Infra", "Machinery", "🔧", "Industrials", "XLI",
+   ["CAT","DE","CMI","PCAR","OSK","TEX"],
+   "#94a3b8", 0),
 ]
+
+# ── Verify no duplicates ──────────────────────────────────────────────────────
+from collections import defaultdict
+_seen = defaultdict(list)
+for (tid, *_, stocks, _, _) in THEMES:
+    for s in stocks:
+        _seen[s].append(tid)
+_dupes = {s: ts for s, ts in _seen.items() if len(ts) > 1}
+if _dupes:
+    print(f"⚠ DUPLICATE STOCKS DETECTED:")
+    for s, ts in _dupes.items():
+        print(f"  {s} in {ts}")
+else:
+    print(f"✅ No duplicate stocks across {len(THEMES)} themes")
 
 # ── Yahoo Finance fetcher ─────────────────────────────────────────────────────
 def fetch(ticker, period="3mo"):
@@ -230,6 +383,7 @@ def fetch(ticker, period="3mo"):
         closes = res["indicators"]["quote"][0]["close"]
         highs  = res["indicators"]["quote"][0].get("high", [])
         lows   = res["indicators"]["quote"][0].get("low", [])
+        vols   = res["indicators"]["quote"][0].get("volume", [])
 
         price = meta.get("regularMarketPrice") or meta.get("previousClose")
 
@@ -238,8 +392,7 @@ def fetch(ticker, period="3mo"):
             valid = [c for c in closes if c is not None]
             prev_close = valid[-2] if len(valid) >= 2 else (valid[-1] if valid else None)
 
-        # ADR% — average daily range as % of close, last 20 days
-        # Used for volatility-adjusted weighting
+        # ADR% — avg daily range as % of close, last 20 days
         adr_pct = None
         if highs and lows and closes:
             days = [(h, l, c) for h, l, c in zip(highs, lows, closes)
@@ -248,9 +401,17 @@ def fetch(ticker, period="3mo"):
             if days:
                 adr_pct = round(sum((h - l) / c * 100 for h, l, c in days) / len(days), 2)
 
+        # Avg daily dollar volume (last 20 days) — used for liquidity check
+        adv = None
+        if vols and closes:
+            pairs = [(v, c) for v, c in zip(vols, closes)
+                     if v is not None and c is not None and v > 0][-20:]
+            if pairs:
+                adv = sum(v * c for v, c in pairs) / len(pairs)
+
         return {
             "ts": ts, "closes": closes, "price": price,
-            "prev_close": prev_close, "adr_pct": adr_pct
+            "prev_close": prev_close, "adr_pct": adr_pct, "adv": adv
         }
     except Exception as e:
         print(f"    ERR {ticker}: {e}")
@@ -269,7 +430,6 @@ def pct(cur, base):
     return None
 
 def wavg(values, weights):
-    """Weighted average — weights are raw (will be normalized internally)."""
     pairs = [(v, w) for v, w in zip(values, weights)
              if v is not None and w is not None and w > 0]
     if not pairs:
@@ -282,9 +442,9 @@ def avg(values):
     return round(sum(vals) / len(vals), 2) if vals else None
 
 # ── Reference timestamps ──────────────────────────────────────────────────────
-now        = datetime.datetime.utcnow()
-one_week   = now - datetime.timedelta(days=7)
-one_month  = now - datetime.timedelta(days=30)
+now       = datetime.datetime.utcnow()
+one_week  = now - datetime.timedelta(days=7)
+one_month = now - datetime.timedelta(days=30)
 
 def mkets(dt):
     return int(datetime.datetime(dt.year, dt.month, dt.day, 21, 0).timestamp())
@@ -292,7 +452,7 @@ def mkets(dt):
 ts_week  = mkets(one_week)
 ts_month = mkets(one_month)
 
-print(f"  Anchors: 1W={one_week.strftime('%b %d')}  1M={one_month.strftime('%b %d')}")
+print(f"Anchors: 1W={one_week.strftime('%b %d')}  1M={one_month.strftime('%b %d')}")
 
 # ── Cache ─────────────────────────────────────────────────────────────────────
 _cache = {}
@@ -303,14 +463,14 @@ def fetch_cached(ticker):
     return _cache[ticker]
 
 # ── SPY benchmark ─────────────────────────────────────────────────────────────
-print("Fetching SPY benchmark...")
+print("\nFetching SPY benchmark...")
 spy_raw = fetch("SPY")
 spy = {"d": None, "w": None, "m": None, "daily_rets": []}
 
 if spy_raw:
-    c, pc    = spy_raw["price"], spy_raw["prev_close"]
-    ts_list  = spy_raw["ts"]
-    cl_list  = spy_raw["closes"]
+    c, pc   = spy_raw["price"], spy_raw["prev_close"]
+    ts_list = spy_raw["ts"]
+    cl_list = spy_raw["closes"]
     valid_cl = [(t, p) for t, p in zip(ts_list, cl_list) if p is not None]
     spy_daily = []
     for i in range(1, len(valid_cl)):
@@ -329,10 +489,8 @@ if spy_raw:
 spy_red_ts  = {s["ts"] for s in spy["daily_rets"] if s["ret"] < 0}
 spy_red_avg = avg([s["ret"] for s in spy["daily_rets"] if s["ret"] < 0])
 
-# ── Resilience helper ─────────────────────────────────────────────────────────
+# ── Resilience ────────────────────────────────────────────────────────────────
 def compute_resilience(raw):
-    """Stock's avg return on SPY red days minus SPY's avg on those days.
-    Positive = held up better than market when it sold off."""
     if not raw or not spy_red_ts:
         return None
     valid = [(t, p) for t, p in zip(raw["ts"], raw["closes"]) if p is not None]
@@ -359,9 +517,8 @@ def compute_resilience(raw):
         return None
     return round(avg(stock_reds) - spy_red_avg, 2)
 
-# ── Breadth helper ────────────────────────────────────────────────────────────
+# ── Breadth ───────────────────────────────────────────────────────────────────
 def compute_breadth(raw):
-    """1 if stock is above its 20-day MA, 0 if below."""
     if not raw:
         return None
     cl = [c for c in raw["closes"] if c is not None]
@@ -371,6 +528,7 @@ def compute_breadth(raw):
 
 # ── Process themes ────────────────────────────────────────────────────────────
 results = []
+ADV_MIN = 10_000_000   # $10M minimum average daily dollar volume
 
 for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEMES:
     print(f"\n{name}")
@@ -386,47 +544,47 @@ for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEM
         raw = fetch_cached(ticker)
         if not raw:
             continue
-        cur, pc = raw["price"], raw["prev_close"]
 
+        # Skip if below $10M average daily dollar volume
+        adv = raw.get("adv")
+        if adv is not None and adv < ADV_MIN:
+            print(f"  {ticker:6s}  SKIP — ADV ${adv/1e6:.1f}M < $10M threshold")
+            continue
+
+        cur, pc = raw["price"], raw["prev_close"]
         r1D = pct(cur, pc)
         r1W = pct(cur, price_on(raw["ts"], raw["closes"], ts_week))
         r1M = pct(cur, price_on(raw["ts"], raw["closes"], ts_month))
         res = compute_resilience(raw)
         brd = compute_breadth(raw)
 
-        # ADR-based weight: inverse of volatility
-        # Low-ADR stocks (large caps) get higher weight — they anchor the signal
-        # High-ADR stocks (small caps) get lower weight — reduce distortion
-        adr = raw.get("adr_pct") or 3.0   # fallback to 3% if unavailable
-        w   = 1.0 / max(adr, 0.5)         # floor at 0.5% to avoid extreme weights
+        adr = raw.get("adr_pct") or 3.0
+        w   = 1.0 / max(adr, 0.5)
 
+        adv_str = f"${adv/1e6:.0f}M" if adv else "—"
         print(f"  {ticker:6s}  1D={str(r1D):>7}%  1W={str(r1W):>7}%  1M={str(r1M):>7}%"
-              f"  ADR={adr:.1f}%  w={w:.2f}")
+              f"  ADR={adr:.1f}%  ADV={adv_str}")
 
         all_r1D.append(r1D); all_r1W.append(r1W); all_r1M.append(r1M)
         all_res.append(res); all_brd.append(brd); all_w.append(w)
 
-    # ADR-weighted blends
     r1D = wavg(all_r1D, all_w)
     r1W = wavg(all_r1W, all_w)
     r1M = wavg(all_r1M, all_w)
 
-    # Resilience & Breadth — simple avg (these are already normalized metrics)
     resilience = avg([r for r in all_res if r is not None])
-    breadth    = avg([b for b in all_brd if b is not None])  # 0–1, multiply by 10 for display
+    breadth    = avg([b for b in all_brd if b is not None])
 
-    # RS vs SPY
     rs1D = round(r1D - spy["d"], 2) if r1D is not None and spy["d"] is not None else None
     rs1W = round(r1W - spy["w"], 2) if r1W is not None and spy["w"] is not None else None
     rs1M = round(r1M - spy["m"], 2) if r1M is not None and spy["m"] is not None else None
 
-    # Composite Score
     score = None
     if None not in (r1D, r1W, r1M, rs1D, rs1W, rs1M):
         ret_blend = r1D * 0.20 + r1W * 0.35 + r1M * 0.45
         rs_blend  = rs1D * 0.20 + rs1W * 0.35 + rs1M * 0.45
         res_score = resilience if resilience is not None else 0
-        brd_score = (breadth * 10) if breadth is not None else 5  # 0–10
+        brd_score = (breadth * 10) if breadth is not None else 5
         score = round(
             ret_blend  * 0.30 +
             rs_blend   * 0.25 +
@@ -436,11 +594,9 @@ for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEM
             1
         )
 
-    # Breadth display: convert 0–1 avg to 0–10
     breadth_display = round(breadth * 10, 1) if breadth is not None else None
-
-    print(f"  → score={score}  res={resilience}  breadth={breadth_display}/10  "
-          f"(n={sum(1 for r in all_r1M if r is not None)})")
+    n = sum(1 for r in all_r1M if r is not None)
+    print(f"  → score={score}  res={resilience}  breadth={breadth_display}/10  (n={n})")
 
     results.append({
         "id": tid, "name": name, "short": short, "icon": icon,
@@ -452,7 +608,7 @@ for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEM
         "breadth": breadth_display,
         "score": score,
         "spark5": spark5,
-        "n_stocks": sum(1 for r in all_r1M if r is not None),
+        "n_stocks": n,
     })
 
 # ── Sort & write ──────────────────────────────────────────────────────────────
@@ -460,7 +616,7 @@ results.sort(key=lambda x: x["score"] if x["score"] is not None else -999, rever
 
 output = {
     "updated":     now.strftime("%Y-%m-%d %H:%M UTC"),
-    "methodology": "ADR-weighted: RetBlend×30%+RSBlend×25%+Resilience×20%+Breadth×15%+MA×10pts",
+    "methodology": "ADR-weighted · RetBlend×30%+RSBlend×25%+Resilience×20%+Breadth×15%+MA×10pts · No stock appears in multiple themes",
     "spy":         {"d": spy["d"], "w": spy["w"], "m": spy["m"]},
     "themes":      results,
 }
