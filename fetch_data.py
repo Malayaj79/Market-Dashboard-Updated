@@ -282,15 +282,17 @@ def avg(values):
     return round(sum(vals) / len(vals), 2) if vals else None
 
 # ── Reference timestamps ──────────────────────────────────────────────────────
-now       = datetime.datetime.utcnow()
-last_fri  = now - datetime.timedelta(days=max((now.weekday() - 4) % 7, 1))
-month_end = now.replace(day=1) - datetime.timedelta(days=1)
+now        = datetime.datetime.utcnow()
+one_week   = now - datetime.timedelta(days=7)
+one_month  = now - datetime.timedelta(days=30)
 
 def mkets(dt):
     return int(datetime.datetime(dt.year, dt.month, dt.day, 21, 0).timestamp())
 
-ts_fri   = mkets(last_fri)
-ts_month = mkets(month_end)
+ts_week  = mkets(one_week)
+ts_month = mkets(one_month)
+
+print(f"  Anchors: 1W={one_week.strftime('%b %d')}  1M={one_month.strftime('%b %d')}")
 
 # ── Cache ─────────────────────────────────────────────────────────────────────
 _cache = {}
@@ -318,7 +320,7 @@ if spy_raw:
     spy_daily = spy_daily[-20:]
     spy = {
         "d": pct(c, pc),
-        "w": pct(c, price_on(ts_list, cl_list, ts_fri)),
+        "w": pct(c, price_on(ts_list, cl_list, ts_week)),
         "m": pct(c, price_on(ts_list, cl_list, ts_month)),
         "daily_rets": spy_daily,
     }
@@ -387,7 +389,7 @@ for (tid, name, short, icon, sector, proxy_etf, constituents, color, ma) in THEM
         cur, pc = raw["price"], raw["prev_close"]
 
         r1D = pct(cur, pc)
-        r1W = pct(cur, price_on(raw["ts"], raw["closes"], ts_fri))
+        r1W = pct(cur, price_on(raw["ts"], raw["closes"], ts_week))
         r1M = pct(cur, price_on(raw["ts"], raw["closes"], ts_month))
         res = compute_resilience(raw)
         brd = compute_breadth(raw)
