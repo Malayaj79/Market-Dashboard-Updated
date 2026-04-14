@@ -115,6 +115,16 @@ td:first-child,td:nth-child(2){text-align:left}
 .brd-bar-bg{width:40px;height:4px;background:var(--dim);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px}
 .brd-bar-fill{height:100%;border-radius:2px;background:var(--amber)}
 
+
+/* EMERGING SCORE */
+.emg-badge{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.emg-hot{background:#ff6b0015;color:#ff6b00;border:1px solid #ff6b0040}
+.emg-warm{background:#ffab0015;color:#ffab00;border:1px solid #ffab0040}
+.emg-cool{background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+.emg-signals{display:flex;gap:3px;margin-top:3px;flex-wrap:wrap}
+.sig{font-family:var(--mono);font-size:7px;padding:1px 4px;border-radius:2px;letter-spacing:.3px}
+.sig-on{background:#00e67615;color:var(--green);border:1px solid #00e67630}
+.sig-off{background:var(--dim);color:var(--muted);border:1px solid var(--dim)}
 /* SPARK */
 .sp-cell{padding:4px 10px}
 canvas.sp{display:block}
@@ -189,6 +199,7 @@ canvas.sp{display:block}
       <span class="tab" id="s-rs" onclick="setSort('rs')">VS SPY</span>
       <span class="tab" id="s-res" onclick="setSort('res')">RESILIENCE</span>
       <span class="tab" id="s-brd" onclick="setSort('brd')">BREADTH</span>
+      <span class="tab" id="s-emg" onclick="setSort('emg')">EMERGING</span>
       <span class="sep"></span>
       <span class="fl">TIMEFRAME</span>
       <span class="tab on" id="tf-1M" onclick="setTf('1M')">1M</span>
@@ -650,6 +661,7 @@ function sorted(){
   else if(sortBy==='rs')l.sort((a,b)=>(gRS(b)??-999)-(gRS(a)??-999));
   else if(sortBy==='res')l.sort((a,b)=>(b.resilience??-999)-(a.resilience??-999));
   else if(sortBy==='brd')l.sort((a,b)=>(b.breadth??-999)-(a.breadth??-999));
+  else if(sortBy==='emg')l.sort((a,b)=>(b.emerging??-999)-(a.emerging??-999));
   return l;
 }
 function gRank(id){return[...D.themes].sort((a,b)=>(b.score??-999)-(a.score??-999)).findIndex(t=>t.id===id)+1}
@@ -711,15 +723,30 @@ function buildSectorTabs(){
     sectors.map(s=>`<span class="tab${s===sect?' on':''}" onclick="sect='${s}';renderTable()">${s.toUpperCase()}</span>`).join('');
 }
 
+
+// ── EMERGING SCORE CELL ───────────────────────────────────────────────────
+function buildEmgCell(t){
+  const e = t.emerging;
+  if(e==null) return '<span class="emg-badge emg-cool">—</span>';
+  const cls = e>=7?'emg-hot':e>=5?'emg-warm':'emg-cool';
+  const va = t.vol_accum, ac = t.adr_contraction, rs = t.rs_trend;
+  const sigs = [
+    va!=null&&va>=1.4 ? '<span class="sig sig-on">VOL+</span>' : '<span class="sig sig-off">VOL</span>',
+    ac!=null&&ac>=1.3 ? '<span class="sig sig-on">TIGHT</span>' : '<span class="sig sig-off">TIGHT</span>',
+    rs!=null&&rs>0    ? '<span class="sig sig-on">RS↑</span>'   : '<span class="sig sig-off">RS↑</span>',
+  ].join('');
+  return \`<div><span class="emg-badge \${cls}">\${e.toFixed(1)}</span><div class="emg-signals">\${sigs}</div></div>\`;
+}
+
 // ── TABLE ─────────────────────────────────────────────────────────────────
 function renderTable(){
-  ['score','ret','rs','res','brd'].forEach(s=>{const el=document.getElementById('s-'+s);if(el)el.className='tab'+(sortBy===s?' on':'');});
+  ['score','ret','rs','res','brd','emg'].forEach(s=>{const el=document.getElementById('s-'+s);if(el)el.className='tab'+(sortBy===s?' on':'');});
   ['1D','1W','1M'].forEach(t=>{const el=document.getElementById('tf-'+t);if(el)el.className='tab'+(tf===t?' on':'');});
   buildSectorTabs();
   const list=sorted();
   let h=`<table><thead><tr>
     <th>#</th><th>THEME</th><th>1D%</th><th>1W%</th><th>1M%</th>
-    <th>VS SPY ${tf}</th><th>RESILIENCE</th><th>BREADTH</th><th>5D TREND</th><th>SCORE</th><th>STOCKS</th>
+    <th>VS SPY ${tf}</th><th>RESILIENCE</th><th>BREADTH</th><th>5D TREND</th><th>SCORE</th><th>EMERGING</th><th>STOCKS</th>
   </tr></thead><tbody>`;
   list.forEach(t=>{
     const gr=gRank(t.id),rs=gRS(t),sc=t.score;
@@ -748,9 +775,10 @@ function renderTable(){
         <span class="sc-num ${fc(sc)}">${sc!=null?(sc>=0?'+':'')+sc:'—'}</span>
         <div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${bp}%;background:${bc}"></div></div>
       </div></td>
+      <td>${buildEmgCell(t)}</td>
       <td><span class="h-tog" onclick="event.stopPropagation();togH('h-${t.id}')">▸ ${t.stocks.length}</span></td>
     </tr>
-    <tr class="h-row" id="h-${t.id}"><td colspan="11">
+    <tr class="h-row" id="h-${t.id}"><td colspan="12">
       <div class="h-grid">${t.stocks.map(s=>{
         const [cname,role]=CM[s]||[s,'Key constituent'];
         return`<div class="h-card" style="border-left-color:${t.color}">
