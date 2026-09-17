@@ -54,7 +54,11 @@ td:first-child,td:nth-child(2){text-align:left}
 .r-num{color:var(--muted);width:28px;font-size:10px}
 .r-name{color:var(--text);font-weight:500}
 
-/* MA PILLS */
+/* SORTABLE HEADERS */
+thead th.sortable{cursor:pointer;user-select:none;transition:color .12s}
+thead th.sortable:hover{color:var(--cyan)}
+thead th.sortable.active{color:var(--cyan)}
+.sort-arrow{font-size:8px;margin-left:3px}
 .ma-pill{font-family:var(--mono);font-size:10px;font-weight:700;border-radius:3px;padding:2px 7px;white-space:nowrap;display:inline-block}
 .ma-cnt{font-family:var(--mono);font-size:8px;color:var(--muted);margin-left:5px}
 
@@ -97,7 +101,7 @@ td:first-child,td:nth-child(2){text-align:left}
 <div class="section">
   <div class="sec-hdr">
     <span class="sec-title">MA BREADTH</span>
-    <span class="sec-sub">% OF CONSTITUENTS ABOVE EACH MA · SORTABLE · CLICK ▸ TO EXPAND</span>
+    <span class="sec-sub">% OF CONSTITUENTS ABOVE EACH MA · CLICK A COLUMN TO SORT · CLICK ▸ TO EXPAND</span>
   </div>
   <div class="sec-body">
     <div class="bm-bar" id="bm-bar"></div>
@@ -118,7 +122,7 @@ td:first-child,td:nth-child(2){text-align:left}
 
 <script>
 // ── STATE ─────────────────────────────────────────────────────────────────
-let D=null, maSortBy='ma50';
+let D=null, maSortBy='ma50', maSortDir='desc';
 
 // ── LOAD ──────────────────────────────────────────────────────────────────
 async function load(){
@@ -174,10 +178,15 @@ function renderBenchmarkBar(){
 }
 
 // ── MASTER TABLE ─────────────────────────────────────────────────────────
-function setMaSort(col){maSortBy=col;renderMaBreadth();}
+function setMaSort(col){
+  if(maSortBy===col){maSortDir=maSortDir==='desc'?'asc':'desc';}   // clicking the same column again flips direction
+  else{maSortBy=col;maSortDir='desc';}                             // clicking a new column defaults to highest-first
+  renderMaBreadth();
+}
 function maSorted(){
   const field=maSortBy+'_pct';
-  return [...D.themes].sort((a,b)=>(b[field]??-1)-(a[field]??-1));
+  const mult=maSortDir==='desc'?-1:1;
+  return [...D.themes].sort((a,b)=>mult*((a[field]??-1)-(b[field]??-1)));
 }
 function togH(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==='table-row'?'none':'table-row';}
 
@@ -185,8 +194,14 @@ function renderMaBreadth(){
   renderBenchmarkBar();
   ['ma10','ma20','ma50'].forEach(k=>{const el=document.getElementById('ms-'+k);if(el)el.className='tab'+(maSortBy===k?' on':'');});
   const list=maSorted();
+  const arrow=col=>maSortBy===col?`<span class="sort-arrow">${maSortDir==='desc'?'▼':'▲'}</span>`:'';
+  const thCls=col=>'sortable'+(maSortBy===col?' active':'');
   let h=`<table><thead><tr>
-    <th>#</th><th>THEME</th><th>10MA</th><th>20MA</th><th>50MA</th><th>STOCKS</th>
+    <th>#</th><th>THEME</th>
+    <th class="${thCls('ma10')}" onclick="setMaSort('ma10')">10MA${arrow('ma10')}</th>
+    <th class="${thCls('ma20')}" onclick="setMaSort('ma20')">20MA${arrow('ma20')}</th>
+    <th class="${thCls('ma50')}" onclick="setMaSort('ma50')">50MA${arrow('ma50')}</th>
+    <th>STOCKS</th>
   </tr></thead><tbody>`;
   list.forEach((t,i)=>{
     h+=`<tr>
