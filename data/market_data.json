@@ -1,21 +1,21 @@
 {
-  "updated": "2026-09-17 18:58 UTC",
+  "updated": "2026-09-17 19:02 UTC",
   "methodology": "MA breadth only \u2014 % of constituents above their 10/20/50-day MA. No composite scoring.",
   "benchmarks": {
     "SPY": {
-      "price": 762.3,
+      "price": 762.49,
       "ma10": 0,
       "ma20": 0,
       "ma50": 1
     },
     "QQQ": {
-      "price": 716.165,
+      "price": 716.31,
       "ma10": 1,
       "ma20": 1,
       "ma50": 1
     },
     "RSP": {
-      "price": 213.6,
+      "price": 213.665,
       "ma10": 0,
       "ma20": 0,
       "ma50": 0
@@ -113,8 +113,8 @@
       "color": "#a78bfa",
       "ma10_pct": 60.0,
       "ma10_cnt": "3/5",
-      "ma20_pct": 20.0,
-      "ma20_cnt": "1/5",
+      "ma20_pct": 40.0,
+      "ma20_cnt": "2/5",
       "ma50_pct": 20.0,
       "ma50_cnt": "1/5",
       "ma_detail": [
@@ -127,7 +127,7 @@
         {
           "ticker": "AMBA",
           "ma10": 1,
-          "ma20": 0,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -1410,8 +1410,8 @@
       "color": "#f87171",
       "ma10_pct": 50.0,
       "ma10_cnt": "7/14",
-      "ma20_pct": 71.4,
-      "ma20_cnt": "10/14",
+      "ma20_pct": 78.6,
+      "ma20_cnt": "11/14",
       "ma50_pct": 21.4,
       "ma50_cnt": "3/14",
       "ma_detail": [
@@ -1466,7 +1466,7 @@
         {
           "ticker": "CORZ",
           "ma10": 0,
-          "ma20": 0,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -1518,8 +1518,8 @@
       "color": "#fde68a",
       "ma10_pct": 20.0,
       "ma10_cnt": "1/5",
-      "ma20_pct": 20.0,
-      "ma20_cnt": "1/5",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/5",
       "ma50_pct": 20.0,
       "ma50_cnt": "1/5",
       "ma_detail": [
@@ -1532,7 +1532,7 @@
         {
           "ticker": "OKLO",
           "ma10": 1,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -2112,8 +2112,8 @@
         "VSAT"
       ],
       "color": "#7c3aed",
-      "ma10_pct": 60.0,
-      "ma10_cnt": "3/5",
+      "ma10_pct": 80.0,
+      "ma10_cnt": "4/5",
       "ma20_pct": 80.0,
       "ma20_cnt": "4/5",
       "ma50_pct": 40.0,
@@ -2145,7 +2145,7 @@
         },
         {
           "ticker": "VSAT",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 1,
           "ma50": 0
         }
