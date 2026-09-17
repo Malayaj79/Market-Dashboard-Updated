@@ -1,1455 +1,1628 @@
 {
-  "updated": "2026-09-16 23:59 UTC",
-  "methodology": "Pure constituent scoring \u00b7 No ETF proxy \u00b7 ADR-weighted \u00b7 RetBlend\u00d735%+RSBlend\u00d730%+Resilience\u00d720%+Breadth\u00d715%",
-  "spy": {
-    "d": -0.44,
-    "w": -1.1,
-    "m": -2.41
+  "updated": "2026-09-17 17:38 UTC",
+  "methodology": "MA breadth only \u2014 % of constituents above their 10/21/50-day MA. No composite scoring.",
+  "benchmarks": {
+    "SPY": {
+      "price": 762.23,
+      "ma10": 0,
+      "ma21": 0,
+      "ma50": 1
+    },
+    "QQQ": {
+      "price": 716.38,
+      "ma10": 1,
+      "ma21": 1,
+      "ma50": 1
+    },
+    "RSP": {
+      "price": 213.655,
+      "ma10": 0,
+      "ma21": 0,
+      "ma50": 0
+    }
   },
   "themes": [
-    {
-      "id": "cyber",
-      "name": "Cybersecurity",
-      "short": "Cyber",
-      "icon": "\ud83d\udd10",
-      "sector": "Technology",
-      "stocks": [
-        "CRWD",
-        "PANW",
-        "FTNT",
-        "S",
-        "OKTA",
-        "ZS"
-      ],
-      "color": "#22d3ee",
-      "price": 198.61,
-      "ret1D": 1.17,
-      "ret1W": 13.32,
-      "ret1M": 10.49,
-      "rs1D": 1.61,
-      "rs1W": 14.42,
-      "rs1M": 12.9,
-      "resilience": 0.85,
-      "breadth": 10.0,
-      "score": 8.4,
-      "emerging": 6.6,
-      "vol_accum": 1.33,
-      "adr_contraction": 0.99,
-      "rs_trend": 1.13,
-      "spark5": [
-        100.0,
-        100.32,
-        99.08,
-        112.13,
-        114.34
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "print3d",
-      "name": "3D Printing",
-      "short": "3D Print",
-      "icon": "\ud83d\udda8",
-      "sector": "Technology",
-      "stocks": [
-        "DDD",
-        "SSYS",
-        "XMTR",
-        "MTLS",
-        "MKFG",
-        "NNDM"
-      ],
-      "color": "#7c3aed",
-      "price": 22.62,
-      "ret1D": 9.55,
-      "ret1W": 8.83,
-      "ret1M": 3.81,
-      "rs1D": 9.99,
-      "rs1W": 9.93,
-      "rs1M": 6.22,
-      "resilience": -0.37,
-      "breadth": 10.0,
-      "score": 6.3,
-      "emerging": 5.5,
-      "vol_accum": 1.46,
-      "adr_contraction": 1.19,
-      "rs_trend": 0.17,
-      "spark5": [
-        100.0,
-        99.1,
-        100.78,
-        99.54,
-        99.59
-      ],
-      "n_stocks": 1
-    },
-    {
-      "id": "arvr",
-      "name": "AR / VR & Spatial Computing",
-      "short": "AR/VR",
-      "icon": "\ud83e\udd7d",
-      "sector": "Consumer Tech",
-      "stocks": [
-        "RBLX",
-        "SNAP",
-        "IMMR",
-        "UNITY",
-        "U",
-        "AAPL"
-      ],
-      "color": "#f472b6",
-      "price": 86.96,
-      "ret1D": -2.61,
-      "ret1W": 4.49,
-      "ret1M": 8.36,
-      "rs1D": -2.17,
-      "rs1W": 5.59,
-      "rs1M": 10.77,
-      "resilience": 0.84,
-      "breadth": 7.5,
-      "score": 4.9,
-      "emerging": 5.0,
-      "vol_accum": 1.2,
-      "adr_contraction": 1.01,
-      "rs_trend": 0.23,
-      "spark5": [
-        100.0,
-        101.23,
-        103.47,
-        105.97,
-        104.98
-      ],
-      "n_stocks": 4
-    },
-    {
-      "id": "shipping",
-      "name": "Shipping & Logistics",
-      "short": "Shipping",
-      "icon": "\ud83d\udea2",
-      "sector": "Industrials",
-      "stocks": [
-        "ZIM",
-        "GOGL",
-        "SBLK",
-        "MATX",
-        "STNG",
-        "FLNG"
-      ],
-      "color": "#0369a1",
-      "price": 72.9,
-      "ret1D": -0.08,
-      "ret1W": 1.96,
-      "ret1M": 4.6,
-      "rs1D": 0.36,
-      "rs1W": 3.06,
-      "rs1M": 7.01,
-      "resilience": 0.8,
-      "breadth": 10.0,
-      "score": 3.9,
-      "emerging": 5.2,
-      "vol_accum": 1.14,
-      "adr_contraction": 1.08,
-      "rs_trend": 0.09,
-      "spark5": [
-        100.0,
-        100.66,
-        101.78,
-        103.52,
-        103.61
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "agri",
-      "name": "Agriculture & Fertilizers",
-      "short": "Agriculture",
-      "icon": "\ud83c\udf3e",
-      "sector": "Materials",
-      "stocks": [
-        "MOS",
-        "NTR",
-        "CF",
-        "ICL",
-        "CTVA",
-        "SQM"
-      ],
-      "color": "#65a30d",
-      "price": 64.94,
-      "ret1D": -0.6,
-      "ret1W": -5.39,
-      "ret1M": 7.57,
-      "rs1D": -0.16,
-      "rs1W": -4.29,
-      "rs1M": 9.98,
-      "resilience": 1.03,
-      "breadth": 6.0,
-      "score": 2.5,
-      "emerging": 3.8,
-      "vol_accum": 1.26,
-      "adr_contraction": 0.92,
-      "rs_trend": -0.23,
-      "spark5": [
-        100.0,
-        97.55,
-        96.25,
-        94.92,
-        96.32
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "ai",
-      "name": "Artificial Intelligence",
-      "short": "AI",
-      "icon": "\u26a1",
-      "sector": "Technology",
-      "stocks": [
-        "NVDA",
-        "PLTR",
-        "AI",
-        "MSFT",
-        "META",
-        "GOOGL"
-      ],
-      "color": "#00d4ff",
-      "price": 317.55,
-      "ret1D": -0.67,
-      "ret1W": 1.04,
-      "ret1M": 3.28,
-      "rs1D": -0.23,
-      "rs1W": 2.14,
-      "rs1M": 5.69,
-      "resilience": 0.08,
-      "breadth": 5.0,
-      "score": 2.3,
-      "emerging": 4.6,
-      "vol_accum": 1.12,
-      "adr_contraction": 1.05,
-      "rs_trend": 0.01,
-      "spark5": [
-        100.0,
-        100.54,
-        102.68,
-        102.48,
-        102.05
-      ],
-      "n_stocks": 6
-    },
     {
       "id": "agenticai",
       "name": "Agentic AI",
       "short": "Agentic AI",
       "icon": "\ud83e\udde0",
-      "sector": "Technology",
+      "sector": "AI Software",
       "stocks": [
-        "CRM",
-        "ORCL",
-        "PEGA",
-        "GTLB",
+        "PATH",
         "SOUN",
-        "BBAI"
+        "FIVN",
+        "PEGA",
+        "RNG",
+        "DOCN",
+        "ZETA",
+        "FSLY"
       ],
       "color": "#818cf8",
-      "price": 81.33,
-      "ret1D": -4.0,
-      "ret1W": -1.53,
-      "ret1M": 6.34,
-      "rs1D": -3.56,
-      "rs1W": -0.43,
-      "rs1M": 8.75,
-      "resilience": -0.58,
-      "breadth": 5.0,
-      "score": 2.1,
-      "emerging": 4.2,
-      "vol_accum": 1.13,
-      "adr_contraction": 0.97,
-      "rs_trend": 0.06,
-      "spark5": [
-        100.0,
-        99.13,
-        99.56,
-        102.38,
-        99.92
+      "ma10_pct": 50.0,
+      "ma10_cnt": "4/8",
+      "ma21_pct": 62.5,
+      "ma21_cnt": "5/8",
+      "ma50_pct": 75.0,
+      "ma50_cnt": "6/8",
+      "ma_detail": [
+        {
+          "ticker": "PATH",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "SOUN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FIVN",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "PEGA",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "RNG",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "DOCN",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "ZETA",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "FSLY",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
       ],
-      "n_stocks": 6
+      "n_stocks": 8
     },
     {
-      "id": "saas",
-      "name": "Software as a Service",
-      "short": "SaaS",
-      "icon": "\ud83e\udde9",
-      "sector": "Technology",
+      "id": "edgeai",
+      "name": "Edge AI",
+      "short": "Edge AI",
+      "icon": "\ud83d\udcf1",
+      "sector": "AI Software",
       "stocks": [
-        "NOW",
-        "HUBS",
-        "BILL",
-        "INTU",
-        "VEEV",
-        "ZM"
+        "OUST",
+        "AMBA",
+        "QCOM",
+        "LSCC",
+        "SYNA"
       ],
-      "color": "#6ee7b7",
-      "price": 183.38,
-      "ret1D": -3.0,
-      "ret1W": 1.43,
-      "ret1M": 3.21,
-      "rs1D": -2.56,
-      "rs1W": 2.53,
-      "rs1M": 5.62,
-      "resilience": -0.15,
-      "breadth": 5.0,
-      "score": 2.1,
-      "emerging": 5.1,
-      "vol_accum": 1.07,
-      "adr_contraction": 1.17,
-      "rs_trend": 0.35,
-      "spark5": [
-        100.0,
-        99.24,
-        99.99,
-        105.02,
-        103.57
+      "color": "#a78bfa",
+      "ma10_pct": 60.0,
+      "ma10_cnt": "3/5",
+      "ma21_pct": 20.0,
+      "ma21_cnt": "1/5",
+      "ma50_pct": 20.0,
+      "ma50_cnt": "1/5",
+      "ma_detail": [
+        {
+          "ticker": "OUST",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "AMBA",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "QCOM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "LSCC",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "SYNA",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
-      "n_stocks": 6
+      "n_stocks": 5
     },
     {
-      "id": "aidrug",
-      "name": "AI Drug Discovery",
-      "short": "AI Drug",
+      "id": "enterpriseaisoftware",
+      "name": "Enterprise AI Software",
+      "short": "Ent. AI SW",
+      "icon": "\ud83d\uddc4",
+      "sector": "AI Software",
+      "stocks": [
+        "SNOW",
+        "SAP",
+        "MDB",
+        "NOW",
+        "CRM"
+      ],
+      "color": "#60a5fa",
+      "ma10_pct": 80.0,
+      "ma10_cnt": "4/5",
+      "ma21_pct": 60.0,
+      "ma21_cnt": "3/5",
+      "ma50_pct": 100.0,
+      "ma50_cnt": "5/5",
+      "ma_detail": [
+        {
+          "ticker": "SNOW",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "SAP",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "MDB",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "NOW",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "CRM",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "aihealthcare",
+      "name": "AI Healthcare",
+      "short": "AI Health",
       "icon": "\ud83e\uddec",
-      "sector": "Healthcare",
+      "sector": "AI Software",
       "stocks": [
         "RXRX",
         "SDGR",
-        "ABCL",
-        "EXAI",
-        "INSM",
-        "CRVS"
+        "CERT",
+        "ABSI",
+        "TEM",
+        "HTFL"
       ],
       "color": "#10b981",
-      "price": 34.72,
-      "ret1D": 0.23,
-      "ret1W": 1.94,
-      "ret1M": 2.44,
-      "rs1D": 0.67,
-      "rs1W": 3.04,
-      "rs1M": 4.85,
-      "resilience": -0.71,
-      "breadth": 4.0,
-      "score": 2.1,
-      "emerging": 4.9,
-      "vol_accum": 1.37,
-      "adr_contraction": 0.96,
-      "rs_trend": 0.09,
-      "spark5": [
-        100.0,
-        97.35,
-        98.89,
-        102.17,
-        103.08
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "oilgas",
-      "name": "Traditional Oil & Gas",
-      "short": "Oil & Gas",
-      "icon": "\ud83d\udee2",
-      "sector": "Energy",
-      "stocks": [
-        "XOM",
-        "CVX",
-        "COP",
-        "SLB",
-        "EOG",
-        "MPC"
-      ],
-      "color": "#d97706",
-      "price": 186.42,
-      "ret1D": -0.9,
-      "ret1W": -1.56,
-      "ret1M": 3.36,
-      "rs1D": -0.46,
-      "rs1W": -0.46,
-      "rs1M": 5.77,
-      "resilience": 1.32,
-      "breadth": 5.0,
-      "score": 2.0,
-      "emerging": 4.2,
-      "vol_accum": 0.98,
-      "adr_contraction": 0.84,
-      "rs_trend": 0.11,
-      "spark5": [
-        100.0,
-        99.54,
-        99.9,
-        98.93,
-        101.8
+      "ma10_pct": 100.0,
+      "ma10_cnt": "6/6",
+      "ma21_pct": 100.0,
+      "ma21_cnt": "6/6",
+      "ma50_pct": 100.0,
+      "ma50_cnt": "6/6",
+      "ma_detail": [
+        {
+          "ticker": "RXRX",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "SDGR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "CERT",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "ABSI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "TEM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "HTFL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
       ],
       "n_stocks": 6
     },
     {
-      "id": "cdn",
-      "name": "CDN & Edge Delivery",
-      "short": "CDN/Edge",
-      "icon": "\ud83c\udf10",
-      "sector": "Technology",
+      "id": "aicompute",
+      "name": "AI Compute",
+      "short": "AI Compute",
+      "icon": "\u26a1",
+      "sector": "AI Hardware",
       "stocks": [
-        "EGIO",
-        "FFIV",
-        "ZAYO",
-        "LUMN",
-        "CCOI",
-        "ATNI"
-      ],
-      "color": "#67e8f9",
-      "price": 117.17,
-      "ret1D": -1.47,
-      "ret1W": 0.31,
-      "ret1M": 0.09,
-      "rs1D": -1.03,
-      "rs1W": 1.41,
-      "rs1M": 2.5,
-      "resilience": -0.12,
-      "breadth": 6.7,
-      "score": 1.4,
-      "emerging": 4.1,
-      "vol_accum": 1.2,
-      "adr_contraction": 0.92,
-      "rs_trend": 0.02,
-      "spark5": [
-        100.0,
-        99.59,
-        101.25,
-        101.49,
-        101.54
-      ],
-      "n_stocks": 3
-    },
-    {
-      "id": "aiinfra",
-      "name": "AI Infrastructure Software",
-      "short": "AI Infra SW",
-      "icon": "\ud83d\uddc4",
-      "sector": "Technology",
-      "stocks": [
-        "DDOG",
-        "MDB",
-        "HASHI",
-        "NEWR",
-        "CFLT",
-        "NTNX"
-      ],
-      "color": "#60a5fa",
-      "price": 225.28,
-      "ret1D": 0.27,
-      "ret1W": 3.27,
-      "ret1M": -4.06,
-      "rs1D": 0.71,
-      "rs1W": 4.37,
-      "rs1M": -1.65,
-      "resilience": -0.13,
-      "breadth": 6.7,
-      "score": 1.0,
-      "emerging": 5.2,
-      "vol_accum": 0.99,
-      "adr_contraction": 1.14,
-      "rs_trend": 0.68,
-      "spark5": [
-        100.0,
-        100.16,
-        99.25,
-        103.3,
-        103.06
-      ],
-      "n_stocks": 3
-    },
-    {
-      "id": "iot",
-      "name": "Internet of Things",
-      "short": "IoT",
-      "icon": "\ud83d\udce1",
-      "sector": "Technology",
-      "stocks": [
-        "TXN",
-        "SWKS",
-        "SLAB",
-        "SMTC",
-        "MCHP",
-        "NXPI"
-      ],
-      "color": "#7dd3fc",
-      "price": 170.35,
-      "ret1D": 0.45,
-      "ret1W": -0.07,
-      "ret1M": -1.07,
-      "rs1D": 0.89,
-      "rs1W": 1.03,
-      "rs1M": 1.34,
-      "resilience": 0.5,
-      "breadth": 5.0,
-      "score": 1.0,
-      "emerging": 3.5,
-      "vol_accum": 0.95,
-      "adr_contraction": 0.87,
-      "rs_trend": 0.01,
-      "spark5": [
-        100.0,
-        100.82,
-        104.66,
-        98.67,
-        101.61
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "gold",
-      "name": "Gold & Gold Miners",
-      "short": "Gold",
-      "icon": "\ud83e\udd47",
-      "sector": "Precious Metals",
-      "stocks": [
-        "GLD",
-        "NEM",
-        "GOLD",
-        "AEM",
-        "WPM",
-        "FNV"
-      ],
-      "color": "#ffd700",
-      "price": 193.67,
-      "ret1D": -0.89,
-      "ret1W": -3.93,
-      "ret1M": 2.33,
-      "rs1D": -0.45,
-      "rs1W": -2.83,
-      "rs1M": 4.74,
-      "resilience": -0.17,
-      "breadth": 1.7,
-      "score": 0.4,
-      "emerging": 4.5,
-      "vol_accum": 1.08,
-      "adr_contraction": 1.22,
-      "rs_trend": 0.02,
-      "spark5": [
-        100.0,
-        96.81,
-        98.76,
-        96.75,
-        97.19
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "meddevice",
-      "name": "Medical Devices",
-      "short": "Med Devices",
-      "icon": "\ud83c\udfe5",
-      "sector": "Healthcare",
-      "stocks": [
-        "EW",
-        "SYK",
-        "INSP",
-        "TNDM",
-        "NVCR",
-        "ALGN"
-      ],
-      "color": "#3b82f6",
-      "price": 105.17,
-      "ret1D": 1.25,
-      "ret1W": 2.02,
-      "ret1M": -5.14,
-      "rs1D": 1.69,
-      "rs1W": 3.12,
-      "rs1M": -2.73,
-      "resilience": -0.47,
-      "breadth": 3.3,
-      "score": -0.0,
-      "emerging": 4.4,
-      "vol_accum": 1.22,
-      "adr_contraction": 0.87,
-      "rs_trend": 0.18,
-      "spark5": [
-        100.0,
-        98.96,
-        99.19,
-        100.86,
-        99.76
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "water",
-      "name": "Water Management",
-      "short": "Water",
-      "icon": "\ud83d\udca7",
-      "sector": "Utilities",
-      "stocks": [
-        "AWK",
-        "XYL",
-        "WTRG",
-        "PNR",
-        "ARTNA",
-        "YORW"
-      ],
-      "color": "#0ea5e9",
-      "price": 68.49,
-      "ret1D": -0.34,
-      "ret1W": -1.4,
-      "ret1M": -2.59,
-      "rs1D": 0.1,
-      "rs1W": -0.3,
-      "rs1M": -0.18,
-      "resilience": 0.16,
-      "breadth": 2.5,
-      "score": -0.2,
-      "emerging": 4.0,
-      "vol_accum": 0.94,
-      "adr_contraction": 1.05,
-      "rs_trend": 0.04,
-      "spark5": [
-        100.0,
-        99.02,
-        98.38,
-        98.42,
-        98.23
-      ],
-      "n_stocks": 4
-    },
-    {
-      "id": "cloud",
-      "name": "Cloud Computing",
-      "short": "Cloud",
-      "icon": "\u2601",
-      "sector": "Technology",
-      "stocks": [
-        "AMZN",
-        "DOCN",
-        "SNOW",
-        "WDAY",
-        "PSTG",
-        "ESTC"
-      ],
-      "color": "#93c5fd",
-      "price": 194.71,
-      "ret1D": -1.54,
-      "ret1W": -1.79,
-      "ret1M": -3.09,
-      "rs1D": -1.1,
-      "rs1W": -0.69,
-      "rs1M": -0.68,
-      "resilience": -0.28,
-      "breadth": 4.0,
-      "score": -0.5,
-      "emerging": 4.6,
-      "vol_accum": 1.42,
-      "adr_contraction": 1.04,
-      "rs_trend": -0.0,
-      "spark5": [
-        100.0,
-        98.79,
-        97.96,
-        98.8,
-        97.11
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "lng",
-      "name": "LNG Export & Natural Gas",
-      "short": "LNG",
-      "icon": "\ud83d\udd25",
-      "sector": "Energy",
-      "stocks": [
-        "LNG",
-        "CQP",
-        "NFE",
-        "GLNG",
-        "AR",
-        "KNTK"
-      ],
-      "color": "#fb923c",
-      "price": 80.98,
-      "ret1D": -3.07,
-      "ret1W": -4.06,
-      "ret1M": -1.0,
-      "rs1D": -2.63,
-      "rs1W": -2.96,
-      "rs1M": 1.41,
-      "resilience": 0.51,
-      "breadth": 0.0,
-      "score": -1.0,
-      "emerging": 3.7,
-      "vol_accum": 0.93,
-      "adr_contraction": 0.97,
-      "rs_trend": -0.07,
-      "spark5": [
-        100.0,
-        99.03,
-        99.64,
-        101.69,
-        858.21
-      ],
-      "n_stocks": 4
-    },
-    {
-      "id": "jrgold",
-      "name": "Junior Gold Miners",
-      "short": "Jr. Gold",
-      "icon": "\u26cf",
-      "sector": "Precious Metals",
-      "stocks": [
-        "GDXJ",
-        "ORLA",
-        "NGD",
-        "KGC",
-        "IAG",
-        "SAND"
-      ],
-      "color": "#fcd34d",
-      "price": 43.69,
-      "ret1D": -1.41,
-      "ret1W": -5.87,
-      "ret1M": 0.08,
-      "rs1D": -0.97,
-      "rs1W": -4.77,
-      "rs1M": 2.49,
-      "resilience": -0.81,
-      "breadth": 0.0,
-      "score": -1.2,
-      "emerging": 3.8,
-      "vol_accum": 1.11,
-      "adr_contraction": 1.24,
-      "rs_trend": -0.12,
-      "spark5": [
-        100.0,
-        96.51,
-        97.34,
-        94.37,
-        93.82
-      ],
-      "n_stocks": 4
-    },
-    {
-      "id": "robotics",
-      "name": "Robotics & Automation",
-      "short": "Robots",
-      "icon": "\ud83e\udd16",
-      "sector": "Technology",
-      "stocks": [
-        "ISRG",
-        "ROK",
-        "PATH",
-        "BRZE",
-        "KUKA",
-        "FANUC"
-      ],
-      "color": "#c084fc",
-      "price": 208.93,
-      "ret1D": -1.6,
-      "ret1W": 1.94,
-      "ret1M": -7.35,
-      "rs1D": -1.16,
-      "rs1W": 3.04,
-      "rs1M": -4.94,
-      "resilience": -0.91,
-      "breadth": 2.5,
-      "score": -1.3,
-      "emerging": 3.9,
-      "vol_accum": 0.96,
-      "adr_contraction": 0.84,
-      "rs_trend": 0.35,
-      "spark5": [
-        100.0,
-        101.36,
-        101.82,
-        105.31,
-        104.16
-      ],
-      "n_stocks": 4
-    },
-    {
-      "id": "clean",
-      "name": "Wind & Renewable Energy",
-      "short": "Wind/Renew",
-      "icon": "\ud83c\udf31",
-      "sector": "Energy",
-      "stocks": [
-        "NEE",
-        "BEP",
-        "AES",
-        "CWEN",
-        "RUN",
-        "NOVA"
-      ],
-      "color": "#4ade80",
-      "price": 32.5,
-      "ret1D": -0.52,
-      "ret1W": -2.29,
-      "ret1M": -4.9,
-      "rs1D": -0.08,
-      "rs1W": -1.19,
-      "rs1M": -2.49,
-      "resilience": -0.38,
-      "breadth": 2.0,
-      "score": -1.3,
-      "emerging": 3.2,
-      "vol_accum": 0.96,
-      "adr_contraction": 1.04,
-      "rs_trend": -0.16,
-      "spark5": [
-        100.0,
-        98.79,
-        98.23,
-        96.41,
-        95.81
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "edgecomp",
-      "name": "Edge Computing",
-      "short": "Edge Compute",
-      "icon": "\ud83d\udda5",
-      "sector": "Technology",
-      "stocks": [
-        "AMBA",
-        "QCOM",
-        "AKAM",
-        "FSLY",
-        "OSS",
-        "ADI"
-      ],
-      "color": "#a78bfa",
-      "price": 124.37,
-      "ret1D": -0.41,
-      "ret1W": -1.32,
-      "ret1M": -7.4,
-      "rs1D": 0.03,
-      "rs1W": -0.22,
-      "rs1M": -4.99,
-      "resilience": -0.17,
-      "breadth": 4.0,
-      "score": -1.5,
-      "emerging": 4.8,
-      "vol_accum": 1.39,
-      "adr_contraction": 0.91,
-      "rs_trend": 0.3,
-      "spark5": [
-        100.0,
-        98.25,
-        100.3,
-        98.61,
-        98.8
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "datacntr",
-      "name": "Data Centers & Infra",
-      "short": "DataCtrs",
-      "icon": "\ud83c\udfed",
-      "sector": "Technology",
-      "stocks": [
-        "EQIX",
-        "DLR",
+        "CBRS",
         "SMCI",
-        "VRT",
         "DELL",
-        "NXDT"
+        "HPE",
+        "NBIS",
+        "CRWV",
+        "APLD"
       ],
-      "color": "#fca5a5",
-      "price": 340.35,
-      "ret1D": 1.69,
-      "ret1W": -3.45,
-      "ret1M": -5.64,
-      "rs1D": 2.13,
-      "rs1W": -2.35,
-      "rs1M": -3.23,
-      "resilience": -0.96,
-      "breadth": 2.0,
-      "score": -1.6,
-      "emerging": 3.5,
-      "vol_accum": 1.13,
-      "adr_contraction": 1.01,
-      "rs_trend": -0.3,
-      "spark5": [
-        100.0,
-        96.57,
-        100.69,
-        95.28,
-        95.4
+      "color": "#00d4ff",
+      "ma10_pct": 71.4,
+      "ma10_cnt": "5/7",
+      "ma21_pct": 71.4,
+      "ma21_cnt": "5/7",
+      "ma50_pct": 57.1,
+      "ma50_cnt": "4/7",
+      "ma_detail": [
+        {
+          "ticker": "CBRS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "SMCI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "DELL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "HPE",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "NBIS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "CRWV",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "APLD",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 7
+    },
+    {
+      "id": "ai",
+      "name": "Artificial Intelligence (Broad)",
+      "short": "AI Broad",
+      "icon": "\ud83e\udd16",
+      "sector": "AI Software",
+      "stocks": [
+        "AI",
+        "BBAI",
+        "PLTR",
+        "SOUN",
+        "UPST"
+      ],
+      "color": "#00b8d4",
+      "ma10_pct": 40.0,
+      "ma10_cnt": "2/5",
+      "ma21_pct": 20.0,
+      "ma21_cnt": "1/5",
+      "ma50_pct": 40.0,
+      "ma50_cnt": "2/5",
+      "ma_detail": [
+        {
+          "ticker": "AI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "BBAI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "PLTR",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "SOUN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UPST",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
       "n_stocks": 5
     },
     {
-      "id": "pgm",
-      "name": "Platinum Group Metals",
-      "short": "PGMs",
-      "icon": "\u2697",
-      "sector": "Precious Metals",
-      "stocks": [
-        "PPLT",
-        "PALL",
-        "SBSW",
-        "PLZL",
-        "PLAT",
-        "PAL"
-      ],
-      "color": "#cbd5e1",
-      "price": 13.83,
-      "ret1D": -0.99,
-      "ret1W": -7.97,
-      "ret1M": -0.87,
-      "rs1D": -0.55,
-      "rs1W": -6.87,
-      "rs1M": 1.54,
-      "resilience": -0.43,
-      "breadth": 0.0,
-      "score": -1.8,
-      "emerging": 3.6,
-      "vol_accum": 1.09,
-      "adr_contraction": 1.11,
-      "rs_trend": -0.21,
-      "spark5": [
-        100.0,
-        95.85,
-        95.69,
-        94.06,
-        94.1
-      ],
-      "n_stocks": 3
-    },
-    {
-      "id": "steel",
-      "name": "Steel & Aluminum",
-      "short": "Steel/Al",
-      "icon": "\ud83c\udfd7",
-      "sector": "Materials",
-      "stocks": [
-        "NUE",
-        "STLD",
-        "CLF",
-        "CMC",
-        "AA",
-        "CENX"
-      ],
-      "color": "#78716c",
-      "price": 110.49,
-      "ret1D": 0.78,
-      "ret1W": -4.42,
-      "ret1M": -8.05,
-      "rs1D": 1.22,
-      "rs1W": -3.32,
-      "rs1M": -5.64,
-      "resilience": -0.56,
-      "breadth": 5.0,
-      "score": -2.2,
-      "emerging": 3.7,
-      "vol_accum": 1.1,
-      "adr_contraction": 1.34,
-      "rs_trend": -0.32,
-      "spark5": [
-        100.0,
-        96.7,
-        97.47,
-        94.4,
-        94.46
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "defense",
-      "name": "Defense & Military Tech",
-      "short": "Defense",
-      "icon": "\ud83d\udee1",
-      "sector": "Industrials",
-      "stocks": [
-        "LMT",
-        "RTX",
-        "NOC",
-        "GD",
-        "BA",
-        "HII"
-      ],
-      "color": "#ff6b35",
-      "price": 350.82,
-      "ret1D": -0.17,
-      "ret1W": 0.66,
-      "ret1M": -9.72,
-      "rs1D": 0.27,
-      "rs1W": 1.76,
-      "rs1M": -7.31,
-      "resilience": -0.17,
-      "breadth": 0.0,
-      "score": -2.3,
-      "emerging": 4.0,
-      "vol_accum": 1.07,
-      "adr_contraction": 0.93,
-      "rs_trend": 0.19,
-      "spark5": [
-        100.0,
-        100.33,
-        100.52,
-        100.81,
-        101.08
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "minerals",
-      "name": "Critical Minerals",
-      "short": "Minerals",
-      "icon": "\u26cf",
-      "sector": "Materials",
-      "stocks": [
-        "FCX",
-        "MP",
-        "VALE",
-        "RIO",
-        "SCCO",
-        "HBM"
-      ],
-      "color": "#fb923c",
-      "price": 73.88,
-      "ret1D": -1.61,
-      "ret1W": -9.06,
-      "ret1M": -2.48,
-      "rs1D": -1.17,
-      "rs1W": -7.96,
-      "rs1M": -0.07,
-      "resilience": -0.55,
-      "breadth": 0.0,
-      "score": -2.6,
-      "emerging": 3.3,
-      "vol_accum": 0.98,
-      "adr_contraction": 1.12,
-      "rs_trend": -0.14,
-      "spark5": [
-        100.0,
-        94.66,
-        94.29,
-        92.0,
-        91.19
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "silver",
-      "name": "Silver & Silver Miners",
-      "short": "Silver",
-      "icon": "\ud83e\udd48",
-      "sector": "Precious Metals",
-      "stocks": [
-        "SLV",
-        "PAAS",
-        "AG",
-        "HL",
-        "FSM",
-        "MAG"
-      ],
-      "color": "#e2e8f0",
-      "price": 30.48,
-      "ret1D": -1.64,
-      "ret1W": -9.35,
-      "ret1M": -1.9,
-      "rs1D": -1.2,
-      "rs1W": -8.25,
-      "rs1M": 0.51,
-      "resilience": -0.86,
-      "breadth": 0.0,
-      "score": -2.6,
-      "emerging": 3.9,
-      "vol_accum": 1.19,
-      "adr_contraction": 1.3,
-      "rs_trend": -0.23,
-      "spark5": [
-        100.0,
-        95.87,
-        95.07,
-        91.78,
-        91.66
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "reshoring",
-      "name": "Supply Chain Reshoring",
-      "short": "Reshoring",
-      "icon": "\ud83c\udfd7",
-      "sector": "Industrials",
-      "stocks": [
-        "URI",
-        "MLM",
-        "VMC",
-        "FAST",
-        "GWW",
-        "BLDR"
-      ],
-      "color": "#fdba74",
-      "price": 519.04,
-      "ret1D": -0.98,
-      "ret1W": -1.44,
-      "ret1M": -8.71,
-      "rs1D": -0.54,
-      "rs1W": -0.34,
-      "rs1M": -6.3,
-      "resilience": -0.35,
-      "breadth": 0.0,
-      "score": -2.6,
-      "emerging": 3.7,
-      "vol_accum": 0.95,
-      "adr_contraction": 0.95,
-      "rs_trend": 0.15,
-      "spark5": [
-        100.0,
-        98.71,
-        99.7,
-        99.3,
-        99.21
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "machinery",
-      "name": "Heavy Machinery & Infra",
-      "short": "Machinery",
-      "icon": "\ud83d\udd27",
-      "sector": "Industrials",
-      "stocks": [
-        "CAT",
-        "DE",
-        "CMI",
-        "PCAR",
-        "OSK",
-        "TEX"
-      ],
-      "color": "#94a3b8",
-      "price": 383.63,
-      "ret1D": -1.4,
-      "ret1W": -3.73,
-      "ret1M": -8.05,
-      "rs1D": -0.96,
-      "rs1W": -2.63,
-      "rs1M": -5.64,
-      "resilience": -0.15,
-      "breadth": 1.7,
-      "score": -2.7,
-      "emerging": 3.7,
-      "vol_accum": 0.99,
-      "adr_contraction": 1.18,
-      "rs_trend": -0.06,
-      "spark5": [
-        100.0,
-        98.68,
-        99.23,
-        97.37,
-        97.16
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "quantum",
-      "name": "Quantum Computing",
-      "short": "Quantum",
-      "icon": "\u269b",
-      "sector": "Technology",
-      "stocks": [
-        "IONQ",
-        "RGTI",
-        "QUBT",
-        "QBTS",
-        "HON",
-        "IBM"
-      ],
-      "color": "#e879f9",
-      "price": 86.84,
-      "ret1D": -1.0,
-      "ret1W": -1.15,
-      "ret1M": -10.54,
-      "rs1D": -0.56,
-      "rs1W": -0.05,
-      "rs1M": -8.13,
-      "resilience": -1.16,
-      "breadth": 1.7,
-      "score": -3.0,
-      "emerging": 4.5,
-      "vol_accum": 1.27,
-      "adr_contraction": 1.19,
-      "rs_trend": 0.13,
-      "spark5": [
-        100.0,
-        97.81,
-        99.03,
-        99.67,
-        98.72
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "glp1",
-      "name": "GLP-1 & Obesity Drugs",
-      "short": "GLP-1",
-      "icon": "\ud83d\udc8a",
-      "sector": "Healthcare",
-      "stocks": [
-        "NVO",
-        "LLY",
-        "VKTX",
-        "HIMS",
-        "AMGN",
-        "ZFOX"
-      ],
-      "color": "#8b5cf6",
-      "price": 322.68,
-      "ret1D": -2.6,
-      "ret1W": -3.79,
-      "ret1M": -7.38,
-      "rs1D": -2.16,
-      "rs1W": -2.69,
-      "rs1M": -4.97,
-      "resilience": -0.86,
-      "breadth": 0.0,
-      "score": -3.1,
-      "emerging": 3.4,
-      "vol_accum": 0.97,
-      "adr_contraction": 1.21,
-      "rs_trend": -0.1,
-      "spark5": [
-        100.0,
-        98.6,
-        97.75,
-        99.19,
-        96.78
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "fintech",
-      "name": "Digital Payments & Fintech",
-      "short": "Fintech",
-      "icon": "\ud83d\udcb3",
-      "sector": "Fintech",
-      "stocks": [
-        "SQ",
-        "AFRM",
-        "SOFI",
-        "NU",
-        "UPST",
-        "HOOD"
-      ],
-      "color": "#f97316",
-      "price": 46.3,
-      "ret1D": -4.78,
-      "ret1W": -3.87,
-      "ret1M": -5.93,
-      "rs1D": -4.34,
-      "rs1W": -2.77,
-      "rs1M": -3.52,
-      "resilience": -1.61,
-      "breadth": 0.0,
-      "score": -3.1,
-      "emerging": 3.7,
-      "vol_accum": 1.12,
-      "adr_contraction": 1.29,
-      "rs_trend": -0.16,
-      "spark5": [
-        100.0,
-        98.89,
-        99.75,
-        101.11,
-        98.47
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "semi",
-      "name": "Semiconductors & Chips",
-      "short": "Semis",
+      "id": "datacenterchips",
+      "name": "Data Center Chips",
+      "short": "DC Chips",
       "icon": "\ud83d\udc8e",
-      "sector": "Technology",
+      "sector": "Semiconductors",
       "stocks": [
+        "NVDA",
         "AMD",
         "AVGO",
-        "ARM",
-        "TSM",
-        "ASML",
-        "LRCX"
+        "MRVL",
+        "ALAB"
       ],
       "color": "#6366f1",
-      "price": 564.19,
-      "ret1D": 0.61,
-      "ret1W": -6.67,
-      "ret1M": -10.05,
-      "rs1D": 1.05,
-      "rs1W": -5.57,
-      "rs1M": -7.64,
-      "resilience": -0.23,
-      "breadth": 1.7,
-      "score": -3.7,
-      "emerging": 3.0,
-      "vol_accum": 1.03,
-      "adr_contraction": 1.06,
-      "rs_trend": -0.2,
-      "spark5": [
-        100.0,
-        97.02,
-        98.46,
-        92.24,
-        92.37
-      ],
-      "n_stocks": 6
-    },
-    {
-      "id": "autonomouv",
-      "name": "Autonomous Vehicles",
-      "short": "Auto Vehicles",
-      "icon": "\ud83d\ude97",
-      "sector": "Consumer Tech",
-      "stocks": [
-        "TSLA",
-        "MBLY",
-        "LAZR",
-        "OUST",
-        "APTV",
-        "MOBILEYE"
-      ],
-      "color": "#34d399",
-      "price": 97.15,
-      "ret1D": -1.84,
-      "ret1W": -3.45,
-      "ret1M": -11.38,
-      "rs1D": -1.4,
-      "rs1W": -2.35,
-      "rs1M": -8.97,
-      "resilience": -1.12,
-      "breadth": 2.5,
-      "score": -3.7,
-      "emerging": 2.9,
-      "vol_accum": 1.04,
-      "adr_contraction": 1.08,
-      "rs_trend": -0.22,
-      "spark5": [
-        100.0,
-        99.33,
-        99.79,
-        96.41,
-        94.79
-      ],
-      "n_stocks": 4
-    },
-    {
-      "id": "grid",
-      "name": "Power Grid Modernization",
-      "short": "Grid",
-      "icon": "\ud83d\udd0c",
-      "sector": "Energy",
-      "stocks": [
-        "ETN",
-        "EMR",
-        "HUBB",
-        "PWR",
-        "GEV",
-        "AMPS"
-      ],
-      "color": "#86efac",
-      "price": 505.41,
-      "ret1D": 0.65,
-      "ret1W": -3.02,
-      "ret1M": -12.54,
-      "rs1D": 1.09,
-      "rs1W": -1.92,
-      "rs1M": -10.13,
-      "resilience": -0.8,
-      "breadth": 0.0,
-      "score": -4.0,
-      "emerging": 2.8,
-      "vol_accum": 0.94,
-      "adr_contraction": 1.08,
-      "rs_trend": -0.21,
-      "spark5": [
-        100.0,
-        98.97,
-        101.18,
-        96.29,
-        96.0
+      "ma10_pct": 60.0,
+      "ma10_cnt": "3/5",
+      "ma21_pct": 80.0,
+      "ma21_cnt": "4/5",
+      "ma50_pct": 60.0,
+      "ma50_cnt": "3/5",
+      "ma_detail": [
+        {
+          "ticker": "NVDA",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "AMD",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "AVGO",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "MRVL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "ALAB",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
       ],
       "n_stocks": 5
     },
     {
-      "id": "memory",
-      "name": "Memory & Data Storage",
-      "short": "Memory",
+      "id": "aimemory",
+      "name": "AI Memory",
+      "short": "AI Memory",
       "icon": "\ud83d\udcbe",
-      "sector": "Memory & Storage",
+      "sector": "Semiconductors",
       "stocks": [
-        "SNDK",
-        "WDC",
-        "STX",
         "MU",
-        "MRVL",
-        "NTAP"
+        "RMBS",
+        "PENG",
+        "SNDK",
+        "SIMO",
+        "DRAM",
+        "STX",
+        "WDC"
       ],
       "color": "#38bdf8",
-      "price": 677.98,
-      "ret1D": 0.09,
-      "ret1W": -7.49,
-      "ret1M": -12.0,
-      "rs1D": 0.53,
-      "rs1W": -6.39,
-      "rs1M": -9.59,
-      "resilience": -0.18,
-      "breadth": 3.3,
-      "score": -4.3,
-      "emerging": 3.0,
-      "vol_accum": 1.13,
-      "adr_contraction": 1.06,
-      "rs_trend": -0.32,
-      "spark5": [
-        100.0,
-        96.65,
-        97.04,
-        92.06,
-        91.12
+      "ma10_pct": 37.5,
+      "ma10_cnt": "3/8",
+      "ma21_pct": 62.5,
+      "ma21_cnt": "5/8",
+      "ma50_pct": 37.5,
+      "ma50_cnt": "3/8",
+      "ma_detail": [
+        {
+          "ticker": "MU",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "RMBS",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "PENG",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "SNDK",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "SIMO",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "DRAM",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "STX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "WDC",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 8
+    },
+    {
+      "id": "semiconductorip",
+      "name": "Semiconductor IP",
+      "short": "Semi IP",
+      "icon": "\ud83d\udcd0",
+      "sector": "Semiconductors",
+      "stocks": [
+        "ARM",
+        "CEVA",
+        "SNPS",
+        "CDNS",
+        "RMBS"
+      ],
+      "color": "#4f46e5",
+      "ma10_pct": 60.0,
+      "ma10_cnt": "3/5",
+      "ma21_pct": 40.0,
+      "ma21_cnt": "2/5",
+      "ma50_pct": 20.0,
+      "ma50_cnt": "1/5",
+      "ma_detail": [
+        {
+          "ticker": "ARM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "CEVA",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "SNPS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CDNS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "RMBS",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "ainetworking",
+      "name": "AI Networking",
+      "short": "AI Network",
+      "icon": "\ud83d\udd0c",
+      "sector": "Semiconductors",
+      "stocks": [
+        "ANET",
+        "CIEN",
+        "CRDO",
+        "EXTR",
+        "FFIV"
+      ],
+      "color": "#22d3ee",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "5/5",
+      "ma21_pct": 60.0,
+      "ma21_cnt": "3/5",
+      "ma50_pct": 40.0,
+      "ma50_cnt": "2/5",
+      "ma_detail": [
+        {
+          "ticker": "ANET",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "CIEN",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CRDO",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "EXTR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "FFIV",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "photonics",
+      "name": "Photonics",
+      "short": "Photonics",
+      "icon": "\ud83d\udd06",
+      "sector": "Semiconductors",
+      "stocks": [
+        "AXTI",
+        "COHR",
+        "LITE",
+        "AAOI",
+        "POET",
+        "FN"
+      ],
+      "color": "#bbf7d0",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "3/6",
+      "ma21_pct": 50.0,
+      "ma21_cnt": "3/6",
+      "ma50_pct": 33.3,
+      "ma50_cnt": "2/6",
+      "ma_detail": [
+        {
+          "ticker": "AXTI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "COHR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "LITE",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "AAOI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "POET",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
       "n_stocks": 6
     },
     {
-      "id": "nuclear",
+      "id": "aipackaging",
+      "name": "AI Packaging",
+      "short": "AI Package",
+      "icon": "\ud83d\udce6",
+      "sector": "Semiconductors",
+      "stocks": [
+        "AMKR",
+        "ASX",
+        "KLIC",
+        "VECO",
+        "ONTO"
+      ],
+      "color": "#f0abfc",
+      "ma10_pct": 40.0,
+      "ma10_cnt": "2/5",
+      "ma21_pct": 40.0,
+      "ma21_cnt": "2/5",
+      "ma50_pct": 20.0,
+      "ma50_cnt": "1/5",
+      "ma_detail": [
+        {
+          "ticker": "AMKR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ASX",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "KLIC",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "VECO",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ONTO",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "foundryservices",
+      "name": "Foundry Services",
+      "short": "Foundry",
+      "icon": "\ud83c\udfed",
+      "sector": "Semiconductors",
+      "stocks": [
+        "TSM",
+        "GFS",
+        "UMC",
+        "TSEM",
+        "INTC"
+      ],
+      "color": "#94a3b8",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "5/5",
+      "ma21_pct": 100.0,
+      "ma21_cnt": "5/5",
+      "ma50_pct": 60.0,
+      "ma50_cnt": "3/5",
+      "ma_detail": [
+        {
+          "ticker": "TSM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "GFS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "UMC",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "TSEM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "INTC",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "waferfabequipment",
+      "name": "Wafer Fab Equipment",
+      "short": "Wafer Equip",
+      "icon": "\ud83d\udd2d",
+      "sector": "Semiconductors",
+      "stocks": [
+        "AMAT",
+        "LRCX",
+        "KLAC",
+        "ASML",
+        "ACLS",
+        "UCTT"
+      ],
+      "color": "#7c83fd",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/6",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/6",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/6",
+      "ma_detail": [
+        {
+          "ticker": "AMAT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LRCX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "KLAC",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ASML",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ACLS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UCTT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 6
+    },
+    {
+      "id": "smallcapsemis",
+      "name": "Small Cap Semis",
+      "short": "Small Semis",
+      "icon": "\ud83d\udd2c",
+      "sector": "Semiconductors",
+      "stocks": [
+        "ALMU",
+        "POWI",
+        "NVTS",
+        "ON",
+        "MXL",
+        "TTMI",
+        "AOSL",
+        "AMBQ"
+      ],
+      "color": "#c084fc",
+      "ma10_pct": 42.9,
+      "ma10_cnt": "3/7",
+      "ma21_pct": 42.9,
+      "ma21_cnt": "3/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
+      "ma_detail": [
+        {
+          "ticker": "POWI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NVTS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ON",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "MXL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "TTMI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "AOSL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "AMBQ",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 7
+    },
+    {
+      "id": "semitest",
+      "name": "Semiconductor Test",
+      "short": "Semi Test",
+      "icon": "\ud83e\uddea",
+      "sector": "Semiconductors",
+      "stocks": [
+        "FORM",
+        "AEHR",
+        "COHU",
+        "TER",
+        "KEYS"
+      ],
+      "color": "#67e8f9",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "5/5",
+      "ma21_pct": 80.0,
+      "ma21_cnt": "4/5",
+      "ma50_pct": 60.0,
+      "ma50_cnt": "3/5",
+      "ma_detail": [
+        {
+          "ticker": "FORM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "AEHR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "COHU",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "TER",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "KEYS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "lidarlaser",
+      "name": "Lidar / Laser",
+      "short": "Lidar/Laser",
+      "icon": "\ud83d\udce1",
+      "sector": "Semiconductors",
+      "stocks": [
+        "LASR"
+      ],
+      "color": "#f59e0b",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/1",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/1",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/1",
+      "ma_detail": [
+        {
+          "ticker": "LASR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 1
+    },
+    {
+      "id": "datastorage",
+      "name": "Data Storage",
+      "short": "Data Storage",
+      "icon": "\ud83d\udcbd",
+      "sector": "Semiconductors",
+      "stocks": [
+        "QMCO",
+        "MRAM",
+        "P",
+        "BLZE"
+      ],
+      "color": "#93c5fd",
+      "ma10_pct": 75.0,
+      "ma10_cnt": "3/4",
+      "ma21_pct": 50.0,
+      "ma21_cnt": "2/4",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "2/4",
+      "ma_detail": [
+        {
+          "ticker": "QMCO",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "MRAM",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "P",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "BLZE",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 4
+    },
+    {
+      "id": "fiberoptics",
+      "name": "Fiber Optics (Legacy Telecom)",
+      "short": "Fiber Optics",
+      "icon": "\ud83c\udf10",
+      "sector": "Semiconductors",
+      "stocks": [
+        "APH",
+        "GLW",
+        "AME",
+        "IPGP",
+        "LUMN",
+        "OPTX",
+        "PLAB"
+      ],
+      "color": "#7dd3fc",
+      "ma10_pct": 16.7,
+      "ma10_cnt": "1/6",
+      "ma21_pct": 33.3,
+      "ma21_cnt": "2/6",
+      "ma50_pct": 16.7,
+      "ma50_cnt": "1/6",
+      "ma_detail": [
+        {
+          "ticker": "APH",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "GLW",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "AME",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "IPGP",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "LUMN",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "PLAB",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 6
+    },
+    {
+      "id": "aipower",
+      "name": "AI Power",
+      "short": "AI Power",
+      "icon": "\ud83d\udd0b",
+      "sector": "AI Infrastructure",
+      "stocks": [
+        "VRT",
+        "MOD",
+        "AEIS",
+        "NVT",
+        "POWL"
+      ],
+      "color": "#86efac",
+      "ma10_pct": 40.0,
+      "ma10_cnt": "2/5",
+      "ma21_pct": 20.0,
+      "ma21_cnt": "1/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
+      "ma_detail": [
+        {
+          "ticker": "VRT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "MOD",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "AEIS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NVT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "POWL",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "aienergy",
+      "name": "AI Energy",
+      "short": "AI Energy",
+      "icon": "\u26a1",
+      "sector": "AI Infrastructure",
+      "stocks": [
+        "VST",
+        "CEG",
+        "NRG",
+        "GEV",
+        "FCEL",
+        "TLN",
+        "BE"
+      ],
+      "color": "#4ade80",
+      "ma10_pct": 28.6,
+      "ma10_cnt": "2/7",
+      "ma21_pct": 42.9,
+      "ma21_cnt": "3/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
+      "ma_detail": [
+        {
+          "ticker": "VST",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "CEG",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NRG",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "GEV",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FCEL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "TLN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "BE",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 7
+    },
+    {
+      "id": "ailand",
+      "name": "AI Land (Data Center REITs)",
+      "short": "AI Land",
+      "icon": "\ud83c\udfd7",
+      "sector": "AI Infrastructure",
+      "stocks": [
+        "DLR",
+        "EQIX",
+        "IRM",
+        "APLD",
+        "SRVR"
+      ],
+      "color": "#fca5a5",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "2/4",
+      "ma21_pct": 25.0,
+      "ma21_cnt": "1/4",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/4",
+      "ma_detail": [
+        {
+          "ticker": "DLR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "EQIX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "IRM",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "APLD",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 4
+    },
+    {
+      "id": "aiconstruction",
+      "name": "AI Construction",
+      "short": "AI Constr.",
+      "icon": "\ud83c\udfd7",
+      "sector": "AI Infrastructure",
+      "stocks": [
+        "EME",
+        "MTZ",
+        "PWR",
+        "FIX",
+        "STRL",
+        "AGX"
+      ],
+      "color": "#fdba74",
+      "ma10_pct": 16.7,
+      "ma10_cnt": "1/6",
+      "ma21_pct": 16.7,
+      "ma21_cnt": "1/6",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/6",
+      "ma_detail": [
+        {
+          "ticker": "EME",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "MTZ",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "PWR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FIX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "STRL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "AGX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 6
+    },
+    {
+      "id": "cooling",
+      "name": "Data Center Cooling",
+      "short": "Cooling",
+      "icon": "\u2744",
+      "sector": "AI Infrastructure",
+      "stocks": [
+        "JCI",
+        "INV",
+        "CARR",
+        "AAON"
+      ],
+      "color": "#0ea5e9",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/3",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/3",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/3",
+      "ma_detail": [
+        {
+          "ticker": "JCI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CARR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "AAON",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 3
+    },
+    {
+      "id": "datacenters",
+      "name": "Data Centers (Crypto\u2192AI Hosting)",
+      "short": "DC Hosting",
+      "icon": "\ud83d\udda5",
+      "sector": "AI Infrastructure",
+      "stocks": [
+        "SHAZ",
+        "WYFI",
+        "BRUN",
+        "WGMI",
+        "HUT",
+        "FRMI",
+        "CIFR",
+        "INOD",
+        "CORZ",
+        "IREN",
+        "KEEL",
+        "BTDR",
+        "NUAI",
+        "WULF"
+      ],
+      "color": "#f87171",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "7/14",
+      "ma21_pct": 64.3,
+      "ma21_cnt": "9/14",
+      "ma50_pct": 21.4,
+      "ma50_cnt": "3/14",
+      "ma_detail": [
+        {
+          "ticker": "SHAZ",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "WYFI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "BRUN",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "WGMI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "HUT",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "FRMI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CIFR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "INOD",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CORZ",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "IREN",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "KEEL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "BTDR",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "NUAI",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "WULF",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 14
+    },
+    {
+      "id": "nuclearenergy",
       "name": "Nuclear Energy",
       "short": "Nuclear",
       "icon": "\u2622",
       "sector": "Energy",
       "stocks": [
-        "CEG",
-        "VST",
-        "TLN",
-        "BWXT",
         "SMR",
-        "ETR"
+        "OKLO",
+        "CCJ",
+        "LEU",
+        "BWXT"
       ],
       "color": "#fde68a",
-      "price": 157.3,
-      "ret1D": -1.19,
-      "ret1W": -8.72,
-      "ret1M": -9.09,
-      "rs1D": -0.75,
-      "rs1W": -7.62,
-      "rs1M": -6.68,
-      "resilience": -0.36,
-      "breadth": 0.0,
-      "score": -4.4,
-      "emerging": 2.4,
-      "vol_accum": 1.16,
-      "adr_contraction": 0.96,
-      "rs_trend": -0.55,
-      "spark5": [
-        100.0,
-        97.08,
-        94.44,
-        90.5,
-        89.66
+      "ma10_pct": 20.0,
+      "ma10_cnt": "1/5",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
+      "ma_detail": [
+        {
+          "ticker": "SMR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "OKLO",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CCJ",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LEU",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "BWXT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
-      "n_stocks": 6
+      "n_stocks": 5
+    },
+    {
+      "id": "nuclear",
+      "name": "Uranium & Nuclear Fuel",
+      "short": "Uranium",
+      "icon": "\ud83e\udea8",
+      "sector": "Energy",
+      "stocks": [
+        "NLR",
+        "NNE",
+        "XE",
+        "URNM",
+        "DNN",
+        "UEC",
+        "UUUU"
+      ],
+      "color": "#f59e0b",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/7",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/7",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/7",
+      "ma_detail": [
+        {
+          "ticker": "NLR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NNE",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "XE",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "URNM",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "DNN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UEC",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UUUU",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 7
     },
     {
       "id": "solar",
@@ -1458,262 +1631,1351 @@
       "icon": "\u2600",
       "sector": "Energy",
       "stocks": [
-        "ENPH",
         "FSLR",
+        "ENLT",
+        "ENPH",
+        "RUN",
         "SEDG",
         "ARRY",
-        "CSIQ",
-        "MAXN"
+        "TAN",
+        "NXT"
       ],
       "color": "#fbbf24",
-      "price": 55.37,
-      "ret1D": -6.05,
-      "ret1W": -6.44,
-      "ret1M": -10.36,
-      "rs1D": -5.61,
-      "rs1W": -5.34,
-      "rs1M": -7.95,
-      "resilience": -0.86,
-      "breadth": 2.0,
-      "score": -4.7,
-      "emerging": 2.8,
-      "vol_accum": 1.15,
-      "adr_contraction": 0.94,
-      "rs_trend": -0.28,
-      "spark5": [
-        100.0,
-        101.03,
-        99.67,
-        99.35,
-        97.69
+      "ma10_pct": 50.0,
+      "ma10_cnt": "4/8",
+      "ma21_pct": 12.5,
+      "ma21_cnt": "1/8",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/8",
+      "ma_detail": [
+        {
+          "ticker": "FSLR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ENLT",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ENPH",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "RUN",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "SEDG",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "ARRY",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "TAN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NXT",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 8
+    },
+    {
+      "id": "batteries",
+      "name": "Battery Technology",
+      "short": "Battery",
+      "icon": "\ud83d\udd0b",
+      "sector": "Energy",
+      "stocks": [
+        "ABAT",
+        "HYLN",
+        "TE",
+        "AMPX",
+        "ENVX",
+        "FLNC"
+      ],
+      "color": "#34d399",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/4",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/4",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/4",
+      "ma_detail": [
+        {
+          "ticker": "TE",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "AMPX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ENVX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FLNC",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 4
+    },
+    {
+      "id": "lithium",
+      "name": "Lithium & Battery Materials",
+      "short": "Lithium",
+      "icon": "\u26cf",
+      "sector": "Energy",
+      "stocks": [
+        "ALB",
+        "LAC",
+        "LAR",
+        "LIT",
+        "SGML",
+        "SLI"
+      ],
+      "color": "#65a30d",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/5",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
+      "ma_detail": [
+        {
+          "ticker": "ALB",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LAC",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LAR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LIT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "SGML",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
       "n_stocks": 5
     },
     {
-      "id": "fiber",
-      "name": "Fiber Optics & Optical Net.",
-      "short": "Fiber Optics",
-      "icon": "\ud83d\udd06",
-      "sector": "Fiber Optics",
+      "id": "defense",
+      "name": "Defense & Military Tech",
+      "short": "Defense",
+      "icon": "\ud83d\udee1",
+      "sector": "Defense",
       "stocks": [
-        "AAOI",
-        "LITE",
-        "COHR",
-        "CIEN",
-        "VIAV",
-        "FNSR"
+        "LMT",
+        "RTX",
+        "NOC",
+        "LHX",
+        "GD",
+        "KTOS",
+        "AVAV"
       ],
-      "color": "#bbf7d0",
-      "price": 336.21,
-      "ret1D": 5.7,
-      "ret1W": -6.52,
-      "ret1M": -21.69,
-      "rs1D": 6.14,
-      "rs1W": -5.42,
-      "rs1M": -19.28,
-      "resilience": -0.67,
-      "breadth": 4.0,
-      "score": -6.2,
-      "emerging": 3.8,
-      "vol_accum": 1.18,
-      "adr_contraction": 1.1,
-      "rs_trend": -0.07,
-      "spark5": [
-        100.0,
-        96.27,
-        98.86,
-        88.37,
-        89.51
+      "color": "#ff6b35",
+      "ma10_pct": 57.1,
+      "ma10_cnt": "4/7",
+      "ma21_pct": 14.3,
+      "ma21_cnt": "1/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
+      "ma_detail": [
+        {
+          "ticker": "LMT",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "RTX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NOC",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LHX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "GD",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "KTOS",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "AVAV",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
       ],
-      "n_stocks": 5
+      "n_stocks": 7
+    },
+    {
+      "id": "drones",
+      "name": "Drones & Autonomous Systems",
+      "short": "Drones",
+      "icon": "\ud83d\udef8",
+      "sector": "Defense",
+      "stocks": [
+        "RCAT",
+        "ONDS",
+        "UMAC",
+        "DPRO",
+        "SWMR",
+        "FLY"
+      ],
+      "color": "#f472b6",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "3/6",
+      "ma21_pct": 16.7,
+      "ma21_cnt": "1/6",
+      "ma50_pct": 33.3,
+      "ma50_cnt": "2/6",
+      "ma_detail": [
+        {
+          "ticker": "RCAT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ONDS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UMAC",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "DPRO",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "SWMR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FLY",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 6
     },
     {
       "id": "space",
       "name": "Space Exploration",
       "short": "Space",
       "icon": "\ud83d\ude80",
-      "sector": "Industrials",
+      "sector": "Defense",
       "stocks": [
-        "ASTS",
-        "LUNR",
         "RKLB",
+        "ASTS",
+        "RDW",
+        "LUNR",
+        "VOYG",
+        "UFO",
+        "BKSY",
         "PL",
-        "SPCE",
-        "SATL"
+        "SATL",
+        "SIDU",
+        "YSS",
+        "FJET"
       ],
       "color": "#8b5cf6",
-      "price": 26.79,
-      "ret1D": -0.33,
-      "ret1W": -3.19,
-      "ret1M": -20.95,
-      "rs1D": 0.11,
-      "rs1W": -2.09,
-      "rs1M": -18.54,
-      "resilience": -1.15,
-      "breadth": 0.0,
-      "score": -6.7,
-      "emerging": 3.4,
-      "vol_accum": 1.08,
-      "adr_contraction": 0.89,
-      "rs_trend": 0.04,
-      "spark5": [
-        100.0,
-        96.92,
-        96.99,
-        96.92,
-        97.51
+      "ma10_pct": 100.0,
+      "ma10_cnt": "9/9",
+      "ma21_pct": 55.6,
+      "ma21_cnt": "5/9",
+      "ma50_pct": 33.3,
+      "ma50_cnt": "3/9",
+      "ma_detail": [
+        {
+          "ticker": "RKLB",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "ASTS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "RDW",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "LUNR",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "VOYG",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "BKSY",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "PL",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "SATL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "YSS",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
-      "n_stocks": 6
+      "n_stocks": 9
     },
     {
-      "id": "uranium",
-      "name": "Uranium Mining",
-      "short": "Uranium",
-      "icon": "\ud83e\udea8",
-      "sector": "Energy",
+      "id": "aerospace",
+      "name": "Aerospace",
+      "short": "Aerospace",
+      "icon": "\u2708",
+      "sector": "Defense",
       "stocks": [
-        "CCJ",
-        "NXE",
-        "DNN",
-        "UUUU",
-        "URG",
-        "UEC"
+        "AXON",
+        "FTAI",
+        "HWM",
+        "BA"
       ],
-      "color": "#f59e0b",
-      "price": 21.02,
-      "ret1D": -2.43,
-      "ret1W": -13.38,
-      "ret1M": -12.06,
-      "rs1D": -1.99,
-      "rs1W": -12.28,
-      "rs1M": -9.65,
-      "resilience": -1.81,
-      "breadth": 0.0,
-      "score": -6.8,
-      "emerging": 3.0,
-      "vol_accum": 1.01,
-      "adr_contraction": 1.28,
-      "rs_trend": -0.3,
-      "spark5": [
-        100.0,
-        95.86,
-        91.93,
-        88.67,
-        87.13
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "drones",
-      "name": "Drones & Autonomous",
-      "short": "Drones",
-      "icon": "\ud83d\udef8",
-      "sector": "Industrials",
-      "stocks": [
-        "ACHR",
-        "JOBY",
-        "AVAV",
-        "KTOS",
-        "RCAT",
-        "ARK"
-      ],
-      "color": "#f472b6",
-      "price": 44.49,
-      "ret1D": -3.15,
-      "ret1W": -2.24,
-      "ret1M": -22.28,
-      "rs1D": -2.71,
-      "rs1W": -1.14,
-      "rs1M": -19.87,
-      "resilience": -1.37,
-      "breadth": 2.0,
-      "score": -6.9,
-      "emerging": 3.8,
-      "vol_accum": 1.02,
-      "adr_contraction": 1.02,
-      "rs_trend": 0.18,
-      "spark5": [
-        100.0,
-        100.35,
-        100.6,
-        101.0,
-        101.26
-      ],
-      "n_stocks": 5
-    },
-    {
-      "id": "battery",
-      "name": "Battery Technology",
-      "short": "Battery",
-      "icon": "\ud83d\udd0b",
-      "sector": "Energy",
-      "stocks": [
-        "ALB",
-        "QS",
-        "LTHM",
-        "ENVX",
-        "FLNC",
-        "STEM"
-      ],
-      "color": "#34d399",
-      "price": 26.18,
-      "ret1D": -4.04,
-      "ret1W": -9.09,
-      "ret1M": -20.76,
-      "rs1D": -3.6,
-      "rs1W": -7.99,
-      "rs1M": -18.35,
-      "resilience": -1.56,
-      "breadth": 0.0,
-      "score": -8.5,
-      "emerging": 3.2,
-      "vol_accum": 1.05,
-      "adr_contraction": 1.15,
-      "rs_trend": -0.15,
-      "spark5": [
-        100.0,
-        97.34,
-        95.72,
-        93.6,
-        91.85
+      "color": "#94a3b8",
+      "ma10_pct": 25.0,
+      "ma10_cnt": "1/4",
+      "ma21_pct": 25.0,
+      "ma21_cnt": "1/4",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/4",
+      "ma_detail": [
+        {
+          "ticker": "AXON",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FTAI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "HWM",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "BA",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
       "n_stocks": 4
     },
     {
-      "id": "semiequip",
-      "name": "Semiconductor Equipment",
-      "short": "Semi Equip",
-      "icon": "\ud83d\udd2d",
-      "sector": "Technology",
+      "id": "evtol",
+      "name": "eVTOL / Air Mobility",
+      "short": "eVTOL",
+      "icon": "\ud83d\ude81",
+      "sector": "Defense",
       "stocks": [
-        "AMAT",
-        "KLAC",
-        "ONTO",
-        "TER",
-        "UCTT",
-        "MKSI"
+        "ACHR",
+        "JOBY"
       ],
-      "color": "#4f46e5",
-      "price": 244.89,
-      "ret1D": -0.74,
-      "ret1W": -11.1,
-      "ret1M": -23.92,
-      "rs1D": -0.3,
-      "rs1W": -10.0,
-      "rs1M": -21.51,
-      "resilience": -1.19,
-      "breadth": 0.0,
-      "score": -9.4,
-      "emerging": 2.7,
-      "vol_accum": 1.04,
-      "adr_contraction": 1.18,
-      "rs_trend": -0.37,
-      "spark5": [
-        100.0,
-        96.55,
-        99.09,
-        89.39,
-        88.34
+      "color": "#c084fc",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/2",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/2",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/2",
+      "ma_detail": [
+        {
+          "ticker": "ACHR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "JOBY",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 2
+    },
+    {
+      "id": "satellites",
+      "name": "Satellites",
+      "short": "Satellites",
+      "icon": "\ud83d\udef0",
+      "sector": "Defense",
+      "stocks": [
+        "VIAV",
+        "SPIR",
+        "GSAT",
+        "IRDM",
+        "ECHO",
+        "VSAT"
+      ],
+      "color": "#7c3aed",
+      "ma10_pct": 60.0,
+      "ma10_cnt": "3/5",
+      "ma21_pct": 60.0,
+      "ma21_cnt": "3/5",
+      "ma50_pct": 40.0,
+      "ma50_cnt": "2/5",
+      "ma_detail": [
+        {
+          "ticker": "VIAV",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "GSAT",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "IRDM",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ECHO",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "VSAT",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "cybersecurity",
+      "name": "Cybersecurity",
+      "short": "Cyber",
+      "icon": "\ud83d\udd10",
+      "sector": "Software",
+      "stocks": [
+        "CRWD",
+        "PANW",
+        "FTNT",
+        "OKTA",
+        "NET",
+        "ZS",
+        "AKAM"
+      ],
+      "color": "#22d3ee",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "7/7",
+      "ma21_pct": 100.0,
+      "ma21_cnt": "7/7",
+      "ma50_pct": 85.7,
+      "ma50_cnt": "6/7",
+      "ma_detail": [
+        {
+          "ticker": "CRWD",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "PANW",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "FTNT",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "OKTA",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "NET",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "ZS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "AKAM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 7
+    },
+    {
+      "id": "crypto",
+      "name": "Crypto (Exchanges & Miners)",
+      "short": "Crypto",
+      "icon": "\u20bf",
+      "sector": "Fintech",
+      "stocks": [
+        "COIN",
+        "MSTR",
+        "MARA",
+        "RIOT",
+        "CLSK"
+      ],
+      "color": "#f97316",
+      "ma10_pct": 60.0,
+      "ma10_cnt": "3/5",
+      "ma21_pct": 80.0,
+      "ma21_cnt": "4/5",
+      "ma50_pct": 100.0,
+      "ma50_cnt": "5/5",
+      "ma_detail": [
+        {
+          "ticker": "COIN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "MSTR",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "MARA",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "RIOT",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "CLSK",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "blockchain",
+      "name": "Blockchain Infrastructure",
+      "short": "Blockchain",
+      "icon": "\ud83d\udd17",
+      "sector": "Fintech",
+      "stocks": [
+        "PURR",
+        "CRCL",
+        "BMNR",
+        "FIGR",
+        "COIN",
+        "SBET"
+      ],
+      "color": "#fb923c",
+      "ma10_pct": 16.7,
+      "ma10_cnt": "1/6",
+      "ma21_pct": 50.0,
+      "ma21_cnt": "3/6",
+      "ma50_pct": 100.0,
+      "ma50_cnt": "6/6",
+      "ma_detail": [
+        {
+          "ticker": "PURR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "CRCL",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "BMNR",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "FIGR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "COIN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "SBET",
+          "ma10": 0,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 6
+    },
+    {
+      "id": "paymentprocessing",
+      "name": "Payment Processing",
+      "short": "Payments",
+      "icon": "\ud83d\udcb3",
+      "sector": "Fintech",
+      "stocks": [
+        "CHYM",
+        "AFRM",
+        "PYPL",
+        "SEZL",
+        "XYZ",
+        "KLAR",
+        "UPST"
+      ],
+      "color": "#fdba74",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/7",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
+      "ma_detail": [
+        {
+          "ticker": "CHYM",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "AFRM",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "PYPL",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "SEZL",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "XYZ",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "KLAR",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UPST",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 7
+    },
+    {
+      "id": "evs",
+      "name": "Electric Vehicles",
+      "short": "EVs",
+      "icon": "\ud83d\ude97",
+      "sector": "Consumer Tech",
+      "stocks": [
+        "TSLA",
+        "RIVN",
+        "LCID",
+        "QS",
+        "PSNY",
+        "LI",
+        "NIO",
+        "XPEV"
+      ],
+      "color": "#34d399",
+      "ma10_pct": 42.9,
+      "ma10_cnt": "3/7",
+      "ma21_pct": 14.3,
+      "ma21_cnt": "1/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
+      "ma_detail": [
+        {
+          "ticker": "TSLA",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "RIVN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LCID",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "QS",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "LI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "NIO",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "XPEV",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 7
+    },
+    {
+      "id": "selfdriving",
+      "name": "Self-Driving / Autonomy",
+      "short": "Self-Driving",
+      "icon": "\ud83d\ude98",
+      "sector": "Consumer Tech",
+      "stocks": [
+        "AUR",
+        "PONY"
+      ],
+      "color": "#5eead4",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "2/2",
+      "ma21_pct": 50.0,
+      "ma21_cnt": "1/2",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "1/2",
+      "ma_detail": [
+        {
+          "ticker": "AUR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "PONY",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 2
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics & Automation",
+      "short": "Robots",
+      "icon": "\ud83e\uddbe",
+      "sector": "Consumer Tech",
+      "stocks": [
+        "SYM",
+        "SERV",
+        "ISRG",
+        "NOVT",
+        "CGNX",
+        "BOT",
+        "RR",
+        "PDYN"
+      ],
+      "color": "#c084fc",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "3/6",
+      "ma21_pct": 33.3,
+      "ma21_cnt": "2/6",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "3/6",
+      "ma_detail": [
+        {
+          "ticker": "SYM",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "SERV",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "ISRG",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "NOVT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CGNX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "RR",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 6
+    },
+    {
+      "id": "quantumcomputing",
+      "name": "Quantum Computing",
+      "short": "Quantum",
+      "icon": "\u269b",
+      "sector": "Consumer Tech",
+      "stocks": [
+        "IONQ",
+        "RGTI",
+        "QBTS",
+        "QUBT",
+        "ARQQ",
+        "INFQ",
+        "QSI"
+      ],
+      "color": "#e879f9",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "5/5",
+      "ma21_pct": 100.0,
+      "ma21_cnt": "5/5",
+      "ma50_pct": 80.0,
+      "ma50_cnt": "4/5",
+      "ma_detail": [
+        {
+          "ticker": "IONQ",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "RGTI",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "QBTS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "QUBT",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "INFQ",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 5
+    },
+    {
+      "id": "print3d",
+      "name": "3D Printing",
+      "short": "3D Print",
+      "icon": "\ud83d\udda8",
+      "sector": "Consumer Tech",
+      "stocks": [
+        "DDD",
+        "VELO"
+      ],
+      "color": "#7c3aed",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "1/1",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/1",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/1",
+      "ma_detail": [
+        {
+          "ticker": "VELO",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 1
+    },
+    {
+      "id": "genomics",
+      "name": "Genomics & Gene Editing",
+      "short": "Genomics",
+      "icon": "\ud83e\uddec",
+      "sector": "Healthcare",
+      "stocks": [
+        "ARKG",
+        "BEAM",
+        "CRSP"
+      ],
+      "color": "#3b82f6",
+      "ma10_pct": 66.7,
+      "ma10_cnt": "2/3",
+      "ma21_pct": 66.7,
+      "ma21_cnt": "2/3",
+      "ma50_pct": 66.7,
+      "ma50_cnt": "2/3",
+      "ma_detail": [
+        {
+          "ticker": "ARKG",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "BEAM",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CRSP",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 3
+    },
+    {
+      "id": "digitalhealth",
+      "name": "Digital Health",
+      "short": "Digital Hlth",
+      "icon": "\ud83c\udfe5",
+      "sector": "Healthcare",
+      "stocks": [
+        "HIMS",
+        "DOCS",
+        "GH",
+        "OSCR",
+        "PHR"
+      ],
+      "color": "#f472b6",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "4/4",
+      "ma21_pct": 75.0,
+      "ma21_cnt": "3/4",
+      "ma50_pct": 75.0,
+      "ma50_cnt": "3/4",
+      "ma_detail": [
+        {
+          "ticker": "HIMS",
+          "ma10": 1,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "DOCS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "GH",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "OSCR",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        }
+      ],
+      "n_stocks": 4
+    },
+    {
+      "id": "chinanames",
+      "name": "China Names",
+      "short": "China",
+      "icon": "\ud83c\udde8\ud83c\uddf3",
+      "sector": "Geography",
+      "stocks": [
+        "BABA",
+        "BIDU",
+        "FUTU",
+        "FXI",
+        "JD",
+        "PDD"
+      ],
+      "color": "#dc2626",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/6",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/6",
+      "ma50_pct": 16.7,
+      "ma50_cnt": "1/6",
+      "ma_detail": [
+        {
+          "ticker": "BABA",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "BIDU",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FUTU",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "FXI",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "JD",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "PDD",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 6
+    },
+    {
+      "id": "delivery",
+      "name": "Delivery & Rideshare",
+      "short": "Delivery",
+      "icon": "\ud83d\udef5",
+      "sector": "Consumer",
+      "stocks": [
+        "LYFT",
+        "CART",
+        "UBER"
+      ],
+      "color": "#fb7185",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/3",
+      "ma21_pct": 0.0,
+      "ma21_cnt": "0/3",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/3",
+      "ma_detail": [
+        {
+          "ticker": "LYFT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "CART",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "UBER",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 3
+    },
+    {
+      "id": "sportsbetting",
+      "name": "Sports Betting",
+      "short": "SportsBet",
+      "icon": "\ud83c\udfb0",
+      "sector": "Consumer",
+      "stocks": [
+        "BETZ",
+        "DKNG",
+        "FUBO",
+        "PENN"
+      ],
+      "color": "#eab308",
+      "ma10_pct": 33.3,
+      "ma10_cnt": "1/3",
+      "ma21_pct": 33.3,
+      "ma21_cnt": "1/3",
+      "ma50_pct": 33.3,
+      "ma50_cnt": "1/3",
+      "ma_detail": [
+        {
+          "ticker": "DKNG",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "FUBO",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "PENN",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 3
+    },
+    {
+      "id": "weed",
+      "name": "Cannabis",
+      "short": "Weed",
+      "icon": "\ud83c\udf3f",
+      "sector": "Consumer",
+      "stocks": [
+        "ACB",
+        "CGC",
+        "CURA",
+        "MJ",
+        "MSOS",
+        "TLRY"
+      ],
+      "color": "#4d7c0f",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "1/2",
+      "ma21_pct": 50.0,
+      "ma21_cnt": "1/2",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "1/2",
+      "ma_detail": [
+        {
+          "ticker": "MSOS",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "TLRY",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
+      ],
+      "n_stocks": 2
+    },
+    {
+      "id": "mag7",
+      "name": "Mag 7 Stocks",
+      "short": "Mag 7",
+      "icon": "\u2b50",
+      "sector": "Mega Cap",
+      "stocks": [
+        "MSFT",
+        "AMZN",
+        "GOOGL",
+        "META",
+        "AAPL",
+        "NFLX"
+      ],
+      "color": "#facc15",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "3/6",
+      "ma21_pct": 50.0,
+      "ma21_cnt": "3/6",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "3/6",
+      "ma_detail": [
+        {
+          "ticker": "MSFT",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 1
+        },
+        {
+          "ticker": "AMZN",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        },
+        {
+          "ticker": "GOOGL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 0
+        },
+        {
+          "ticker": "META",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "AAPL",
+          "ma10": 1,
+          "ma21": 1,
+          "ma50": 1
+        },
+        {
+          "ticker": "NFLX",
+          "ma10": 0,
+          "ma21": 0,
+          "ma50": 0
+        }
       ],
       "n_stocks": 6
     }
