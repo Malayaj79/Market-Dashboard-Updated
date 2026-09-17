@@ -1,21 +1,21 @@
 {
-  "updated": "2026-09-17 19:02 UTC",
+  "updated": "2026-09-17 19:14 UTC",
   "methodology": "MA breadth only \u2014 % of constituents above their 10/20/50-day MA. No composite scoring.",
   "benchmarks": {
     "SPY": {
-      "price": 762.49,
+      "price": 762.75,
       "ma10": 0,
       "ma20": 0,
       "ma50": 1
     },
     "QQQ": {
-      "price": 716.31,
+      "price": 716.62,
       "ma10": 1,
       "ma20": 1,
       "ma50": 1
     },
     "RSP": {
-      "price": 213.665,
+      "price": 213.645,
       "ma10": 0,
       "ma20": 0,
       "ma50": 0
@@ -113,8 +113,8 @@
       "color": "#a78bfa",
       "ma10_pct": 60.0,
       "ma10_cnt": "3/5",
-      "ma20_pct": 40.0,
-      "ma20_cnt": "2/5",
+      "ma20_pct": 20.0,
+      "ma20_cnt": "1/5",
       "ma50_pct": 20.0,
       "ma50_cnt": "1/5",
       "ma_detail": [
@@ -127,7 +127,7 @@
         {
           "ticker": "AMBA",
           "ma10": 1,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -640,8 +640,8 @@
         "FN"
       ],
       "color": "#bbf7d0",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "3/6",
+      "ma10_pct": 33.3,
+      "ma10_cnt": "2/6",
       "ma20_pct": 50.0,
       "ma20_cnt": "3/6",
       "ma50_pct": 33.3,
@@ -661,7 +661,7 @@
         },
         {
           "ticker": "LITE",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 1,
           "ma50": 1
         },
@@ -1249,8 +1249,8 @@
         "SRVR"
       ],
       "color": "#fca5a5",
-      "ma10_pct": 25.0,
-      "ma10_cnt": "1/4",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "2/4",
       "ma20_pct": 25.0,
       "ma20_cnt": "1/4",
       "ma50_pct": 0.0,
@@ -1270,7 +1270,7 @@
         },
         {
           "ticker": "IRM",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -1410,8 +1410,8 @@
       "color": "#f87171",
       "ma10_pct": 50.0,
       "ma10_cnt": "7/14",
-      "ma20_pct": 78.6,
-      "ma20_cnt": "11/14",
+      "ma20_pct": 64.3,
+      "ma20_cnt": "9/14",
       "ma50_pct": 21.4,
       "ma50_cnt": "3/14",
       "ma_detail": [
@@ -1466,7 +1466,7 @@
         {
           "ticker": "CORZ",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -1484,7 +1484,7 @@
         {
           "ticker": "BTDR",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         },
         {
@@ -2351,8 +2351,8 @@
         "UPST"
       ],
       "color": "#fdba74",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/7",
+      "ma10_pct": 14.3,
+      "ma10_cnt": "1/7",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/7",
       "ma50_pct": 14.3,
@@ -2390,7 +2390,7 @@
         },
         {
           "ticker": "KLAR",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2420,8 +2420,8 @@
         "XPEV"
       ],
       "color": "#34d399",
-      "ma10_pct": 42.9,
-      "ma10_cnt": "3/7",
+      "ma10_pct": 57.1,
+      "ma10_cnt": "4/7",
       "ma20_pct": 14.3,
       "ma20_cnt": "1/7",
       "ma50_pct": 14.3,
@@ -2441,7 +2441,7 @@
         },
         {
           "ticker": "LCID",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2857,8 +2857,8 @@
       "ma10_cnt": "1/3",
       "ma20_pct": 33.3,
       "ma20_cnt": "1/3",
-      "ma50_pct": 33.3,
-      "ma50_cnt": "1/3",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/3",
       "ma_detail": [
         {
           "ticker": "DKNG",
@@ -2870,7 +2870,7 @@
           "ticker": "FUBO",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "PENN",
