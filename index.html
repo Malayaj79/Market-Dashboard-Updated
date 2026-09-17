@@ -86,7 +86,7 @@ td:first-child,td:nth-child(2){text-align:left}
 <header class="site-header">
   <div>
     <div class="site-title">MA<span> //</span> BREADTH DASHBOARD</div>
-    <div style="font-family:var(--mono);font-size:8px;color:var(--muted);margin-top:4px;letter-spacing:1px">52 THEMES · % ABOVE 10/21/50-DAY MOVING AVERAGE · YAHOO FINANCE</div>
+    <div style="font-family:var(--mono);font-size:8px;color:var(--muted);margin-top:4px;letter-spacing:1px">52 THEMES · % ABOVE 10/20/50-DAY MOVING AVERAGE · YAHOO FINANCE</div>
   </div>
   <div class="header-meta">
     <div><span class="live-dot"></span>UPDATED: <b id="ts">LOADING…</b></div>
@@ -104,7 +104,7 @@ td:first-child,td:nth-child(2){text-align:left}
     <div class="tab-row">
       <span class="fl">SORT</span>
       <span class="tab" id="ms-ma10" onclick="setMaSort('ma10')">10MA</span>
-      <span class="tab" id="ms-ma21" onclick="setMaSort('ma21')">21MA</span>
+      <span class="tab" id="ms-ma20" onclick="setMaSort('ma20')">20MA</span>
       <span class="tab on" id="ms-ma50" onclick="setMaSort('ma50')">50MA</span>
     </div>
     <div id="ma-wrap"></div>
@@ -113,7 +113,7 @@ td:first-child,td:nth-child(2){text-align:left}
 
 <footer class="site-footer">
   <span>DATA: YAHOO FINANCE · EOD PRICES · AUTO-REFRESHED DAILY · NOT FINANCIAL ADVICE</span>
-  <span>10/21/50-DAY MA BREADTH · SPY / QQQ / RSP REFERENCE</span>
+  <span>10/20/50-DAY MA BREADTH · SPY / QQQ / RSP REFERENCE</span>
 </footer>
 
 <script>
@@ -167,7 +167,7 @@ function renderBenchmarkBar(){
       <div class="bm-name">${name}</div>
       <div class="bm-price">${x.price!=null?'$'+x.price.toFixed(2):'—'}</div>
       ${row('10-DAY MA',x.ma10)}
-      ${row('21-DAY MA',x.ma21)}
+      ${row('20-DAY MA',x.ma20)}
       ${row('50-DAY MA',x.ma50)}
     </div>`;
   }).join('');
@@ -183,17 +183,17 @@ function togH(id){const el=document.getElementById(id);if(el)el.style.display=el
 
 function renderMaBreadth(){
   renderBenchmarkBar();
-  ['ma10','ma21','ma50'].forEach(k=>{const el=document.getElementById('ms-'+k);if(el)el.className='tab'+(maSortBy===k?' on':'');});
+  ['ma10','ma20','ma50'].forEach(k=>{const el=document.getElementById('ms-'+k);if(el)el.className='tab'+(maSortBy===k?' on':'');});
   const list=maSorted();
   let h=`<table><thead><tr>
-    <th>#</th><th>THEME</th><th>10MA</th><th>21MA</th><th>50MA</th><th>STOCKS</th>
+    <th>#</th><th>THEME</th><th>10MA</th><th>20MA</th><th>50MA</th><th>STOCKS</th>
   </tr></thead><tbody>`;
   list.forEach((t,i)=>{
     h+=`<tr>
       <td class="r-num">${i+1}</td>
       <td class="r-name">${t.icon} ${t.name}</td>
       <td>${maPill(t.ma10_pct,t.ma10_cnt)}</td>
-      <td>${maPill(t.ma21_pct,t.ma21_cnt)}</td>
+      <td>${maPill(t.ma20_pct,t.ma20_cnt)}</td>
       <td>${maPill(t.ma50_pct,t.ma50_cnt)}</td>
       <td><span class="h-tog" onclick="event.stopPropagation();togH('ma-${t.id}')">▸ ${t.stocks.length}</span></td>
     </tr>
@@ -205,7 +205,7 @@ function renderMaBreadth(){
           <div class="h-ticker" style="background:${t.color}18;color:${t.color};border:1px solid ${t.color}44">${d.ticker}</div>
           <div class="h-info"><div class="h-row2">
             <span style="color:${col(d.ma10)}">10D:${lab(d.ma10)}</span>
-            <span style="color:${col(d.ma21)}">21D:${lab(d.ma21)}</span>
+            <span style="color:${col(d.ma20)}">20D:${lab(d.ma20)}</span>
             <span style="color:${col(d.ma50)}">50D:${lab(d.ma50)}</span>
           </div></div>
         </div>`;
@@ -219,7 +219,7 @@ function renderMaBreadth(){
 // ── SEED (local fallback if opened without a server) ────────────────────
 const SEED={
   updated:"— (seed — deploy to GitHub Pages for live data)",
-  benchmarks:{SPY:{price:null,ma10:null,ma21:null,ma50:null},QQQ:{price:null,ma10:null,ma21:null,ma50:null},RSP:{price:null,ma10:null,ma21:null,ma50:null}},
+  benchmarks:{SPY:{price:null,ma10:null,ma20:null,ma50:null},QQQ:{price:null,ma10:null,ma20:null,ma50:null},RSP:{price:null,ma10:null,ma20:null,ma50:null}},
   themes:[]
 };
 
