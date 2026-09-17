@@ -3,7 +3,7 @@ Market Themes — MA Breadth Dashboard — Data Fetcher
 ====================================================
 No composite scoring, no resilience/emerging metrics. This does exactly one
 thing: for each theme, what % of its constituents are trading above their
-10/21/50-day moving average (plus raw "x/y" counts), and the same check for
+10/20/50-day moving average (plus raw "x/y" counts), and the same check for
 SPY / QQQ / RSP as a reference bar (RSP included since it's equal-weight,
 matching this dashboard's own constituent-averaging approach).
 
@@ -258,7 +258,7 @@ def fetch(ticker, period="3mo"):
         print(f"    ERR {ticker}: {e}")
         return None
 
-# ── MA Breadth (10/21/50) ────────────────────────────────────────────────────
+# ── MA Breadth (10/20/50) ────────────────────────────────────────────────────
 def above_ma(raw, period):
     """1 if current price is above its N-day SMA, 0 if below, None if
     insufficient data."""
@@ -271,7 +271,7 @@ def above_ma(raw, period):
     return 1 if raw["price"] > sma else 0
 
 def ma_breadth_bundle(raw):
-    return {p: above_ma(raw, p) for p in (10, 21, 50)}
+    return {p: above_ma(raw, p) for p in (10, 20, 50)}
 
 def avg(values):
     vals = [v for v in values if v is not None]
@@ -295,10 +295,10 @@ for bname in ("SPY", "QQQ", "RSP"):
     braw = fetch(bname)
     if braw:
         mb = ma_breadth_bundle(braw)
-        benchmarks[bname] = {"price": braw["price"], "ma10": mb[10], "ma21": mb[21], "ma50": mb[50]}
-        print(f"  {bname}  price={braw['price']}  above10MA={mb[10]}  above21MA={mb[21]}  above50MA={mb[50]}")
+        benchmarks[bname] = {"price": braw["price"], "ma10": mb[10], "ma20": mb[20], "ma50": mb[50]}
+        print(f"  {bname}  price={braw['price']}  above10MA={mb[10]}  above20MA={mb[20]}  above50MA={mb[50]}")
     else:
-        benchmarks[bname] = {"price": None, "ma10": None, "ma21": None, "ma50": None}
+        benchmarks[bname] = {"price": None, "ma10": None, "ma20": None, "ma50": None}
 
 # ── Process themes ────────────────────────────────────────────────────────────
 results = []
@@ -307,7 +307,7 @@ ADV_MIN = 10_000_000   # $10M minimum average daily dollar volume
 for (tid, name, short, icon, sector, constituents, color) in THEMES:
     print(f"\n{name}")
 
-    all_ma10, all_ma21, all_ma50 = [], [], []
+    all_ma10, all_ma20, all_ma50 = [], [], []
     all_tickers_used = []
 
     for ticker in constituents:
@@ -321,9 +321,9 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
             continue
 
         mab = ma_breadth_bundle(raw)
-        print(f"  {ticker:6s}  10MA={mab[10]}  21MA={mab[21]}  50MA={mab[50]}")
+        print(f"  {ticker:6s}  10MA={mab[10]}  20MA={mab[20]}  50MA={mab[50]}")
 
-        all_ma10.append(mab[10]); all_ma21.append(mab[21]); all_ma50.append(mab[50])
+        all_ma10.append(mab[10]); all_ma20.append(mab[20]); all_ma50.append(mab[50])
         all_tickers_used.append(ticker)
 
     def _ma_pct_and_count(flags):
@@ -335,32 +335,32 @@ for (tid, name, short, icon, sector, constituents, color) in THEMES:
         return pct_val, cnt_str
 
     ma10_pct, ma10_cnt = _ma_pct_and_count(all_ma10)
-    ma21_pct, ma21_cnt = _ma_pct_and_count(all_ma21)
+    ma20_pct, ma20_cnt = _ma_pct_and_count(all_ma20)
     ma50_pct, ma50_cnt = _ma_pct_and_count(all_ma50)
 
     n = len(all_tickers_used)
-    print(f"  → 10MA={ma10_pct}%  21MA={ma21_pct}%  50MA={ma50_pct}%  (n={n})")
+    print(f"  → 10MA={ma10_pct}%  20MA={ma20_pct}%  50MA={ma50_pct}%  (n={n})")
 
     results.append({
         "id": tid, "name": name, "short": short, "icon": icon,
         "sector": sector, "stocks": constituents,
         "color": color,
         "ma10_pct": ma10_pct, "ma10_cnt": ma10_cnt,
-        "ma21_pct": ma21_pct, "ma21_cnt": ma21_cnt,
+        "ma20_pct": ma20_pct, "ma20_cnt": ma20_cnt,
         "ma50_pct": ma50_pct, "ma50_cnt": ma50_cnt,
         "ma_detail": [
-            {"ticker": t, "ma10": m10, "ma21": m21, "ma50": m50}
-            for t, m10, m21, m50 in zip(all_tickers_used, all_ma10, all_ma21, all_ma50)
+            {"ticker": t, "ma10": m10, "ma20": m20, "ma50": m50}
+            for t, m10, m20, m50 in zip(all_tickers_used, all_ma10, all_ma20, all_ma50)
         ],
         "n_stocks": n,
     })
 
 # ── Write ──────────────────────────────────────────────────────────────────────
-now = datetime.datetime.utcnow()
+now = datetime.datetime.now(datetime.timezone.utc)
 
 output = {
     "updated":     now.strftime("%Y-%m-%d %H:%M UTC"),
-    "methodology": "MA breadth only — % of constituents above their 10/21/50-day MA. No composite scoring.",
+    "methodology": "MA breadth only — % of constituents above their 10/20/50-day MA. No composite scoring.",
     "benchmarks":  benchmarks,
     "themes":      results,
 }
