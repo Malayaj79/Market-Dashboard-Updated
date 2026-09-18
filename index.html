@@ -59,6 +59,7 @@ thead th.sortable{cursor:pointer;user-select:none;transition:color .12s}
 thead th.sortable:hover{color:var(--cyan)}
 thead th.sortable.active{color:var(--cyan)}
 .sort-arrow{font-size:8px;margin-left:3px}
+.sort-rank{font-size:7px;color:var(--cyan);margin-left:1px}
 .ma-pill{font-family:var(--mono);font-size:10px;font-weight:700;border-radius:3px;padding:2px 7px;white-space:nowrap;display:inline-block}
 .ma-cnt{font-family:var(--mono);font-size:8px;color:var(--muted);margin-left:5px}
 
@@ -101,7 +102,7 @@ thead th.sortable.active{color:var(--cyan)}
 <div class="section">
   <div class="sec-hdr">
     <span class="sec-title">MA BREADTH</span>
-    <span class="sec-sub">% OF CONSTITUENTS ABOVE EACH MA · CLICK A COLUMN TO SORT · CLICK ▸ TO EXPAND</span>
+    <span class="sec-sub">CLICK A COLUMN TO SORT · SHIFT+CLICK TO ADD A TIEBREAKER · CLICK ▸ TO EXPAND</span>
   </div>
   <div class="sec-body">
     <div class="bm-bar" id="bm-bar"></div>
@@ -122,7 +123,9 @@ thead th.sortable.active{color:var(--cyan)}
 
 <script>
 // ── STATE ─────────────────────────────────────────────────────────────────
-let D=null, maSortBy='ma50', maSortDir='desc';
+// sortKeys is a priority-ordered list: [{col:'ma50',dir:'desc'}, {col:'ma20',dir:'desc'}, ...]
+// The first entry is the primary sort key, later entries are tiebreakers.
+let D=null, sortKeys=[{col:'ma50',dir:'desc'}];
 
 // ── LOAD ──────────────────────────────────────────────────────────────────
 async function load(){
@@ -178,29 +181,52 @@ function renderBenchmarkBar(){
 }
 
 // ── MASTER TABLE ─────────────────────────────────────────────────────────
-function setMaSort(col){
-  if(maSortBy===col){maSortDir=maSortDir==='desc'?'asc':'desc';}   // clicking the same column again flips direction
-  else{maSortBy=col;maSortDir='desc';}                             // clicking a new column defaults to highest-first
+// Plain click on a header: makes it the SOLE sort key (or flips its direction
+// if it's already the sole key). Shift+click: adds it as a tiebreaker after
+// whatever's already being sorted by (or flips its direction if it's already
+// in the list).
+function setMaSort(col, shiftKey){
+  const idx = sortKeys.findIndex(k=>k.col===col);
+  if(shiftKey){
+    if(idx===-1){ sortKeys.push({col,dir:'desc'}); }
+    else{ sortKeys[idx].dir = sortKeys[idx].dir==='desc'?'asc':'desc'; }
+  } else {
+    if(idx===0 && sortKeys.length===1){ sortKeys[0].dir = sortKeys[0].dir==='desc'?'asc':'desc'; }
+    else{ sortKeys=[{col,dir:'desc'}]; }
+  }
   renderMaBreadth();
 }
 function maSorted(){
-  const field=maSortBy+'_pct';
-  const mult=maSortDir==='desc'?-1:1;
-  return [...D.themes].sort((a,b)=>mult*((a[field]??-1)-(b[field]??-1)));
+  return [...D.themes].sort((a,b)=>{
+    for(const {col,dir} of sortKeys){
+      const field=col+'_pct';
+      const mult=dir==='desc'?-1:1;
+      const diff=mult*((a[field]??-1)-(b[field]??-1));
+      if(diff!==0) return diff;
+    }
+    return 0;
+  });
 }
 function togH(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==='table-row'?'none':'table-row';}
 
 function renderMaBreadth(){
   renderBenchmarkBar();
-  ['ma10','ma20','ma50'].forEach(k=>{const el=document.getElementById('ms-'+k);if(el)el.className='tab'+(maSortBy===k?' on':'');});
+  const primaryCol = sortKeys[0]?.col;
+  ['ma10','ma20','ma50'].forEach(k=>{const el=document.getElementById('ms-'+k);if(el)el.className='tab'+(primaryCol===k?' on':'');});
   const list=maSorted();
-  const arrow=col=>maSortBy===col?`<span class="sort-arrow">${maSortDir==='desc'?'▼':'▲'}</span>`:'';
-  const thCls=col=>'sortable'+(maSortBy===col?' active':'');
+  const headerLabel=col=>{
+    const idx=sortKeys.findIndex(k=>k.col===col);
+    if(idx===-1) return '';
+    const arrow = sortKeys[idx].dir==='desc'?'▼':'▲';
+    const rank = sortKeys.length>1 ? `<sup class="sort-rank">${idx+1}</sup>` : '';
+    return `<span class="sort-arrow">${arrow}</span>${rank}`;
+  };
+  const thCls=col=>'sortable'+(sortKeys.some(k=>k.col===col)?' active':'');
   let h=`<table><thead><tr>
     <th>#</th><th>THEME</th>
-    <th class="${thCls('ma10')}" onclick="setMaSort('ma10')">10MA${arrow('ma10')}</th>
-    <th class="${thCls('ma20')}" onclick="setMaSort('ma20')">20MA${arrow('ma20')}</th>
-    <th class="${thCls('ma50')}" onclick="setMaSort('ma50')">50MA${arrow('ma50')}</th>
+    <th class="${thCls('ma10')}" onclick="setMaSort('ma10', event.shiftKey)">10MA${headerLabel('ma10')}</th>
+    <th class="${thCls('ma20')}" onclick="setMaSort('ma20', event.shiftKey)">20MA${headerLabel('ma20')}</th>
+    <th class="${thCls('ma50')}" onclick="setMaSort('ma50', event.shiftKey)">50MA${headerLabel('ma50')}</th>
     <th>STOCKS</th>
   </tr></thead><tbody>`;
   list.forEach((t,i)=>{
