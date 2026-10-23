@@ -1,21 +1,21 @@
 {
-  "updated": "2026-10-22 00:22 UTC",
+  "updated": "2026-10-23 00:21 UTC",
   "methodology": "MA breadth only \u2014 % of constituents above their 10/20/50-day MA. No composite scoring.",
   "benchmarks": {
     "SPY": {
-      "price": 773.09,
-      "ma10": 1,
-      "ma20": 1,
-      "ma50": 1
+      "price": 763.96,
+      "ma10": 0,
+      "ma20": 0,
+      "ma50": 0
     },
     "QQQ": {
-      "price": 725.2,
+      "price": 704.47,
       "ma10": 0,
       "ma20": 0,
       "ma50": 0
     },
     "RSP": {
-      "price": 216.64,
+      "price": 218.22,
       "ma10": 1,
       "ma20": 1,
       "ma50": 1
@@ -111,12 +111,12 @@
         "SYNA"
       ],
       "color": "#a78bfa",
-      "ma10_pct": 40.0,
-      "ma10_cnt": "2/5",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/5",
       "ma20_pct": 20.0,
       "ma20_cnt": "1/5",
-      "ma50_pct": 40.0,
-      "ma50_cnt": "2/5",
+      "ma50_pct": 20.0,
+      "ma50_cnt": "1/5",
       "ma_detail": [
         {
           "ticker": "OUST",
@@ -126,15 +126,15 @@
         },
         {
           "ticker": "AMBA",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
         {
           "ticker": "QCOM",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "LSCC",
@@ -165,10 +165,10 @@
         "CRM"
       ],
       "color": "#60a5fa",
-      "ma10_pct": 80.0,
-      "ma10_cnt": "4/5",
-      "ma20_pct": 80.0,
-      "ma20_cnt": "4/5",
+      "ma10_pct": 60.0,
+      "ma10_cnt": "3/5",
+      "ma20_pct": 60.0,
+      "ma20_cnt": "3/5",
       "ma50_pct": 60.0,
       "ma50_cnt": "3/5",
       "ma_detail": [
@@ -186,8 +186,8 @@
         },
         {
           "ticker": "MDB",
-          "ma10": 1,
-          "ma20": 1,
+          "ma10": 0,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -222,10 +222,10 @@
       "color": "#10b981",
       "ma10_pct": 50.0,
       "ma10_cnt": "3/6",
-      "ma20_pct": 50.0,
-      "ma20_cnt": "3/6",
-      "ma50_pct": 66.7,
-      "ma50_cnt": "4/6",
+      "ma20_pct": 33.3,
+      "ma20_cnt": "2/6",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "3/6",
       "ma_detail": [
         {
           "ticker": "RXRX",
@@ -237,7 +237,7 @@
           "ticker": "SDGR",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "CERT",
@@ -248,7 +248,7 @@
         {
           "ticker": "ABSI",
           "ma10": 1,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         },
         {
@@ -350,8 +350,8 @@
       "color": "#00b8d4",
       "ma10_pct": 40.0,
       "ma10_cnt": "2/5",
-      "ma20_pct": 40.0,
-      "ma20_cnt": "2/5",
+      "ma20_pct": 60.0,
+      "ma20_cnt": "3/5",
       "ma50_pct": 40.0,
       "ma50_cnt": "2/5",
       "ma_detail": [
@@ -369,7 +369,7 @@
         },
         {
           "ticker": "PLTR",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 1,
           "ma50": 1
         },
@@ -381,8 +381,8 @@
         },
         {
           "ticker": "UPST",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         }
       ],
@@ -406,8 +406,8 @@
       "ma10_cnt": "0/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
-      "ma50_pct": 40.0,
-      "ma50_cnt": "2/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
       "ma_detail": [
         {
           "ticker": "NVDA",
@@ -419,7 +419,7 @@
           "ticker": "AMD",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "AVGO",
@@ -431,7 +431,7 @@
           "ticker": "MRVL",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "ALAB",
@@ -459,12 +459,12 @@
         "WDC"
       ],
       "color": "#38bdf8",
-      "ma10_pct": 12.5,
-      "ma10_cnt": "1/8",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/8",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/8",
-      "ma50_pct": 12.5,
-      "ma50_cnt": "1/8",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/8",
       "ma_detail": [
         {
           "ticker": "MU",
@@ -482,7 +482,7 @@
           "ticker": "PENG",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "SNDK",
@@ -510,7 +510,7 @@
         },
         {
           "ticker": "WDC",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         }
@@ -535,8 +535,8 @@
       "ma10_cnt": "0/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
-      "ma50_pct": 40.0,
-      "ma50_cnt": "2/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
       "ma_detail": [
         {
           "ticker": "ARM",
@@ -554,13 +554,13 @@
           "ticker": "SNPS",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "CDNS",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "RMBS",
@@ -587,8 +587,8 @@
       "color": "#22d3ee",
       "ma10_pct": 0.0,
       "ma10_cnt": "0/5",
-      "ma20_pct": 20.0,
-      "ma20_cnt": "1/5",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/5",
       "ma50_pct": 20.0,
       "ma50_cnt": "1/5",
       "ma_detail": [
@@ -619,7 +619,7 @@
         {
           "ticker": "FFIV",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         }
       ],
@@ -704,8 +704,8 @@
       "ma10_cnt": "0/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
-      "ma50_pct": 20.0,
-      "ma50_cnt": "1/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
       "ma_detail": [
         {
           "ticker": "AMKR",
@@ -717,7 +717,7 @@
           "ticker": "ASX",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "KLIC",
@@ -758,8 +758,8 @@
       "ma10_cnt": "0/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
-      "ma50_pct": 20.0,
-      "ma50_cnt": "1/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
       "ma_detail": [
         {
           "ticker": "TSM",
@@ -771,7 +771,7 @@
           "ticker": "GFS",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "UMC",
@@ -872,12 +872,12 @@
         "AMBQ"
       ],
       "color": "#c084fc",
-      "ma10_pct": 28.6,
-      "ma10_cnt": "2/7",
+      "ma10_pct": 14.3,
+      "ma10_cnt": "1/7",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/7",
-      "ma50_pct": 14.3,
-      "ma50_cnt": "1/7",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/7",
       "ma_detail": [
         {
           "ticker": "POWI",
@@ -893,9 +893,9 @@
         },
         {
           "ticker": "ON",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "MXL",
@@ -988,8 +988,8 @@
         "LASR"
       ],
       "color": "#f59e0b",
-      "ma10_pct": 100.0,
-      "ma10_cnt": "1/1",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/1",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/1",
       "ma50_pct": 0.0,
@@ -997,7 +997,7 @@
       "ma_detail": [
         {
           "ticker": "LASR",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         }
@@ -1067,12 +1067,12 @@
         "PLAB"
       ],
       "color": "#7dd3fc",
-      "ma10_pct": 33.3,
-      "ma10_cnt": "2/6",
-      "ma20_pct": 16.7,
-      "ma20_cnt": "1/6",
-      "ma50_pct": 16.7,
-      "ma50_cnt": "1/6",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/6",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/6",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/6",
       "ma_detail": [
         {
           "ticker": "APH",
@@ -1088,9 +1088,9 @@
         },
         {
           "ticker": "AME",
-          "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma10": 0,
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "IPGP",
@@ -1106,7 +1106,7 @@
         },
         {
           "ticker": "PLAB",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         }
@@ -1185,16 +1185,16 @@
       "color": "#4ade80",
       "ma10_pct": 0.0,
       "ma10_cnt": "0/7",
-      "ma20_pct": 28.6,
-      "ma20_cnt": "2/7",
-      "ma50_pct": 28.6,
-      "ma50_cnt": "2/7",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
       "ma_detail": [
         {
           "ticker": "VST",
           "ma10": 0,
-          "ma20": 1,
-          "ma50": 1
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "CEG",
@@ -1223,7 +1223,7 @@
         {
           "ticker": "TLN",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         },
         {
@@ -1249,10 +1249,10 @@
         "SRVR"
       ],
       "color": "#fca5a5",
-      "ma10_pct": 25.0,
-      "ma10_cnt": "1/4",
-      "ma20_pct": 25.0,
-      "ma20_cnt": "1/4",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/4",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/4",
       "ma50_pct": 0.0,
       "ma50_cnt": "0/4",
       "ma_detail": [
@@ -1270,8 +1270,8 @@
         },
         {
           "ticker": "IRM",
-          "ma10": 1,
-          "ma20": 1,
+          "ma10": 0,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -1361,14 +1361,14 @@
       "ma10_cnt": "1/3",
       "ma20_pct": 33.3,
       "ma20_cnt": "1/3",
-      "ma50_pct": 33.3,
-      "ma50_cnt": "1/3",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/3",
       "ma_detail": [
         {
           "ticker": "JCI",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "CARR",
@@ -1412,8 +1412,8 @@
       "ma10_cnt": "1/14",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/14",
-      "ma50_pct": 7.1,
-      "ma50_cnt": "1/14",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/14",
       "ma_detail": [
         {
           "ticker": "SHAZ",
@@ -1461,7 +1461,7 @@
           "ticker": "INOD",
           "ma10": 1,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "CORZ",
@@ -1641,10 +1641,10 @@
         "NXT"
       ],
       "color": "#fbbf24",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "4/8",
-      "ma20_pct": 25.0,
-      "ma20_cnt": "2/8",
+      "ma10_pct": 37.5,
+      "ma10_cnt": "3/8",
+      "ma20_pct": 37.5,
+      "ma20_cnt": "3/8",
       "ma50_pct": 12.5,
       "ma50_cnt": "1/8",
       "ma_detail": [
@@ -1662,14 +1662,14 @@
         },
         {
           "ticker": "ENPH",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
         {
           "ticker": "RUN",
           "ma10": 1,
-          "ma20": 0,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -1817,8 +1817,8 @@
       "ma10_cnt": "5/7",
       "ma20_pct": 71.4,
       "ma20_cnt": "5/7",
-      "ma50_pct": 28.6,
-      "ma50_cnt": "2/7",
+      "ma50_pct": 42.9,
+      "ma50_cnt": "3/7",
       "ma_detail": [
         {
           "ticker": "LMT",
@@ -1842,7 +1842,7 @@
           "ticker": "LHX",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "GD",
@@ -2033,8 +2033,8 @@
       "ma_detail": [
         {
           "ticker": "AXON",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -2051,8 +2051,8 @@
         },
         {
           "ticker": "BA",
-          "ma10": 1,
-          "ma20": 1,
+          "ma10": 0,
+          "ma20": 0,
           "ma50": 0
         }
       ],
@@ -2106,12 +2106,12 @@
         "VSAT"
       ],
       "color": "#7c3aed",
-      "ma10_pct": 40.0,
-      "ma10_cnt": "2/5",
-      "ma20_pct": 40.0,
-      "ma20_cnt": "2/5",
-      "ma50_pct": 40.0,
-      "ma50_cnt": "2/5",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/5",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/5",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/5",
       "ma_detail": [
         {
           "ticker": "VIAV",
@@ -2121,9 +2121,9 @@
         },
         {
           "ticker": "GSAT",
-          "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma10": 0,
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "IRDM",
@@ -2133,9 +2133,9 @@
         },
         {
           "ticker": "ECHO",
-          "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma10": 0,
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "VSAT",
@@ -2228,8 +2228,8 @@
         "CLSK"
       ],
       "color": "#f97316",
-      "ma10_pct": 40.0,
-      "ma10_cnt": "2/5",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
       "ma50_pct": 20.0,
@@ -2237,13 +2237,13 @@
       "ma_detail": [
         {
           "ticker": "COIN",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
         {
           "ticker": "MSTR",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 1
         },
@@ -2283,8 +2283,8 @@
         "SBET"
       ],
       "color": "#fb923c",
-      "ma10_pct": 66.7,
-      "ma10_cnt": "4/6",
+      "ma10_pct": 16.7,
+      "ma10_cnt": "1/6",
       "ma20_pct": 16.7,
       "ma20_cnt": "1/6",
       "ma50_pct": 16.7,
@@ -2304,7 +2304,7 @@
         },
         {
           "ticker": "BMNR",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
@@ -2316,13 +2316,13 @@
         },
         {
           "ticker": "COIN",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
         {
           "ticker": "SBET",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         }
@@ -2345,12 +2345,12 @@
         "UPST"
       ],
       "color": "#fdba74",
-      "ma10_pct": 57.1,
-      "ma10_cnt": "4/7",
+      "ma10_pct": 71.4,
+      "ma10_cnt": "5/7",
       "ma20_pct": 85.7,
       "ma20_cnt": "6/7",
-      "ma50_pct": 28.6,
-      "ma50_cnt": "2/7",
+      "ma50_pct": 42.9,
+      "ma50_cnt": "3/7",
       "ma_detail": [
         {
           "ticker": "CHYM",
@@ -2361,7 +2361,7 @@
         {
           "ticker": "AFRM",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -2380,7 +2380,7 @@
           "ticker": "XYZ",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "KLAR",
@@ -2390,8 +2390,8 @@
         },
         {
           "ticker": "UPST",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         }
       ],
@@ -2414,8 +2414,8 @@
         "XPEV"
       ],
       "color": "#34d399",
-      "ma10_pct": 28.6,
-      "ma10_cnt": "2/7",
+      "ma10_pct": 42.9,
+      "ma10_cnt": "3/7",
       "ma20_pct": 28.6,
       "ma20_cnt": "2/7",
       "ma50_pct": 14.3,
@@ -2435,7 +2435,7 @@
         },
         {
           "ticker": "LCID",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2516,8 +2516,8 @@
         "PDYN"
       ],
       "color": "#c084fc",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "3/6",
+      "ma10_pct": 33.3,
+      "ma10_cnt": "2/6",
       "ma20_pct": 16.7,
       "ma20_cnt": "1/6",
       "ma50_pct": 16.7,
@@ -2543,7 +2543,7 @@
         },
         {
           "ticker": "NOVT",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
@@ -2580,8 +2580,8 @@
       "color": "#e879f9",
       "ma10_pct": 0.0,
       "ma10_cnt": "0/6",
-      "ma20_pct": 16.7,
-      "ma20_cnt": "1/6",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/6",
       "ma50_pct": 16.7,
       "ma50_cnt": "1/6",
       "ma_detail": [
@@ -2618,7 +2618,7 @@
         {
           "ticker": "QSI",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         }
       ],
@@ -2663,23 +2663,23 @@
         "CRSP"
       ],
       "color": "#3b82f6",
-      "ma10_pct": 66.7,
-      "ma10_cnt": "2/3",
-      "ma20_pct": 33.3,
-      "ma20_cnt": "1/3",
-      "ma50_pct": 33.3,
-      "ma50_cnt": "1/3",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/3",
+      "ma20_pct": 0.0,
+      "ma20_cnt": "0/3",
+      "ma50_pct": 0.0,
+      "ma50_cnt": "0/3",
       "ma_detail": [
         {
           "ticker": "ARKG",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "BEAM",
-          "ma10": 1,
-          "ma20": 1,
+          "ma10": 0,
+          "ma20": 0,
           "ma50": 0
         },
         {
@@ -2705,18 +2705,18 @@
         "PHR"
       ],
       "color": "#f472b6",
-      "ma10_pct": 100.0,
-      "ma10_cnt": "4/4",
-      "ma20_pct": 75.0,
-      "ma20_cnt": "3/4",
-      "ma50_pct": 75.0,
-      "ma50_cnt": "3/4",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "2/4",
+      "ma20_pct": 50.0,
+      "ma20_cnt": "2/4",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "2/4",
       "ma_detail": [
         {
           "ticker": "HIMS",
           "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "DOCS",
@@ -2726,13 +2726,13 @@
         },
         {
           "ticker": "GH",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
         {
           "ticker": "OSCR",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 1,
           "ma50": 1
         }
@@ -2853,10 +2853,10 @@
         "PENN"
       ],
       "color": "#eab308",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "1/2",
-      "ma20_pct": 50.0,
-      "ma20_cnt": "1/2",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "2/2",
+      "ma20_pct": 100.0,
+      "ma20_cnt": "2/2",
       "ma50_pct": 0.0,
       "ma50_cnt": "0/2",
       "ma_detail": [
@@ -2868,8 +2868,8 @@
         },
         {
           "ticker": "PENN",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         }
       ],
@@ -2890,8 +2890,8 @@
         "TLRY"
       ],
       "color": "#4d7c0f",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "1/2",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/2",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/2",
       "ma50_pct": 0.0,
@@ -2899,7 +2899,7 @@
       "ma_detail": [
         {
           "ticker": "MSOS",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
@@ -2927,24 +2927,24 @@
         "NFLX"
       ],
       "color": "#facc15",
-      "ma10_pct": 33.3,
-      "ma10_cnt": "2/6",
-      "ma20_pct": 50.0,
-      "ma20_cnt": "3/6",
-      "ma50_pct": 66.7,
-      "ma50_cnt": "4/6",
+      "ma10_pct": 16.7,
+      "ma10_cnt": "1/6",
+      "ma20_pct": 16.7,
+      "ma20_cnt": "1/6",
+      "ma50_pct": 33.3,
+      "ma50_cnt": "2/6",
       "ma_detail": [
         {
           "ticker": "MSFT",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         },
         {
           "ticker": "AMZN",
-          "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma10": 0,
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "GOOGL",
@@ -2956,7 +2956,7 @@
           "ticker": "META",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 1
+          "ma50": 0
         },
         {
           "ticker": "AAPL",
