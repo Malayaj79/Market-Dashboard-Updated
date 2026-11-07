@@ -1,23 +1,23 @@
 {
-  "updated": "2026-11-06 01:58 UTC",
+  "updated": "2026-11-07 01:31 UTC",
   "methodology": "MA breadth only \u2014 % of constituents above their 10/20/50-day MA. No composite scoring.",
   "benchmarks": {
     "SPY": {
-      "price": 733.0,
+      "price": 735.29,
       "ma10": 0,
       "ma20": 0,
       "ma50": 0
     },
     "QQQ": {
-      "price": 647.05,
+      "price": 656.1,
       "ma10": 0,
       "ma20": 0,
       "ma50": 0
     },
     "RSP": {
-      "price": 216.87,
+      "price": 216.05,
       "ma10": 0,
-      "ma20": 1,
+      "ma20": 0,
       "ma50": 1
     }
   },
@@ -111,17 +111,17 @@
         "SYNA"
       ],
       "color": "#a78bfa",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/5",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/5",
+      "ma10_pct": 40.0,
+      "ma10_cnt": "2/5",
+      "ma20_pct": 20.0,
+      "ma20_cnt": "1/5",
       "ma50_pct": 20.0,
       "ma50_cnt": "1/5",
       "ma_detail": [
         {
           "ticker": "OUST",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -138,7 +138,7 @@
         },
         {
           "ticker": "LSCC",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -165,8 +165,8 @@
         "CRM"
       ],
       "color": "#60a5fa",
-      "ma10_pct": 20.0,
-      "ma10_cnt": "1/5",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/5",
       "ma20_pct": 20.0,
       "ma20_cnt": "1/5",
       "ma50_pct": 20.0,
@@ -180,7 +180,7 @@
         },
         {
           "ticker": "SAP",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 1,
           "ma50": 1
         },
@@ -220,12 +220,12 @@
         "HTFL"
       ],
       "color": "#10b981",
-      "ma10_pct": 33.3,
-      "ma10_cnt": "2/6",
-      "ma20_pct": 33.3,
-      "ma20_cnt": "2/6",
-      "ma50_pct": 50.0,
-      "ma50_cnt": "3/6",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "3/6",
+      "ma20_pct": 66.7,
+      "ma20_cnt": "4/6",
+      "ma50_pct": 83.3,
+      "ma50_cnt": "5/6",
       "ma_detail": [
         {
           "ticker": "RXRX",
@@ -248,14 +248,14 @@
         {
           "ticker": "ABSI",
           "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
+          "ma20": 1,
+          "ma50": 1
         },
         {
           "ticker": "TEM",
-          "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
+          "ma10": 1,
+          "ma20": 1,
+          "ma50": 1
         },
         {
           "ticker": "HTFL",
@@ -535,8 +535,8 @@
       "ma10_cnt": "0/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/5",
+      "ma50_pct": 20.0,
+      "ma50_cnt": "1/5",
       "ma_detail": [
         {
           "ticker": "ARM",
@@ -554,7 +554,7 @@
           "ticker": "SNPS",
           "ma10": 0,
           "ma20": 0,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "CDNS",
@@ -585,12 +585,12 @@
         "FFIV"
       ],
       "color": "#22d3ee",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/5",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/5",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/5",
+      "ma10_pct": 20.0,
+      "ma10_cnt": "1/5",
+      "ma20_pct": 20.0,
+      "ma20_cnt": "1/5",
+      "ma50_pct": 20.0,
+      "ma50_cnt": "1/5",
       "ma_detail": [
         {
           "ticker": "ANET",
@@ -612,9 +612,9 @@
         },
         {
           "ticker": "EXTR",
-          "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
+          "ma10": 1,
+          "ma20": 1,
+          "ma50": 1
         },
         {
           "ticker": "FFIV",
@@ -872,10 +872,10 @@
         "AMBQ"
       ],
       "color": "#c084fc",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/7",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/7",
+      "ma10_pct": 14.3,
+      "ma10_cnt": "1/7",
+      "ma20_pct": 14.3,
+      "ma20_cnt": "1/7",
       "ma50_pct": 0.0,
       "ma50_cnt": "0/7",
       "ma_detail": [
@@ -911,8 +911,8 @@
         },
         {
           "ticker": "AOSL",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -988,17 +988,17 @@
         "LASR"
       ],
       "color": "#f59e0b",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/1",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/1",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "1/1",
+      "ma20_pct": 100.0,
+      "ma20_cnt": "1/1",
       "ma50_pct": 0.0,
       "ma50_cnt": "0/1",
       "ma_detail": [
         {
           "ticker": "LASR",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         }
       ],
@@ -1183,12 +1183,12 @@
         "BE"
       ],
       "color": "#4ade80",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/7",
+      "ma10_pct": 14.3,
+      "ma10_cnt": "1/7",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/7",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/7",
+      "ma50_pct": 14.3,
+      "ma50_cnt": "1/7",
       "ma_detail": [
         {
           "ticker": "VST",
@@ -1222,9 +1222,9 @@
         },
         {
           "ticker": "TLN",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "BE",
@@ -1249,10 +1249,10 @@
         "SRVR"
       ],
       "color": "#fca5a5",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/4",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/4",
+      "ma10_pct": 25.0,
+      "ma10_cnt": "1/4",
+      "ma20_pct": 25.0,
+      "ma20_cnt": "1/4",
       "ma50_pct": 0.0,
       "ma50_cnt": "0/4",
       "ma_detail": [
@@ -1264,8 +1264,8 @@
         },
         {
           "ticker": "EQIX",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -1516,8 +1516,8 @@
         "BWXT"
       ],
       "color": "#fde68a",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/5",
+      "ma10_pct": 20.0,
+      "ma10_cnt": "1/5",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/5",
       "ma50_pct": 0.0,
@@ -1543,7 +1543,7 @@
         },
         {
           "ticker": "LEU",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -1645,8 +1645,8 @@
       "ma10_cnt": "6/8",
       "ma20_pct": 62.5,
       "ma20_cnt": "5/8",
-      "ma50_pct": 50.0,
-      "ma50_cnt": "4/8",
+      "ma50_pct": 62.5,
+      "ma50_cnt": "5/8",
       "ma_detail": [
         {
           "ticker": "FSLR",
@@ -1656,13 +1656,13 @@
         },
         {
           "ticker": "ENLT",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
         {
           "ticker": "ENPH",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         },
@@ -1688,7 +1688,7 @@
           "ticker": "TAN",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "NXT",
@@ -1714,10 +1714,10 @@
         "FLNC"
       ],
       "color": "#34d399",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/4",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/4",
+      "ma10_pct": 25.0,
+      "ma10_cnt": "1/4",
+      "ma20_pct": 50.0,
+      "ma20_cnt": "2/4",
       "ma50_pct": 0.0,
       "ma50_cnt": "0/4",
       "ma_detail": [
@@ -1729,14 +1729,14 @@
         },
         {
           "ticker": "AMPX",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
           "ticker": "ENVX",
           "ma10": 0,
-          "ma20": 0,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -1880,12 +1880,12 @@
         "FLY"
       ],
       "color": "#f472b6",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/4",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/4",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/4",
+      "ma10_pct": 25.0,
+      "ma10_cnt": "1/4",
+      "ma20_pct": 25.0,
+      "ma20_cnt": "1/4",
+      "ma50_pct": 25.0,
+      "ma50_cnt": "1/4",
       "ma_detail": [
         {
           "ticker": "RCAT",
@@ -1907,9 +1907,9 @@
         },
         {
           "ticker": "FLY",
-          "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
+          "ma10": 1,
+          "ma20": 1,
+          "ma50": 1
         }
       ],
       "n_stocks": 4
@@ -1937,10 +1937,10 @@
       "color": "#8b5cf6",
       "ma10_pct": 10.0,
       "ma10_cnt": "1/10",
-      "ma20_pct": 10.0,
-      "ma20_cnt": "1/10",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/10",
+      "ma20_pct": 20.0,
+      "ma20_cnt": "2/10",
+      "ma50_pct": 10.0,
+      "ma50_cnt": "1/10",
       "ma_detail": [
         {
           "ticker": "RKLB",
@@ -1982,7 +1982,7 @@
           "ticker": "BKSY",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "PL",
@@ -1999,7 +1999,7 @@
         {
           "ticker": "YSS",
           "ma10": 0,
-          "ma20": 0,
+          "ma20": 1,
           "ma50": 0
         }
       ],
@@ -2018,12 +2018,12 @@
         "BA"
       ],
       "color": "#94a3b8",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/4",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/4",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/4",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "2/4",
+      "ma20_pct": 25.0,
+      "ma20_cnt": "1/4",
+      "ma50_pct": 25.0,
+      "ma50_cnt": "1/4",
       "ma_detail": [
         {
           "ticker": "AXON",
@@ -2033,13 +2033,13 @@
         },
         {
           "ticker": "FTAI",
-          "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
+          "ma10": 1,
+          "ma20": 1,
+          "ma50": 1
         },
         {
           "ticker": "HWM",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2063,24 +2063,24 @@
         "JOBY"
       ],
       "color": "#c084fc",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "1/2",
-      "ma20_pct": 50.0,
-      "ma20_cnt": "1/2",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/2",
+      "ma10_pct": 100.0,
+      "ma10_cnt": "2/2",
+      "ma20_pct": 100.0,
+      "ma20_cnt": "2/2",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "1/2",
       "ma_detail": [
         {
           "ticker": "ACHR",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
           "ticker": "JOBY",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         }
       ],
       "n_stocks": 2
@@ -2102,10 +2102,10 @@
       "color": "#7c3aed",
       "ma10_pct": 20.0,
       "ma10_cnt": "1/5",
-      "ma20_pct": 20.0,
-      "ma20_cnt": "1/5",
-      "ma50_pct": 20.0,
-      "ma50_cnt": "1/5",
+      "ma20_pct": 40.0,
+      "ma20_cnt": "2/5",
+      "ma50_pct": 40.0,
+      "ma50_cnt": "2/5",
       "ma_detail": [
         {
           "ticker": "VIAV",
@@ -2128,8 +2128,8 @@
         {
           "ticker": "ECHO",
           "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
+          "ma20": 1,
+          "ma50": 1
         },
         {
           "ticker": "VSAT",
@@ -2277,8 +2277,8 @@
         "SBET"
       ],
       "color": "#fb923c",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/6",
+      "ma10_pct": 16.7,
+      "ma10_cnt": "1/6",
       "ma20_pct": 0.0,
       "ma20_cnt": "0/6",
       "ma50_pct": 0.0,
@@ -2304,7 +2304,7 @@
         },
         {
           "ticker": "FIGR",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2408,12 +2408,12 @@
         "XPEV"
       ],
       "color": "#34d399",
-      "ma10_pct": 42.9,
-      "ma10_cnt": "3/7",
-      "ma20_pct": 42.9,
-      "ma20_cnt": "3/7",
-      "ma50_pct": 14.3,
-      "ma50_cnt": "1/7",
+      "ma10_pct": 85.7,
+      "ma10_cnt": "6/7",
+      "ma20_pct": 85.7,
+      "ma20_cnt": "6/7",
+      "ma50_pct": 28.6,
+      "ma50_cnt": "2/7",
       "ma_detail": [
         {
           "ticker": "TSLA",
@@ -2429,14 +2429,14 @@
         },
         {
           "ticker": "LCID",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
           "ticker": "QS",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -2447,15 +2447,15 @@
         },
         {
           "ticker": "NIO",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
           "ticker": "XPEV",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         }
       ],
       "n_stocks": 7
@@ -2510,10 +2510,10 @@
         "PDYN"
       ],
       "color": "#c084fc",
-      "ma10_pct": 20.0,
-      "ma10_cnt": "1/5",
-      "ma20_pct": 20.0,
-      "ma20_cnt": "1/5",
+      "ma10_pct": 40.0,
+      "ma10_cnt": "2/5",
+      "ma20_pct": 40.0,
+      "ma20_cnt": "2/5",
       "ma50_pct": 20.0,
       "ma50_cnt": "1/5",
       "ma_detail": [
@@ -2525,8 +2525,8 @@
         },
         {
           "ticker": "SERV",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -2566,22 +2566,22 @@
         "QSI"
       ],
       "color": "#e879f9",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/6",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/6",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "3/6",
+      "ma20_pct": 16.7,
+      "ma20_cnt": "1/6",
       "ma50_pct": 16.7,
       "ma50_cnt": "1/6",
       "ma_detail": [
         {
           "ticker": "IONQ",
-          "ma10": 0,
-          "ma20": 0,
+          "ma10": 1,
+          "ma20": 1,
           "ma50": 0
         },
         {
           "ticker": "RGTI",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2599,7 +2599,7 @@
         },
         {
           "ticker": "INFQ",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 0,
           "ma50": 0
         },
@@ -2623,21 +2623,14 @@
         "VELO"
       ],
       "color": "#7c3aed",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/1",
-      "ma20_pct": 0.0,
-      "ma20_cnt": "0/1",
-      "ma50_pct": 0.0,
-      "ma50_cnt": "0/1",
-      "ma_detail": [
-        {
-          "ticker": "VELO",
-          "ma10": 0,
-          "ma20": 0,
-          "ma50": 0
-        }
-      ],
-      "n_stocks": 1
+      "ma10_pct": null,
+      "ma10_cnt": null,
+      "ma20_pct": null,
+      "ma20_cnt": null,
+      "ma50_pct": null,
+      "ma50_cnt": null,
+      "ma_detail": [],
+      "n_stocks": 0
     },
     {
       "id": "genomics",
@@ -2651,8 +2644,8 @@
         "CRSP"
       ],
       "color": "#3b82f6",
-      "ma10_pct": 0.0,
-      "ma10_cnt": "0/3",
+      "ma10_pct": 33.3,
+      "ma10_cnt": "1/3",
       "ma20_pct": 33.3,
       "ma20_cnt": "1/3",
       "ma50_pct": 33.3,
@@ -2666,7 +2659,7 @@
         },
         {
           "ticker": "BEAM",
-          "ma10": 0,
+          "ma10": 1,
           "ma20": 1,
           "ma50": 1
         },
@@ -2693,12 +2686,12 @@
         "PHR"
       ],
       "color": "#f472b6",
-      "ma10_pct": 25.0,
-      "ma10_cnt": "1/4",
-      "ma20_pct": 50.0,
-      "ma20_cnt": "2/4",
-      "ma50_pct": 50.0,
-      "ma50_cnt": "2/4",
+      "ma10_pct": 0.0,
+      "ma10_cnt": "0/4",
+      "ma20_pct": 25.0,
+      "ma20_cnt": "1/4",
+      "ma50_pct": 25.0,
+      "ma50_cnt": "1/4",
       "ma_detail": [
         {
           "ticker": "HIMS",
@@ -2720,9 +2713,9 @@
         },
         {
           "ticker": "OSCR",
-          "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma10": 0,
+          "ma20": 0,
+          "ma50": 0
         }
       ],
       "n_stocks": 4
@@ -2744,21 +2737,21 @@
       "color": "#dc2626",
       "ma10_pct": 83.3,
       "ma10_cnt": "5/6",
-      "ma20_pct": 66.7,
-      "ma20_cnt": "4/6",
-      "ma50_pct": 50.0,
-      "ma50_cnt": "3/6",
+      "ma20_pct": 83.3,
+      "ma20_cnt": "5/6",
+      "ma50_pct": 66.7,
+      "ma50_cnt": "4/6",
       "ma_detail": [
         {
           "ticker": "BABA",
           "ma10": 1,
           "ma20": 1,
-          "ma50": 0
+          "ma50": 1
         },
         {
           "ticker": "BIDU",
           "ma10": 1,
-          "ma20": 0,
+          "ma20": 1,
           "ma50": 0
         },
         {
@@ -2800,8 +2793,8 @@
         "UBER"
       ],
       "color": "#fb7185",
-      "ma10_pct": 100.0,
-      "ma10_cnt": "3/3",
+      "ma10_pct": 66.7,
+      "ma10_cnt": "2/3",
       "ma20_pct": 100.0,
       "ma20_cnt": "3/3",
       "ma50_pct": 66.7,
@@ -2815,7 +2808,7 @@
         },
         {
           "ticker": "CART",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 1,
           "ma50": 1
         },
@@ -2841,18 +2834,18 @@
         "PENN"
       ],
       "color": "#eab308",
-      "ma10_pct": 100.0,
-      "ma10_cnt": "2/2",
-      "ma20_pct": 100.0,
-      "ma20_cnt": "2/2",
-      "ma50_pct": 100.0,
-      "ma50_cnt": "2/2",
+      "ma10_pct": 50.0,
+      "ma10_cnt": "1/2",
+      "ma20_pct": 50.0,
+      "ma20_cnt": "1/2",
+      "ma50_pct": 50.0,
+      "ma50_cnt": "1/2",
       "ma_detail": [
         {
           "ticker": "DKNG",
-          "ma10": 1,
-          "ma20": 1,
-          "ma50": 1
+          "ma10": 0,
+          "ma20": 0,
+          "ma50": 0
         },
         {
           "ticker": "PENN",
@@ -2915,17 +2908,17 @@
         "NFLX"
       ],
       "color": "#facc15",
-      "ma10_pct": 50.0,
-      "ma10_cnt": "3/6",
-      "ma20_pct": 50.0,
-      "ma20_cnt": "3/6",
+      "ma10_pct": 33.3,
+      "ma10_cnt": "2/6",
+      "ma20_pct": 16.7,
+      "ma20_cnt": "1/6",
       "ma50_pct": 50.0,
       "ma50_cnt": "3/6",
       "ma_detail": [
         {
           "ticker": "MSFT",
           "ma10": 1,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         },
         {
@@ -2949,12 +2942,12 @@
         {
           "ticker": "AAPL",
           "ma10": 0,
-          "ma20": 1,
+          "ma20": 0,
           "ma50": 1
         },
         {
           "ticker": "NFLX",
-          "ma10": 1,
+          "ma10": 0,
           "ma20": 0,
           "ma50": 0
         }
